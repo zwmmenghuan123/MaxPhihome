@@ -21,9 +21,10 @@ public interface UrlConfig {
         String LOGOUT = URL_HOST + "/v1/logout"; //退出登陆
     }
 
-
-
-
+    interface ReadDeviceInfoUrl {
+        String URL_HOST = "http://192.168.2.139:8000";
+        String READ_DEVICE_INFO_URL = URL_HOST + "/config-read";
+    }
 
 
 }

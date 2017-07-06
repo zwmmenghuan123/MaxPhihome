@@ -61,16 +61,22 @@ public class SoftApResetActivity extends BaseActivity {
             wifiManager.setWifiEnabled(true);
         }
         if (configAndConnectWifi()) {
-            mProgressBar.setVisibility(View.GONE);
+            mProgressBar.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setVisibility(View.GONE);
 //            if (NetworkUtils.getWifiInfo() != null && ("\""+currentDeviceSsid+"\"").equals(NetworkUtils.getWifiInfo().getSSID())) {
-            Intent intent = new Intent(this, DeviceConfigNetActivity.class);
-            startActivity(intent);
+                    Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
+                    startActivity(intent);
 //            } else {
 //                ToastUtil.show(SoftApResetActivity.this, R.string.get_device_wifi_fail);
 //            }
+                }
+            }, 3000);
+
         } else {
             mProgressBar.setVisibility(View.GONE);
-            ToastUtil.show(SoftApResetActivity.this, R.string.get_device_wifi_fail);
+            ToastUtil.show(SoftApResetActivity.this, R.string.get_wifi_fail);
         }
     }
 
