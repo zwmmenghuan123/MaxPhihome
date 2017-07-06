@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PhiHome</string>
+    <string name="loading">加载中&#8230;</string>
+    <string name="app_exit_hit">再按一次退出程序</string>
+
+    <!--登陆相关-->
+    <string name="title_login_cloud">云账号登录</string>
+    <string name="login">登录</string>
+    <string name="login_user_hint">请输入手机号</string>
+    <string name="login_pwd_hint">请输入密码</string>
+    <string name="login_user_illegal">请输入正确的手机号</string>
+    <string name="login_pwd_illegal">请输入正确的密码</string>
+    <string name="login_auth_fail">未获取到授权码</string>
+    <string name="login_token_fail">登录失败</string>
+    <string name="logout_success">已登出</string>
+</resources>
