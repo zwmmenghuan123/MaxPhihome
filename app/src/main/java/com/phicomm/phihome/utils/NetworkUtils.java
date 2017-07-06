@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
@@ -43,6 +44,18 @@ public class NetworkUtils {
 
         return info.getType() == ConnectivityManager.TYPE_WIFI;
 
+    }
+
+    /**
+     * 获取当前连接的wifi信息
+     * @return
+     */
+    public static WifiInfo getWifiInfo(){
+        WifiManager wifiManager = (WifiManager) PhApplication.getContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager!=null){
+            return wifiManager.getConnectionInfo();
+        }
+        return null;
     }
 
     /**

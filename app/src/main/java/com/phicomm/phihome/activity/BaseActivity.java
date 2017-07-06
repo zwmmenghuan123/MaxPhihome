@@ -87,6 +87,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             LogUtils.debug(e);
         }
     }
+    public void setPageTitle(int titleResId) {
+        String title = this.getResources().getString(titleResId);
+        try {
+            mTvTitle.setText(title);
+        } catch (Exception e) {
+            LogUtils.debug(e);
+        }
+    }
 
     public void showTvMenu(String menu) {
         try {
