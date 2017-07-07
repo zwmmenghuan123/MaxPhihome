@@ -2,6 +2,8 @@ package com.phicomm.phihome.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -13,10 +15,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.phicomm.phihome.PhApplication;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.constants.Products;
+import com.phicomm.phihome.event.NetworkNameChangeEvent;
 import com.phicomm.phihome.utils.NetworkUtils;
 import com.phicomm.phihome.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -38,6 +45,8 @@ public class SoftApResetActivity extends BaseActivity {
     private final int STATE_GET_WIFI_SUCCESS = 1;
     private final int STATE_GET_WIFI_FAIL = 2;
 
+    private boolean isWaitingJump = false;
+
     @Override
     public void initLayout(Bundle savedInstanceState) {
         setContentView(R.layout.activity_soft_ap_reset);
@@ -54,6 +63,19 @@ public class SoftApResetActivity extends BaseActivity {
         wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
+    }
+
     @OnClick(R.id.tv_next_step)
     public void tv_next_step() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -61,30 +83,69 @@ public class SoftApResetActivity extends BaseActivity {
             wifiManager.setWifiEnabled(true);
         }
         if (configAndConnectWifi()) {
-            mProgressBar.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mProgressBar.setVisibility(View.GONE);
-//            if (NetworkUtils.getWifiInfo() != null && ("\""+currentDeviceSsid+"\"").equals(NetworkUtils.getWifiInfo().getSSID())) {
-                    Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
-                    startActivity(intent);
-//            } else {
-//                ToastUtil.show(SoftApResetActivity.this, R.string.get_device_wifi_fail);
-//            }
-                }
-            }, 3000);
-
+//            waitJumpNext();   //轮询方式，不再使用。改用等待网络连接的方式。
+            if (isCurrentSsid()){
+                mProgressBar.setVisibility(View.GONE);
+                Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
+                startActivity(intent);
+            }else{
+                isWaitingJump = true;
+                //等待网络监听事件回调执行
+            }
         } else {
             mProgressBar.setVisibility(View.GONE);
             ToastUtil.show(SoftApResetActivity.this, R.string.get_wifi_fail);
         }
     }
 
+
     private boolean configAndConnectWifi() {
         WifiConfiguration wifiConfiguration = createWifiInfo(currentDeviceSsid, "", 1);
         int wcgId = wifiManager.addNetwork(wifiConfiguration);
         return wifiManager.enableNetwork(wcgId, true);
     }
+
+    private void waitJumpNext(){
+        if (isCurrentSsid()){
+            mProgressBar.setVisibility(View.GONE);
+            Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
+            startActivity(intent);
+        }else{
+            if (mProgressBar!=null){
+                mProgressBar.postDelayed(runnable,50);
+            }
+        }
+    }
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isCurrentSsid()){
+                mProgressBar.setVisibility(View.GONE);
+                Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
+                startActivity(intent);
+            }else{
+                waitJumpNext();
+            }
+        }
+    };
+
+    /**
+     * 判断当前是否已连接wifi，连接的wifi是否是目标wifi
+     */
+    private boolean isCurrentSsid() {
+        if (NetworkUtils.isWifiConnect()) {
+            ConnectivityManager connectMgr = (ConnectivityManager) PhApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo info = connectMgr.getActiveNetworkInfo();
+            if (info != null && info.isConnected()) {
+                WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
+                if (wifiInfo != null) {
+                    return currentDeviceSsid.equals(wifiInfo.getSSID().replace("\"",""));
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 配置wifi
@@ -133,6 +194,18 @@ public class SoftApResetActivity extends BaseActivity {
         return config;
     }
 
+
+    @Subscribe
+    public void onEventMainThread(NetworkNameChangeEvent event) {
+        if (isWaitingJump){
+            if (isCurrentSsid()){
+                mProgressBar.setVisibility(View.GONE);
+                isWaitingJump = false;
+                Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
 
     private void checkAndConnectWifi() {
         setState(STATE_GETTING_WIFI, "");

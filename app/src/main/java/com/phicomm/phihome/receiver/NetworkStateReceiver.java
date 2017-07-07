@@ -9,7 +9,10 @@ import android.net.wifi.WifiInfo;
 import android.util.Log;
 
 import com.phicomm.phihome.PhApplication;
+import com.phicomm.phihome.event.NetworkNameChangeEvent;
 import com.phicomm.phihome.utils.NetworkUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 监听网络状态变化
@@ -26,7 +29,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
             if (info != null && info.isConnected() ) {
                 WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
                 if (wifiInfo != null) {
-                    Log.e("===wifiinfo", "onReceive: " + wifiInfo.getSSID());
+                    EventBus.getDefault().post(new NetworkNameChangeEvent(wifiInfo.getSSID()));
                 }
 
             }

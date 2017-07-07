@@ -44,7 +44,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     private final int SELECT_SSID = 1;
     private String mSSID = null;
 
-    Handler mHandler;
+
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ public class DeviceConfigNetActivity extends BaseActivity {
     @Override
     public void afterInitView() {
         setPageTitle(R.string.device_connect_to_router);
-        mHandler = new Handler(getMainLooper());
         mSoftApDevicePresenter = new SoftApDevicePresenter(new SoftApDeviceView() {
             @Override
             public void readDeviceSSIDSSuccess(Map<String, String> wifi_scan) {
@@ -71,16 +70,14 @@ public class DeviceConfigNetActivity extends BaseActivity {
                             break;
                         }
                     }
-
                 }
-
             }
 
             @Override
             public void readDeviceSSIDFail(int code, String msg) {
                 msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.get_device_wifi_fail) : msg;
-                ToastUtil.show(DeviceConfigNetActivity.this, msg);
                 mTvGettingWifi.setText(msg);
+                mSoftApDevicePresenter.readDeviceInfo();
 
             }
 
@@ -120,15 +117,15 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
             @Override
             public void getConnStateSuccess(GetConnStateBean getConnStateBean) {
-                if (getConnStateBean!=null){
-                    if (1==getConnStateBean.getConn_to_router() && 1== getConnStateBean.getConn_to_server()){
-                        ToastUtil.show(DeviceConfigNetActivity.this,R.string.close_device_soft_ap);
+                if (getConnStateBean != null) {
+                    if (1 == getConnStateBean.getConn_to_router() && 1 == getConnStateBean.getConn_to_server()) {
+                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.close_device_soft_ap);
                         closeSoftAp();
-                    }else{
-                        getConnStateFail(0,null);
+                    } else {
+                        getConnStateFail(0, null);
                     }
-                }else{
-                    getConnStateFail(0,null);
+                } else {
+                    getConnStateFail(0, null);
                 }
             }
 
@@ -139,11 +136,11 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
             @Override
             public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean) {
-                ToastUtil.show(DeviceConfigNetActivity.this,R.string.close_device_soft_ap_success);
+                ToastUtil.show(DeviceConfigNetActivity.this, R.string.close_device_soft_ap_success);
             }
 
             @Override
-            public void closeSoftApFail(int code,String msg) {
+            public void closeSoftApFail(int code, String msg) {
 
             }
         });
@@ -161,7 +158,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     /**
      * 获取设备与路由器和后台的连接状态
      */
-    private void getConnectionState(){
+    private void getConnectionState() {
         mSoftApDevicePresenter.getConnState();
     }
 
