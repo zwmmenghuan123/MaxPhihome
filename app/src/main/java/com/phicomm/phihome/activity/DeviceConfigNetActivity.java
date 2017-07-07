@@ -2,6 +2,7 @@ package com.phicomm.phihome.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.bean.GetConnStateBean;
 import com.phicomm.phihome.bean.WriteSsidInfoBean;
 import com.phicomm.phihome.presenter.SoftApDevicePresenter;
 import com.phicomm.phihome.presenter.viewback.SoftApDeviceView;
@@ -42,6 +44,8 @@ public class DeviceConfigNetActivity extends BaseActivity {
     private final int SELECT_SSID = 1;
     private String mSSID = null;
 
+    Handler mHandler;
+
     @Override
     public void initLayout(Bundle savedInstanceState) {
         setContentView(R.layout.activity_device_config_net);
@@ -50,14 +54,12 @@ public class DeviceConfigNetActivity extends BaseActivity {
     @Override
     public void afterInitView() {
         setPageTitle(R.string.device_connect_to_router);
-
+        mHandler = new Handler(getMainLooper());
         mSoftApDevicePresenter = new SoftApDevicePresenter(new SoftApDeviceView() {
             @Override
             public void readDeviceSSIDSSuccess(Map<String, String> wifi_scan) {
                 if (wifi_scan == null || wifi_scan.size() == 0) {
-                    String msg = CommonUtils.getString(R.string.get_device_wifi_fail);
-                    ToastUtil.show(DeviceConfigNetActivity.this, msg);
-                    mTvGettingWifi.setText(msg);
+                    readDeviceSSIDFail(0, null);
                 } else {
                     mSSID = "";
                     mWifiScan = wifi_scan;
@@ -83,30 +85,6 @@ public class DeviceConfigNetActivity extends BaseActivity {
             }
 
             @Override
-            public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
-                if (writeSsidInfoBean != null) {
-                    if (0==writeSsidInfoBean.getErrorCode()){
-                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.device_connect_router_success);
-                    }else{
-                        String msg = writeSsidInfoBean.getMessage();
-                        if (TextUtils.isEmpty(msg)){
-                            msg = CommonUtils.getString(R.string.device_connect_router_fail);
-                        }
-                        ToastUtil.show(DeviceConfigNetActivity.this, msg);
-                    }
-                } else {
-                    String msg = CommonUtils.getString(R.string.device_connect_router_fail);
-                    ToastUtil.show(DeviceConfigNetActivity.this, msg);
-                }
-            }
-
-            @Override
-            public void writeSSIDFail(int code, String msg) {
-                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.device_connect_router_fail) : msg;
-                ToastUtil.show(DeviceConfigNetActivity.this, msg);
-            }
-
-            @Override
             public void connecting() {
                 mProgressBar.setVisibility(View.VISIBLE);
                 mTvRightArrow.setVisibility(View.GONE);
@@ -117,10 +95,76 @@ public class DeviceConfigNetActivity extends BaseActivity {
                 mProgressBar.setVisibility(View.GONE);
                 mTvRightArrow.setVisibility(View.VISIBLE);
             }
+
+            @Override
+            public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+                if (writeSsidInfoBean != null) {
+                    if (0 == writeSsidInfoBean.getErrorCode()) {
+                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.write_ssid_info_success);
+                        getConnectionState();
+                    } else {
+                        String msg = writeSsidInfoBean.getMessage();
+                        writeSSIDFail(0, msg);
+                    }
+                } else {
+                    String msg = CommonUtils.getString(R.string.write_ssid_info_fail);
+                    writeSSIDFail(0, msg);
+                }
+            }
+
+            @Override
+            public void writeSSIDFail(int code, String msg) {
+                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
+                ToastUtil.show(DeviceConfigNetActivity.this, msg);
+            }
+
+            @Override
+            public void getConnStateSuccess(GetConnStateBean getConnStateBean) {
+                if (getConnStateBean!=null){
+                    if (1==getConnStateBean.getConn_to_router() && 1== getConnStateBean.getConn_to_server()){
+                        ToastUtil.show(DeviceConfigNetActivity.this,R.string.close_device_soft_ap);
+                        closeSoftAp();
+                    }else{
+                        getConnStateFail(0,null);
+                    }
+                }else{
+                    getConnStateFail(0,null);
+                }
+            }
+
+            @Override
+            public void getConnStateFail(int code, String msg) {
+                getConnectionState();
+            }
+
+            @Override
+            public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+                ToastUtil.show(DeviceConfigNetActivity.this,R.string.close_device_soft_ap_success);
+            }
+
+            @Override
+            public void closeSoftApFail(int code,String msg) {
+
+            }
         });
 
         mSoftApDevicePresenter.readDeviceInfo();
     }
+
+    /**
+     * 关闭设备的SoftAp
+     */
+    private void closeSoftAp() {
+        mSoftApDevicePresenter.closeSoftAp();
+    }
+
+    /**
+     * 获取设备与路由器和后台的连接状态
+     */
+    private void getConnectionState(){
+        mSoftApDevicePresenter.getConnState();
+    }
+
 
     @OnClick(R.id.rl_wifi_name)
     public void rl_wifi_name() {
@@ -166,30 +210,5 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
     }
 
-    //    private void getConnState() {
-//        String url = "http://192.168.2.139:8000/conn-state";
-//        RequestParams params = new RequestParams(url);
-//
-//        x.http().get(params, new org.xutils.common.Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                tvConnState.setText("config-state:success " + result);
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                tvConnState.setText("config-state:error" + ex.toString());
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//                tvConnState.setText("config-state: cancell");
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//            }
-//        });
-//    }
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 向智能设备写入wifi信息的返回结果
+ * 关闭智能设备SoftAp时的返回结果
  * Created by xiaolei.yang on 2017/7/7.
  */
 

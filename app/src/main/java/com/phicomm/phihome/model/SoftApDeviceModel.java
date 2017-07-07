@@ -41,4 +41,24 @@ public class SoftApDeviceModel {
 
     }
 
+    /**
+     * 获取智能设备和路由器之间的连接状态
+     */
+    public void getConnState(BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.SoftApInfoUrl.GET_CONN_STATE_URL)
+                .addParams("", "")
+                .run(null, callback);
+    }
+
+    /**
+     * 关闭智能设备的SoftAp
+     */
+    public void closeSoftAp(BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.SoftApInfoUrl.CLOSE_DEVICE_AP_URL)
+                .addParams("", "")
+                .run(null, callback);
+    }
+
+
+
 }

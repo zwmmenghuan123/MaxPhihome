@@ -1,5 +1,6 @@
 package com.phicomm.phihome.presenter.viewback;
 
+import com.phicomm.phihome.bean.GetConnStateBean;
 import com.phicomm.phihome.bean.WriteSsidInfoBean;
 
 import java.util.Map;
@@ -17,6 +18,13 @@ public class SoftApDeviceView {
 
     }
 
+    public void connecting(){
+
+    }
+    public void connectOver(){
+
+    }
+
     public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean){
 
     }
@@ -24,10 +32,20 @@ public class SoftApDeviceView {
 
     }
 
-    public void connecting(){
+    public void getConnStateSuccess(GetConnStateBean getConnStateBean){
 
     }
-    public void connectOver(){
+    public void getConnStateFail(int code, String msg){
 
     }
+
+    public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean){
+
+    }
+    public void closeSoftApFail(int code, String msg){
+
+    }
+
+
+
 }

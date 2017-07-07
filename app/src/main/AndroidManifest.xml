@@ -30,19 +30,10 @@
         </activity>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.X5WebActivity" />
-        <activity
-            android:name=".activity.ProductsActivity"
-            android:label="@string/title_activity_select_device_type"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.SoftApResetActivity"
-            android:label="@string/title_activity_add_smart_inserts"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.DeviceConfigNetActivity"
-            android:label="@string/title_activity_device_config_net"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activity.WifiScanListActivity"></activity>
+        <activity android:name=".activity.ProductsActivity" />
+        <activity android:name=".activity.SoftApResetActivity" />
+        <activity android:name=".activity.DeviceConfigNetActivity" />
+        <activity android:name=".activity.WifiScanListActivity" />
     </application>
 
 </manifest>

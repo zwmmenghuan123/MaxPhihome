@@ -25,6 +25,8 @@ public interface UrlConfig {
         String URL_HOST = "http://192.168.2.139:8000";
         String READ_DEVICE_INFO_URL = URL_HOST + "/config-read";
         String WRITE_SSID_INFO_URL = URL_HOST + "/config-write-uap";
+        String GET_CONN_STATE_URL = URL_HOST + "/conn-state";
+        String CLOSE_DEVICE_AP_URL = URL_HOST + "/close-ap";
     }
 
 
