@@ -34,6 +34,16 @@
         <activity android:name=".activity.SoftApResetActivity" />
         <activity android:name=".activity.DeviceConfigNetActivity" />
         <activity android:name=".activity.WifiScanListActivity" />
+
+
+        <receiver android:name=".receiver.NetworkStateReceiver"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

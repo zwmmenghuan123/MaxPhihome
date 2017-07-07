@@ -95,7 +95,7 @@ public class NetworkUtils {
         ConnectivityManager connectMgr = (ConnectivityManager) PhApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connectMgr.getActiveNetworkInfo();
         if (info != null) {
-            if (1 == info.getType()) {
+            if (ConnectivityManager.TYPE_WIFI == info.getType()) {
                 return "WiFi";
             } else {
                 int subType = info.getSubtype();
