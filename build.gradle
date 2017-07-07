@@ -12,23 +12,22 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
-
 }
 
 allprojects {
     repositories {
         jcenter()
-//        maven {
-//            url 'http://szrd.phiwifi.com:5050/repository/jcenter/'
-//        }
-//        maven {
-//            url 'http://szrd.phiwifi.com:5050/repository/maven-release/'
-//        }
-//        maven {
-//            url 'http://szrd.phiwifi.com:5050/repository/aliBaichuan2/'
-//        }
         maven {
             url "https://jitpack.io"
+        }
+        maven {
+            url 'http://szrd.phiwifi.com:5050/repository/jcenter/'
+        }
+        maven {
+            url 'http://szrd.phiwifi.com:5050/repository/maven-release/'
+        }
+        maven {
+            url 'http://szrd.phiwifi.com:5050/repository/aliBaichuan2/'
         }
 
     }
