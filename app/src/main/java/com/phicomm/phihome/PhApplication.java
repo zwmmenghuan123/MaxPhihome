@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.phicomm.phihome.utils.LogUtils;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * Application基类
@@ -23,6 +25,20 @@ public class PhApplication extends Application{
     private void initThirdParty() {
         //XLog
         LogUtils.init();
+        //bugly
+        CrashReport.initCrashReport(getApplicationContext());
+        //X5WebView
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                LogUtils.debug("isX5initSuccess: " + b);
+            }
+        });
     }
 
     public static Context getContext() {

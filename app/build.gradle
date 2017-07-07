@@ -1,7 +1,26 @@
 apply plugin: 'com.android.application'
+apply plugin: 'bugly'
+
+def final QA_BUGLY_APPID = "4adbe54f3b"
+def final QA_BUGLY_APPKEY = "d4be1983-f304-4a2e-93a4-86b441238b31"
+def appChannel = System.getenv('app_channel') as String ?: "clean assemble";
+
+//此处配置用于上传符号表
+bugly {
+    appId = QA_BUGLY_APPID
+    appKey = QA_BUGLY_APPKEY
+    //是否上传符号表，由Jenkins构建时作为参数传入
+    uploadMapping = appChannel.contains("upload") && appChannel.contains("SymtabFile")
+    println appChannel
+}
 
 android {
-    compileSdkVersion 25
+    def final BASE_VERSION_NAME = "1.0.0"
+    def isBuildFromJenkins = System.getenv()['BUILD_NUMBER'] as Integer ? true : false
+    def qaNumber = System.getenv()['QA_NUMBER'] as Integer ?: 0
+    def buildNumber = System.getenv()['BUILD_NUMBER'] as Integer ?: 0
+
+    compileSdkVersion 23
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.phicomm.phihome"
@@ -12,7 +31,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters "armeabi", "x86", "mips"
+            abiFilters "armeabi", "armeabi-v7a"
         }
 
         multiDexEnabled true
@@ -23,17 +42,42 @@ android {
             }
         }
     }
+
+    signingConfigs {
+        config {
+            keyAlias "phihomeapp"
+            keyPassword "phihome2017"
+            storeFile file('E:/Android/keystore/phihome.jks')
+            storePassword "phihome2017"
+        }
+    }
+
     buildTypes {
         debug {
+            signingConfig signingConfigs.config
             buildConfigField "boolean", "isDebug", "true"
         }
         release {
+            signingConfig signingConfigs.config
             buildConfigField "boolean", "isDebug", "true"
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
+    productFlavors {
+        qa {
+            versionName BASE_VERSION_NAME + "." + qaNumber + "." + buildNumber
+        }
+
+        productFlavors.all { flavor ->
+            println '******* Bugly Crash Report *******'
+            println flavor.name
+            flavor.manifestPlaceholders = [BUGLY_APPID      : QA_BUGLY_APPID,
+                                           BUGLY_APP_CHANNEL: name]
+        }
+
+    }
 
 }
 
@@ -42,16 +86,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/tbs_sdk_thirdapp.jar')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.alibaba:fastjson:1.2.31'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okio:okio:1.11.0'
     compile 'com.tencent.mars:mars-core:1.1.4'
     compile 'org.xutils:xutils:3.5.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.tencent.bugly:crashreport:latest.release'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'

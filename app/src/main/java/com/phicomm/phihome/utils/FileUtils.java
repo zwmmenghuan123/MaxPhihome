@@ -5,7 +5,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
 
-import com.phicomm.prototype.MyApplication;
+import com.phicomm.phihome.PhApplication;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -138,44 +138,7 @@ public class FileUtils {
         }
         return null;
     }
-//    public static boolean copyFile(String srcPath, String destPath) {
-//        LogUtils.i("copyFile", "copyFile begin", false);
-//        File srcFile = new File(srcPath);
-//        File destFile = new File(destPath);
-//        if(!srcFile.exists()) {
-//            LogUtils.d("copyFile", "copyFile, source file not exist.", false);
-//            return false;
-//        }
-//        if(!srcFile.isFile()) {
-//            LogUtils.d("copyFile", "copyFile, source file not a file.", false);
-//            return false;
-//        }
-//        if(!srcFile.canRead()) {
-//            LogUtils.d("copyFile", "copyFile, source file can't read.", false);
-//            return false;
-//        }
-//        if(destFile.exists()){
-//            LogUtils.d("copyFile", "copyFile, before copy File, delete first.", false);
-//            destFile.delete();
-//        }
-//        try {
-//            FileInputStream in = new FileInputStream(srcFile);
-//            FileOutputStream out = new FileOutputStream(destFile);
-//            byte[] buff = new byte[1024];
-//            int len;
-//            while ((len = in.read(buff)) != -1) {
-//                out.write(buff, 0, len);
-//            }
-//            out.flush();
-//            in.close();
-//            out.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return true;
-//    }
+
 
     /**
      * 复制文件目录或单个文件
@@ -448,7 +411,7 @@ public class FileUtils {
     public static void copyFileFromAssets(String assetsFilePath, String targetFileFullPath) {
         InputStream assestsFileImputStream;
         try {
-            assestsFileImputStream = MyApplication.getContext().getAssets().open(assetsFilePath);
+            assestsFileImputStream = PhApplication.getContext().getAssets().open(assetsFilePath);
             copyFileInputStream(assestsFileImputStream, targetFileFullPath);
         } catch (IOException e) {
             e.printStackTrace();
