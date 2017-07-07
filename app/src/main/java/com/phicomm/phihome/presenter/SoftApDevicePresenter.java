@@ -1,7 +1,10 @@
 package com.phicomm.phihome.presenter;
 
+import android.util.Log;
+
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.ReadDeviceInfoBean;
+import com.phicomm.phihome.bean.WriteSsidInfoBean;
 import com.phicomm.phihome.model.SoftApDeviceModel;
 import com.phicomm.phihome.net.callback.BeanCallback;
 import com.phicomm.phihome.presenter.viewback.SoftApDeviceView;
@@ -28,11 +31,6 @@ public class SoftApDevicePresenter {
         if (mSoftApDeviceView!=null){
             mSoftApDeviceView.connecting();
         }
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         mSoftApDeviceModel.readDeviceInfo(new BeanCallback<ReadDeviceInfoBean>() {
 
             @Override
@@ -53,6 +51,26 @@ public class SoftApDevicePresenter {
                     } else {
                         mSoftApDeviceView.readDeviceSSIDFail(0, CommonUtils.getString(R.string.get_device_wifi_fail));
                     }
+                }
+            }
+        });
+    }
+
+    public void writeSsidInfo(String ssid,String password){
+        mSoftApDeviceModel.writeSsidInfo(ssid, password, new BeanCallback<WriteSsidInfoBean>() {
+            @Override
+            public void onSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+                Log.e("=====", "onSuccess: "+writeSsidInfoBean.toString());
+                if (mSoftApDeviceView!=null){
+                    mSoftApDeviceView.writeSSIDSSuccess(writeSsidInfoBean);
+                }
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                Log.e("=====", "onError: "+msg);
+                if (mSoftApDeviceView!=null){
+                    mSoftApDeviceView.readDeviceSSIDFail(code, msg);
                 }
             }
         });

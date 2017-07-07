@@ -13,12 +13,32 @@ public class SoftApDeviceModel {
 
     /**
      * 获取设备周围的SSID列表
+     *
      * @param callback
      */
     public void readDeviceInfo(BaseCallback callback) {
-        OkHttpUtil.get(UrlConfig.ReadDeviceInfoUrl.READ_DEVICE_INFO_URL)
-                .addParams("","")
+        OkHttpUtil.get(UrlConfig.SoftApInfoUrl.READ_DEVICE_INFO_URL)
+                .addParams("", "")
                 .run(null, callback);
+    }
+
+    /**
+     * 向设备写入SSID信息
+     *
+     * @param callback
+     */
+    public void writeSsidInfo(String ssid, String password, BaseCallback callback) {
+        OkHttpUtil.post(UrlConfig.SoftApInfoUrl.WRITE_SSID_INFO_URL)
+                .addParams("GATEWAY", "10.10.10.1")
+                .addParams("DNS1", "10.10.10.1")
+                .addParams("IDENTIFIER", String.valueOf(168430083))
+                .addParams("SSID", ssid)
+                .addParams("NETMASK", "255.255.255.0")
+                .addParams("IP", "10.10.10.4")
+                .addParams("PASSWORD", password)
+                .addParams("DHCP", String.valueOf(true))
+                .run(null, callback);
+
     }
 
 }

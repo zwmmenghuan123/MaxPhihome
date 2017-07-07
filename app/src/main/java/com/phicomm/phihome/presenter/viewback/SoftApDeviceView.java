@@ -1,5 +1,7 @@
 package com.phicomm.phihome.presenter.viewback;
 
+import com.phicomm.phihome.bean.WriteSsidInfoBean;
+
 import java.util.Map;
 
 /**
@@ -12,6 +14,13 @@ public class SoftApDeviceView {
 
     }
     public void readDeviceSSIDFail(int code, String msg){
+
+    }
+
+    public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean){
+
+    }
+    public void writeSSIDFail(int code, String msg){
 
     }
 

@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.bean.WriteSsidInfoBean;
 import com.phicomm.phihome.presenter.SoftApDevicePresenter;
 import com.phicomm.phihome.presenter.viewback.SoftApDeviceView;
 import com.phicomm.phihome.utils.CommonUtils;
@@ -31,12 +32,15 @@ public class DeviceConfigNetActivity extends BaseActivity {
     ProgressBar mProgressBar;
     @BindView(R.id.tv_right_arrow)
     TextView mTvRightArrow;
+    @BindView(R.id.et_password)
+    EditText mEtPassword;
 
     SoftApDevicePresenter mSoftApDevicePresenter;
 
     Map<String, String> mWifiScan;
 
     private final int SELECT_SSID = 1;
+    private String mSSID = null;
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
@@ -55,11 +59,13 @@ public class DeviceConfigNetActivity extends BaseActivity {
                     ToastUtil.show(DeviceConfigNetActivity.this, msg);
                     mTvGettingWifi.setText(msg);
                 } else {
+                    mSSID = "";
                     mWifiScan = wifi_scan;
                     mTvGettingWifi.setText("");
                     for (String value : wifi_scan.values()) {
                         if (!TextUtils.isEmpty(value)) {
                             mTvGettingWifi.setText(value);
+                            mSSID = value;
                             break;
                         }
                     }
@@ -74,6 +80,30 @@ public class DeviceConfigNetActivity extends BaseActivity {
                 ToastUtil.show(DeviceConfigNetActivity.this, msg);
                 mTvGettingWifi.setText(msg);
 
+            }
+
+            @Override
+            public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+                if (writeSsidInfoBean != null) {
+                    if (0==writeSsidInfoBean.getErrorCode()){
+                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.device_connect_router_success);
+                    }else{
+                        String msg = writeSsidInfoBean.getMessage();
+                        if (TextUtils.isEmpty(msg)){
+                            msg = CommonUtils.getString(R.string.device_connect_router_fail);
+                        }
+                        ToastUtil.show(DeviceConfigNetActivity.this, msg);
+                    }
+                } else {
+                    String msg = CommonUtils.getString(R.string.device_connect_router_fail);
+                    ToastUtil.show(DeviceConfigNetActivity.this, msg);
+                }
+            }
+
+            @Override
+            public void writeSSIDFail(int code, String msg) {
+                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.device_connect_router_fail) : msg;
+                ToastUtil.show(DeviceConfigNetActivity.this, msg);
             }
 
             @Override
@@ -98,7 +128,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             CommonUtils.getString(R.string.get_device_wifi_fail);
         } else {
             ArrayList<String> wifiList = new ArrayList<>();
-            for (String value:mWifiScan.values()){
+            for (String value : mWifiScan.values()) {
                 wifiList.add(value);
             }
             Intent intent = new Intent(DeviceConfigNetActivity.this, WifiScanListActivity.class);
@@ -107,12 +137,26 @@ public class DeviceConfigNetActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.tv_connect)
+    public void tv_connect() {
+        if (mSSID == null) {
+            ToastUtil.show(DeviceConfigNetActivity.this, R.string.get_device_wifi_fail);
+        } else {
+            if (mEtPassword.getText() == null) {
+                mEtPassword.setText("");
+            }
+            mSoftApDevicePresenter.writeSsidInfo(mSSID, mEtPassword.getText().toString());
+        }
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case SELECT_SSID:
                 if (resultCode == RESULT_OK && null != data && null != data.getStringExtra("ssid")) {
                     mTvGettingWifi.setText(data.getStringExtra("ssid"));
+                    mSSID = data.getStringExtra("ssid");
                 }
                 break;
             default:
@@ -147,38 +191,5 @@ public class DeviceConfigNetActivity extends BaseActivity {
 //            }
 //        });
 //    }
-//    private void configWriteUap(){
-//        String url = "http://192.168.2.139:8000/config-write-uap";
-//        RequestParams params = new RequestParams(url);
-//
-//        params.addParameter("GATEWAY", "10.10.10.1");
-//        params.addParameter("DNS1", "10.10.10.1");
-//        params.addParameter("IDENTIFIER", 168430083);
-//        params.addParameter("SSID", "Phicomm_SZ");
-//        params.addParameter("NETMASK", "255.255.255.0");
-//        params.addParameter("IP", "10.10.10.4");
-//        params.addParameter("PASSWORD", "phicomm2017");
-//        params.addParameter("DHCP", true);
-//
-//        x.http().post(params, new org.xutils.common.Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                tvConfigWriteUap.setText("config-write-uap:success " + result);
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                tvConfigWriteUap.setText("config-write-uap:error" + ex.toString());
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//                tvConfigWriteUap.setText("config-write-uap: cancell");
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//            }
-//        });
-//    }
+
 }
