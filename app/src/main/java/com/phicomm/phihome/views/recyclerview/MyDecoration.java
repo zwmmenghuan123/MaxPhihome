@@ -15,7 +15,6 @@ import android.view.View;
  */
 
 public class MyDecoration extends RecyclerView.ItemDecoration {
-    private Context mContext;
     private Drawable mDivider;
     private int mOrientation;
     public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
@@ -27,7 +26,6 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
     };
 
     public MyDecoration(Context context, int orientation) {
-        this.mContext = context;
         final TypedArray ta = context.obtainStyledAttributes(ATRRS);
         this.mDivider = ta.getDrawable(0);
         ta.recycle();

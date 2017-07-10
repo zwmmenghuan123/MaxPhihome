@@ -93,10 +93,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void showTargetVersionAlert() {
-        if (BuildConfig.isDebug) {
-            if (AppInfoUtils.getAppVersionCode() > 22) {
-                ToastUtil.show("当前SDK版本为" + Build.VERSION.SDK_INT);
-            }
+        if (BuildConfig.isDebug && AppInfoUtils.getAppVersionCode() > 22) {
+            ToastUtil.show("当前SDK版本为" + Build.VERSION.SDK_INT);
         }
     }
 

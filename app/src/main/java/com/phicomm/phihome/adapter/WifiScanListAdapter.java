@@ -2,7 +2,6 @@ package com.phicomm.phihome.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.phicomm.phihome.R;

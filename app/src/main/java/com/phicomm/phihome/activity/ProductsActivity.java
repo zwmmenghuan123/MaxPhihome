@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.constants.Products;
-import com.phicomm.phihome.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;

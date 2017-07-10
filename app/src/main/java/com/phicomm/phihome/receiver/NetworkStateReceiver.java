@@ -32,7 +32,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         if (info != null && info.isConnected()) {
             WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
             if (wifiInfo != null) {
-                EventBus.getDefault().post(new NetworkNameChangeEvent(wifiInfo.getSSID()));
+                EventBus.getDefault().post(new NetworkNameChangeEvent());
             }
         }
     }

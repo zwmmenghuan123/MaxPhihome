@@ -41,7 +41,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     Map<String, String> mWifiScan;
 
     private static final int SELECT_SSID = 1;
-    private String mSsid = null;
+    private String mSsid;
 
 
     @Override
@@ -170,7 +170,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             for (String value : mWifiScan.values()) {
                 wifiList.add(value);
             }
-            Intent intent = new Intent(DeviceConfigNetActivity.this, WifiScanListActivity.class);
+            Intent intent = new Intent(this, WifiScanListActivity.class);
             intent.putStringArrayListExtra("wifi_scan_list", wifiList);
             startActivityForResult(intent, SELECT_SSID);
         }
@@ -179,7 +179,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     @OnClick(R.id.tv_connect)
     public void tv_connect() {
         if (mSsid == null) {
-            ToastUtil.show(DeviceConfigNetActivity.this, R.string.get_device_wifi_fail);
+            ToastUtil.show(this, R.string.get_device_wifi_fail);
         } else {
             if (mEtPassword.getText() == null) {
                 mEtPassword.setText("");

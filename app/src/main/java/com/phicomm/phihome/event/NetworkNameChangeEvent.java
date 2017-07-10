@@ -7,9 +7,8 @@ package com.phicomm.phihome.event;
  */
 
 public class NetworkNameChangeEvent {
-    private String ssid;
 
-    public NetworkNameChangeEvent(String ssid) {
-        this.ssid = ssid;
+    public NetworkNameChangeEvent() {
+
     }
 }
