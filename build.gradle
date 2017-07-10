@@ -16,20 +16,20 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            url 'http://szrd.phiwifi.com:5050/repository/jcenter/'
-        }
-        maven {
-            url 'http://szrd.phiwifi.com:5050/repository/maven-release/'
-        }
-        maven {
-            url 'http://szrd.phiwifi.com:5050/repository/aliBaichuan2/'
-        }
+        jcenter()
+//        maven {
+//            url 'http://szrd.phiwifi.com:5050/repository/jcenter/'
+//        }
+//        maven {
+//            url 'http://szrd.phiwifi.com:5050/repository/maven-release/'
+//        }
+//        maven {
+//            url 'http://szrd.phiwifi.com:5050/repository/aliBaichuan2/'
+//        }
         maven {
             url "https://jitpack.io"
         }
 
-//        jcenter()
     }
 }
 
