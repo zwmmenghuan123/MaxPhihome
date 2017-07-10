@@ -2,7 +2,6 @@ package com.phicomm.phihome.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -42,7 +41,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     Map<String, String> mWifiScan;
 
     private final int SELECT_SSID = 1;
-    private String mSSID = null;
+    private String mSsid = null;
 
 
 
@@ -56,17 +55,17 @@ public class DeviceConfigNetActivity extends BaseActivity {
         setPageTitle(R.string.device_connect_to_router);
         mSoftApDevicePresenter = new SoftApDevicePresenter(new SoftApDeviceView() {
             @Override
-            public void readDeviceSSIDSSuccess(Map<String, String> wifi_scan) {
+            public void readDeviceSsidSSuccess(Map<String, String> wifi_scan) {
                 if (wifi_scan == null || wifi_scan.size() == 0) {
-                    readDeviceSSIDFail(0, null);
+                    readDeviceSsidFail(0, null);
                 } else {
-                    mSSID = "";
+                    mSsid = "";
                     mWifiScan = wifi_scan;
                     mTvGettingWifi.setText("");
                     for (String value : wifi_scan.values()) {
                         if (!TextUtils.isEmpty(value)) {
                             mTvGettingWifi.setText(value);
-                            mSSID = value;
+                            mSsid = value;
                             break;
                         }
                     }
@@ -74,7 +73,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             }
 
             @Override
-            public void readDeviceSSIDFail(int code, String msg) {
+            public void readDeviceSsidFail(int code, String msg) {
                 msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.get_device_wifi_fail) : msg;
                 mTvGettingWifi.setText(msg);
                 mSoftApDevicePresenter.readDeviceInfo();
@@ -94,23 +93,23 @@ public class DeviceConfigNetActivity extends BaseActivity {
             }
 
             @Override
-            public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+            public void writeSsidSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
                 if (writeSsidInfoBean != null) {
                     if (0 == writeSsidInfoBean.getErrorCode()) {
                         ToastUtil.show(DeviceConfigNetActivity.this, R.string.write_ssid_info_success);
                         getConnectionState();
                     } else {
                         String msg = writeSsidInfoBean.getMessage();
-                        writeSSIDFail(0, msg);
+                        writeSsidFail(0, msg);
                     }
                 } else {
                     String msg = CommonUtils.getString(R.string.write_ssid_info_fail);
-                    writeSSIDFail(0, msg);
+                    writeSsidFail(0, msg);
                 }
             }
 
             @Override
-            public void writeSSIDFail(int code, String msg) {
+            public void writeSsidFail(int code, String msg) {
                 msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
                 ToastUtil.show(DeviceConfigNetActivity.this, msg);
             }
@@ -180,13 +179,13 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
     @OnClick(R.id.tv_connect)
     public void tv_connect() {
-        if (mSSID == null) {
+        if (mSsid == null) {
             ToastUtil.show(DeviceConfigNetActivity.this, R.string.get_device_wifi_fail);
         } else {
             if (mEtPassword.getText() == null) {
                 mEtPassword.setText("");
             }
-            mSoftApDevicePresenter.writeSsidInfo(mSSID, mEtPassword.getText().toString());
+            mSoftApDevicePresenter.writeSsidInfo(mSsid, mEtPassword.getText().toString());
         }
 
     }
@@ -197,7 +196,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             case SELECT_SSID:
                 if (resultCode == RESULT_OK && null != data && null != data.getStringExtra("ssid")) {
                     mTvGettingWifi.setText(data.getStringExtra("ssid"));
-                    mSSID = data.getStringExtra("ssid");
+                    mSsid = data.getStringExtra("ssid");
                 }
                 break;
             default:

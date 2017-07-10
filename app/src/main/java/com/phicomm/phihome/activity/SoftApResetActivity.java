@@ -9,8 +9,6 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -150,18 +148,18 @@ public class SoftApResetActivity extends BaseActivity {
     /**
      * 配置wifi
      *
-     * @param SSID     要配置的wifi名称
+     * @param Ssid     要配置的wifi名称
      * @param Password wifi密码
      * @param type     密码类型 1-无密码，2- wep加密 3-wpa家吗
      */
-    private WifiConfiguration createWifiInfo(String SSID, String Password, int type) {
+    private WifiConfiguration createWifiInfo(String Ssid, String Password, int type) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
         config.allowedKeyManagement.clear();
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
-        config.SSID = "\"" + SSID + "\"";
+        config.SSID = "\"" + Ssid + "\"";
 
         if (type == 1) { // WIFICIPHER_NOPASS
 //            config.wepKeys[0] = "";
@@ -308,9 +306,9 @@ public class SoftApResetActivity extends BaseActivity {
     }
 
     //判定指定WIFI是否已经配置好,依据WIFI的地址BSSID,返回NetId
-    public int isConfiguration(List<WifiConfiguration> wifiConfigList, String SSID) {
+    public int isConfiguration(List<WifiConfiguration> wifiConfigList, String Ssid) {
         for (int i = 0; i < wifiConfigList.size(); i++) {
-            if (wifiConfigList.get(i).SSID.equals("\"" + SSID + "\"")) {//地址相同
+            if (wifiConfigList.get(i).SSID.equals("\"" + Ssid + "\"")) {//地址相同
                 return wifiConfigList.get(i).networkId;
             }
         }

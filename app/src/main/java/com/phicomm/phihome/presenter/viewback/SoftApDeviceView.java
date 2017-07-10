@@ -11,10 +11,10 @@ import java.util.Map;
  */
 
 public class SoftApDeviceView {
-    public void readDeviceSSIDSSuccess(Map<String,String> wifi_scan){
+    public void readDeviceSsidSSuccess(Map<String,String> wifi_scan){
 
     }
-    public void readDeviceSSIDFail(int code, String msg){
+    public void readDeviceSsidFail(int code, String msg){
 
     }
 
@@ -25,10 +25,10 @@ public class SoftApDeviceView {
 
     }
 
-    public void writeSSIDSSuccess(WriteSsidInfoBean writeSsidInfoBean){
+    public void writeSsidSSuccess(WriteSsidInfoBean writeSsidInfoBean){
 
     }
-    public void writeSSIDFail(int code, String msg){
+    public void writeSsidFail(int code, String msg){
 
     }
 

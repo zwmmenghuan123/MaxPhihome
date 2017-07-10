@@ -1,7 +1,5 @@
 package com.phicomm.phihome.presenter;
 
-import android.util.Log;
-
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.GetConnStateBean;
 import com.phicomm.phihome.bean.ReadDeviceInfoBean;
@@ -38,9 +36,9 @@ public class SoftApDevicePresenter {
                 if (mSoftApDeviceView != null) {
                     mSoftApDeviceView.connectOver();
                     if (readDeviceInfoBean != null) {
-                        mSoftApDeviceView.readDeviceSSIDSSuccess(readDeviceInfoBean.getWifi_scan());
+                        mSoftApDeviceView.readDeviceSsidSSuccess(readDeviceInfoBean.getWifi_scan());
                     } else {
-                        mSoftApDeviceView.readDeviceSSIDFail(0, CommonUtils.getString(R.string.get_device_wifi_fail));
+                        mSoftApDeviceView.readDeviceSsidFail(0, CommonUtils.getString(R.string.get_device_wifi_fail));
                     }
                 }
             }
@@ -48,7 +46,7 @@ public class SoftApDevicePresenter {
             @Override
             public void onError(int code, String msg) {
                 if (mSoftApDeviceView != null) {
-                    mSoftApDeviceView.readDeviceSSIDFail(code, msg);
+                    mSoftApDeviceView.readDeviceSsidFail(code, msg);
                     mSoftApDeviceView.connectOver();
                 }
 
@@ -69,14 +67,14 @@ public class SoftApDevicePresenter {
             @Override
             public void onSuccess(WriteSsidInfoBean writeSsidInfoBean) {
                 if (mSoftApDeviceView != null) {
-                    mSoftApDeviceView.writeSSIDSSuccess(writeSsidInfoBean);
+                    mSoftApDeviceView.writeSsidSSuccess(writeSsidInfoBean);
                 }
             }
 
             @Override
             public void onError(int code, String msg) {
                 if (mSoftApDeviceView != null) {
-                    mSoftApDeviceView.readDeviceSSIDFail(code, msg);
+                    mSoftApDeviceView.readDeviceSsidFail(code, msg);
                 }
             }
         });
