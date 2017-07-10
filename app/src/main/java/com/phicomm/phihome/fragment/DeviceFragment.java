@@ -22,7 +22,6 @@ import com.phicomm.phihome.views.recyclerview.RefreshLoadListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
