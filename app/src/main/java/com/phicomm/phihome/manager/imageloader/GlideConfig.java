@@ -7,7 +7,7 @@ import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.bumptech.glide.module.GlideModule;
-import com.phicomm.prototype.utils.PathUtils;
+import com.phicomm.phihome.utils.PathUtils;
 
 /**
  * Glide配置相关
@@ -19,7 +19,7 @@ public class GlideConfig implements GlideModule {
         //设置图片的显示格式RGB_565(每像素2kb)
         builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
         //设置磁盘缓存目录（和创建的缓存目录相同）
-        String diskCachePath = PathUtils.INTERNAL_CACHE + "GlideCache";
+        String diskCachePath = PathUtils.getImageCache();
         //设置磁盘缓存的大小为30M
         int cacheSize = 30 * 1024 * 1024;
         builder.setDiskCache(new DiskLruCacheFactory(diskCachePath, cacheSize));

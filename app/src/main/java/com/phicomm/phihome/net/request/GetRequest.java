@@ -26,10 +26,12 @@ public class GetRequest extends BaseRequest {
 
     private String getNormalUrl(String url) {
         Uri.Builder uriBuilder = Uri.parse(url).buildUpon();
-        Iterator<Map.Entry<String, String>> iterator = mParams.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
-            uriBuilder.appendQueryParameter(entry.getKey(), entry.getValue());
+        if (mParams != null && mParams.size() > 0) {
+            Iterator<Map.Entry<String, String>> iterator = mParams.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                uriBuilder.appendQueryParameter(entry.getKey(), entry.getValue());
+            }
         }
         return uriBuilder.build().toString();
     }

@@ -1,13 +1,29 @@
 package com.phicomm.phihome.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TestActivity extends AppCompatActivity {
+import com.phicomm.phihome.R;
+import com.phicomm.phihome.utils.ToastUtil;
+
+import butterknife.OnClick;
+
+public class TestActivity extends BaseFragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initLayout(Bundle savedInstanceState) {
         setContentView(R.layout.activity_test);
     }
+
+    @Override
+    public void afterInitView() {
+
+    }
+
+
+    @OnClick(R.id.btn_test)
+    public void btn_test() {
+        ToastUtil.show("btn_test");
+        int a = 3 / 0;
+    }
+
 }

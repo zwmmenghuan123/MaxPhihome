@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.jsbridge.JsBridgeUtils;
+import com.phicomm.phihome.utils.NetworkUtils;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.ValueCallback;
@@ -70,6 +71,9 @@ public class X5WebActivity extends BaseActivity {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setLightTouchEnabled(true);
 
+        // 设置 缓存模式
+        webSettings.setCacheMode(NetworkUtils.isNetAvailable() ? android.webkit.WebSettings.LOAD_DEFAULT : android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
         mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -87,7 +91,6 @@ public class X5WebActivity extends BaseActivity {
 
             @Override
             public void onReceivedError(WebView webView, int i, String s, String s1) {
-                openFileChooseProcess();
             }
 
             @Override
