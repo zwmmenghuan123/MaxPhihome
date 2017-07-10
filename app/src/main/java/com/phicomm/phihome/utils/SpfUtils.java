@@ -68,7 +68,7 @@ public class SpfUtils {
      * @return
      */
     public static Object get(String key, Object defaultObject) {
-        SharedPreferences sp =PhApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sp = PhApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 
         if (defaultObject instanceof String) {
             return sp.getString(key, (String) defaultObject);
@@ -99,7 +99,6 @@ public class SpfUtils {
 
     /**
      * 清除所有数据
-     *
      */
     public static void clear() {
         SharedPreferences sp = PhApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
@@ -129,7 +128,6 @@ public class SpfUtils {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         return sp.getAll();
     }
-
 
 
     /**

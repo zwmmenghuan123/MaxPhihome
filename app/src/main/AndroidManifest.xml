@@ -30,13 +30,16 @@
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_APP_CHANNEL}" />
 
-        <activity android:name=".activity.LoginCloudActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.LoginCloudActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.X5WebActivity" />
         <activity android:name=".activity.ProductsActivity" />

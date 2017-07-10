@@ -6,8 +6,8 @@ package com.phicomm.phihome.constants;
  */
 public interface NetConfig {
     int HTTP_CONNECT_TIME_OUT = 10 * 1000;
-    int HTTP_READ_TIME_OUT = 30 * 1000;
-    int HTTP_WRITE_TIME_OUT = 30 * 1000;
+    int HTTP_READ_TIME_OUT = 20 * 1000;
+    int HTTP_WRITE_TIME_OUT = 20 * 1000;
     int HTTP_CACHE_SIZE = 1024 * 1024 * 10;//缓存空间大小，这里设为10M
 
     //自定义的错误

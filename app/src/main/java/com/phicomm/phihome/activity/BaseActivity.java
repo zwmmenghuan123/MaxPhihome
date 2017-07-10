@@ -87,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             LogUtils.debug(e);
         }
     }
+
     public void setPageTitle(int titleResId) {
         String title = this.getResources().getString(titleResId);
         try {

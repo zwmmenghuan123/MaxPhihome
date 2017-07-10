@@ -11,7 +11,7 @@ import com.tencent.smtt.sdk.QbSdk;
  * Application基类
  * Created by qisheng.lv on 2017/7/5.
  */
-public class PhApplication extends Application{
+public class PhApplication extends Application {
     private static Context mContext;
     public static boolean isJunitTest;
 

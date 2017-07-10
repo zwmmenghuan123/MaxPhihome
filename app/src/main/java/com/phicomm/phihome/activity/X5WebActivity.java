@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.jsbridge.JsBridgeUtils;
+import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.NetworkUtils;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
 import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.export.external.interfaces.SslError;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebBackForwardList;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -29,12 +32,13 @@ public class X5WebActivity extends BaseActivity {
     WebView mWebView;
 
     private String mUrl = "https://www.baidu.com/";
-//    private String mUrl = "http://geek.csdn.net/";
+    //    private String mUrl = "http://geek.csdn.net/";
     //    private String mUrl = "http://info.3g.qq.com/";
 //    private String mUrl = "file:///android_asset/webpage/fileChooser.html";
 //    private String mUrl = "file:///android_asset/test.html";
-    private ValueCallback<Uri> uploadFile;
-    private ValueCallback<Uri[]> uploadFiles;
+
+//    private ValueCallback<Uri> uploadFile;
+//    private ValueCallback<Uri[]> uploadFiles;
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
@@ -85,6 +89,7 @@ public class X5WebActivity extends BaseActivity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                 } catch (Exception e) {
+                    LogUtils.debug("initWebView exception: " + e);
                 }
                 return true;
             }
@@ -94,7 +99,7 @@ public class X5WebActivity extends BaseActivity {
             }
 
             @Override
-            public void onReceivedSslError(WebView webView, com.tencent.smtt.export.external.interfaces.SslErrorHandler sslErrorHandler, com.tencent.smtt.export.external.interfaces.SslError sslError) {
+            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
                 super.onReceivedSslError(webView, sslErrorHandler, sslError);
             }
 
@@ -137,27 +142,27 @@ public class X5WebActivity extends BaseActivity {
     private class MyWebChromeClient extends WebChromeClient {
         // For Android 3.0+
         public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-            uploadFile = uploadMsg;
+//            uploadFile = uploadMsg;
             openFileChooseProcess();
         }
 
         // For Android < 3.0
         public void openFileChooser(ValueCallback<Uri> uploadMsgs) {
-            uploadFile = uploadMsgs;
+//            uploadFile = uploadMsgs;
             openFileChooseProcess();
         }
 
         // For Android  > 4.1.1
         public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-            uploadFile = uploadMsg;
+//            uploadFile = uploadMsg;
             openFileChooseProcess();
         }
 
         // For Android  >= 5.0
-        public boolean onShowFileChooser(com.tencent.smtt.sdk.WebView webView,
+        public boolean onShowFileChooser(WebView webView,
                                          ValueCallback<Uri[]> filePathCallback,
                                          WebChromeClient.FileChooserParams fileChooserParams) {
-            uploadFiles = filePathCallback;
+//            uploadFiles = filePathCallback;
             openFileChooseProcess();
             return true;
         }
@@ -197,7 +202,6 @@ public class X5WebActivity extends BaseActivity {
         i.setType("*/*");
         startActivityForResult(Intent.createChooser(i, "test"), 0);
     }
-
 
     @Override
     protected void onDestroy() {

@@ -39,7 +39,7 @@ public class SoftApResetActivity extends BaseActivity {
     WifiManager wifiManager;
 
     private String currentDeviceSsid = "PhiHomeTest";
-    private final int STATE_GETTING_WIFI = 0;
+    private static final int STATE_GETTING_WIFI = 0;
     private final int STATE_GET_WIFI_SUCCESS = 1;
     private final int STATE_GET_WIFI_FAIL = 2;
 

@@ -48,11 +48,12 @@ public class NetworkUtils {
 
     /**
      * 获取当前连接的wifi信息
+     *
      * @return
      */
-    public static WifiInfo getWifiInfo(){
+    public static WifiInfo getWifiInfo() {
         WifiManager wifiManager = (WifiManager) PhApplication.getContext().getSystemService(Context.WIFI_SERVICE);
-        if (wifiManager!=null){
+        if (wifiManager != null) {
             return wifiManager.getConnectionInfo();
         }
         return null;
@@ -129,7 +130,7 @@ public class NetworkUtils {
     }
 
     public static String getLocalUrl() {
-        String url = isWifiConnect() ? "http://" +getGatewayIp() : UrlConfig.LocalUrl.URL_ROUTER_HOST;
+        String url = isWifiConnect() ? "http://" + getGatewayIp() : UrlConfig.LocalUrl.URL_ROUTER_HOST;
         LogUtils.debug("getLocalUrl: " + url);
         return url;
     }

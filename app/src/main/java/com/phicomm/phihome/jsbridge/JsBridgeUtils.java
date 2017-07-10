@@ -21,6 +21,7 @@ public class JsBridgeUtils {
 
 //    public static String MESSAGE = "phihome://common/showToast?{data:{\"toast_msg\":\"hello i js\"}}";
 
+    private static final String CALLBACK_FAILURE = "failure";
     public static final String JS_CALLBACK_COMPLETE = "javascript:jsBridge.onComplete(%s)";
 
     /**
@@ -34,17 +35,17 @@ public class JsBridgeUtils {
     public static String callJava(WebView webView, String message, Object object) {
         JsMessage jsMessage = parseMessage(webView, message);
         if (jsMessage == null) {
-            return "failure";
+            return CALLBACK_FAILURE;
         }
 
         Class<?> targetClass = null;
-        if (jsMessage.getClasz().equals(AppConstans.JSConfig.JS_BRIDGE_COMMON)) {
+        if (jsMessage.getClasz().equals(AppConstans.JsConfig.JS_BRIDGE_COMMON)) {
             targetClass = CommonNativeImpl.class;
         }
 
         if (targetClass == null) {
-            callBack(webView, jsMessage.getMethod(), AppConstans.JSConfig.ERR_CODE_CLASS_NOT_FOUND, jsMessage.getClasz() + "class not found", null);
-            return "failure";
+            callBack(webView, jsMessage.getMethod(), AppConstans.JsConfig.ERR_CODE_CLASS_NOT_FOUND, jsMessage.getClasz() + "class not found", null);
+            return CALLBACK_FAILURE;
         }
 
         Method[] methods = targetClass.getDeclaredMethods();
@@ -57,14 +58,14 @@ public class JsBridgeUtils {
                     return result;
                 } catch (Exception e) {
                     LogUtils.debug("JsBridgeUtils callJava Exception: " + e);
-                    callBack(webView, jsMessage.getMethod(), AppConstans.JSConfig.ERR_CODE_METHOD_CALL_FAILURE, "method call exception", null);
+                    callBack(webView, jsMessage.getMethod(), AppConstans.JsConfig.ERR_CODE_METHOD_CALL_FAILURE, "method call exception", null);
                 }
-                return "failure";
+                return CALLBACK_FAILURE;
             }
         }
         LogUtils.debug("JsBridgeUtils callJava no method found: " + message);
-        callBack(webView, jsMessage.getMethod(), AppConstans.JSConfig.ERR_CODE_METHOD_NOT_FOUND, "method not found", null);
-        return "failure";
+        callBack(webView, jsMessage.getMethod(), AppConstans.JsConfig.ERR_CODE_METHOD_NOT_FOUND, "method not found", null);
+        return CALLBACK_FAILURE;
     }
 
     /**
@@ -72,13 +73,13 @@ public class JsBridgeUtils {
      *
      * @param webView
      * @param method
-     * @param err_code
-     * @param error_msg
+     * @param errCode
+     * @param errorMsg
      * @param data
      */
-    public static void callBack(final WebView webView, String method, int err_code, String error_msg, String data) {
+    public static void callBack(final WebView webView, String method, int errCode, String errorMsg, String data) {
         if (webView != null) {
-            final String callbackStr = getCallback(method, err_code, error_msg, data);
+            final String callbackStr = getCallback(method, errCode, errorMsg, data);
             webView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -90,11 +91,11 @@ public class JsBridgeUtils {
         }
     }
 
-    private static String getCallback(String method, int err_code, String error_msg, String result) {
+    private static String getCallback(String method, int errCode, String errorMsg, String result) {
         JsCallback jsCallback = new JsCallback();
         jsCallback.setMethod(method);
-        jsCallback.setErr_code(err_code);
-        jsCallback.setErr_msg(error_msg);
+        jsCallback.setErr_code(errCode);
+        jsCallback.setErr_msg(errorMsg);
         jsCallback.setResult(result);
         return JSON.toJSONString(jsCallback);
     }
@@ -111,10 +112,10 @@ public class JsBridgeUtils {
      * @return
      */
     private static JsMessage parseMessage(WebView webView, String message) {
-        LogUtils.debug("parseMessage: "+message);
+        LogUtils.debug("parseMessage: " + message);
 
         if (TextUtils.isEmpty(message) || !message.startsWith("phihome") || !message.contains("//") || !message.contains("?")) {
-            callBack(webView, null, AppConstans.JSConfig.ERR_CODE_MESSAGE_ILLEGAL, message + " message illegal", null);
+            callBack(webView, null, AppConstans.JsConfig.ERR_CODE_MESSAGE_ILLEGAL, message + " message illegal", null);
             return null;
         }
 
@@ -126,21 +127,21 @@ public class JsBridgeUtils {
             clsName = message.substring(message.indexOf("//") + 2, message.lastIndexOf("/"));
 
             if (TextUtils.isEmpty(clsName)) {
-                callBack(webView, null, AppConstans.JSConfig.ERR_CODE_CLASS_NOT_FOUND, "class empty", null);
+                callBack(webView, null, AppConstans.JsConfig.ERR_CODE_CLASS_NOT_FOUND, "class empty", null);
                 return null;
             }
 
             method = message.substring(message.lastIndexOf("/") + 1, message.indexOf("?"));
 
             if (TextUtils.isEmpty(method)) {
-                callBack(webView, null, AppConstans.JSConfig.ERR_CODE_METHOD_NOT_FOUND, "method empty", null);
+                callBack(webView, null, AppConstans.JsConfig.ERR_CODE_METHOD_NOT_FOUND, "method empty", null);
                 return null;
             }
 
             params = message.substring(message.indexOf("?") + 1, message.length());
 
             if (TextUtils.isEmpty(params)) {
-                callBack(webView, method, AppConstans.JSConfig.ERR_CODE_PARAMS_ILLEGAL, "params empty", null);
+                callBack(webView, method, AppConstans.JsConfig.ERR_CODE_PARAMS_ILLEGAL, "params empty", null);
                 return null;
             }
 
@@ -151,12 +152,12 @@ public class JsBridgeUtils {
             }
 
             if (jsParams == null) {
-                callBack(webView, method, AppConstans.JSConfig.ERR_CODE_PARAMS_ILLEGAL, "params illegal", null);
+                callBack(webView, method, AppConstans.JsConfig.ERR_CODE_PARAMS_ILLEGAL, "params illegal", null);
                 return null;
             }
 
         } catch (Exception e) {
-            callBack(webView, null, AppConstans.JSConfig.ERR_CODE_MESSAGE_ILLEGAL, e.toString(), null);
+            callBack(webView, null, AppConstans.JsConfig.ERR_CODE_MESSAGE_ILLEGAL, e.toString(), null);
             return null;
         }
 

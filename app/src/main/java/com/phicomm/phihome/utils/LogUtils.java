@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * 基于Xlog封装的日志工具类
@@ -368,21 +369,21 @@ public class LogUtils {
      * 手机终端的信息日志记录
      */
     private static void logDeviceInfo() {
-//        Calendar calendar = Calendar.getInstance();
-//        int date = calendar.get(Calendar.DAY_OF_MONTH);
-//        //SP中记录最新的日志打印日期信息，如果当前日志和SP中最新的日志打印日期是同一天，则不打印设备信息，以此保证日志信息中，关于设备信息，一天只有打一次
-//        if ((Integer.parseInt(SpfUtils.get(MyApplication.getContext(), LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH)).toString()) != date)) {//这里应该为!=，方便调试每次都打印改为==
-//            //打印设备信息，并更新SP
-//            String phoneInfo = String.format("%n手机品牌:%s%n型号:%s%n操作系统:%s %n手机系统版本:%s %nApp版本:%s %n"
-//                    , SystemUtils.getDeviceBrand()
-//                    , SystemUtils.getSystemModel()
-//                    , Build.VERSION.SDK_INT
-//                    , SystemUtils.getSystemVer()
-//                    , AppInfoUtils.getAppVersionName(MyApplication.getContext()) + AppInfoUtils.getAppVersionCode(MyApplication.getContext()));
-//
-//            Log.i("DeviceInfo", phoneInfo);
-//            SpfUtils.put(MyApplication.getContext(), LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH));
-//        }
+        Calendar calendar = Calendar.getInstance();
+        int date = calendar.get(Calendar.DAY_OF_MONTH);
+        //SP中记录最新的日志打印日期信息，如果当前日志和SP中最新的日志打印日期是同一天，则不打印设备信息，以此保证日志信息中，关于设备信息，一天只有打一次
+        if ((Integer.parseInt(SpfUtils.get(LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH)).toString()) != date)) {//这里应该为!=，方便调试每次都打印改为==
+            //打印设备信息，并更新SP
+            String phoneInfo = String.format("%n手机品牌:%s%n型号:%s%n操作系统:%s %n手机系统版本:%s %nApp版本:%s %n"
+                    , SystemUtils.getDeviceBrand()
+                    , SystemUtils.getSystemModel()
+                    , Build.VERSION.SDK_INT
+                    , SystemUtils.getSystemVer()
+                    , AppInfoUtils.getAppVersionName());
+
+            Log.i("DeviceInfo", phoneInfo);
+            SpfUtils.put(LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH));
+        }
     }
 
     /**

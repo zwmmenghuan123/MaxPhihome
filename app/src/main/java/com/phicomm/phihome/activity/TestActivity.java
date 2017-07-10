@@ -1,11 +1,9 @@
 package com.phicomm.phihome.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.phihome.R;
-
-import com.phicomm.phihome.R;
+import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.ToastUtil;
 
 import butterknife.OnClick;
@@ -27,6 +25,7 @@ public class TestActivity extends BaseFragmentActivity {
     public void btn_test() {
         ToastUtil.show("btn_test");
         int a = 3 / 0;
+        LogUtils.debug("a: " + a);
     }
 
 }

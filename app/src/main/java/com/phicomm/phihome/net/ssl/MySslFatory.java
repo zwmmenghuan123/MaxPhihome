@@ -1,5 +1,7 @@
 package com.phicomm.phihome.net.ssl;
 
+import com.phicomm.phihome.utils.LogUtils;
+
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -32,6 +34,7 @@ public class MySslFatory {
             sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
             sslSocketFactory = sslContext.getSocketFactory();
         } catch (Exception e) {
+            LogUtils.debug("SSLSocketFactory exception: " + e.toString());
         }
         return sslSocketFactory;
     }

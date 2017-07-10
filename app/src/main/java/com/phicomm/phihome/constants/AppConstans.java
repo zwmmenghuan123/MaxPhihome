@@ -44,7 +44,7 @@ public interface AppConstans {
     /**
      * JSBridge
      */
-    interface JSConfig {
+    interface JsConfig {
         String JS_BRIDGE_COMMON = "common";
 
 
