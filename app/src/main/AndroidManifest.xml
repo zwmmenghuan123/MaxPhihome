@@ -43,6 +43,11 @@
         <activity android:name=".activity.SoftApResetActivity" />
         <activity android:name=".activity.DeviceConfigNetActivity" />
         <activity android:name=".activity.WifiScanListActivity" />
+        <activity
+            android:name=".activity.X5WebActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.TestActivity" />
 
 
         <receiver android:name=".receiver.NetworkStateReceiver"
