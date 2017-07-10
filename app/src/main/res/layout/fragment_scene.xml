@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="场景"
+        android:text="@string/scene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

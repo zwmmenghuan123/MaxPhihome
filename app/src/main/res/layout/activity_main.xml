@@ -29,7 +29,7 @@
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/ico_home_focus"
             android:gravity="center"
-            android:text="设备"
+            android:text="@string/device"
             android:textColor="@color/status_bar"
             android:textSize="14sp" />
 
@@ -42,7 +42,7 @@
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/ico_setting"
             android:gravity="center"
-            android:text="场景"
+            android:text="@string/scene"
             android:textColor="@color/text"
             android:textSize="14sp" />
 
@@ -55,7 +55,7 @@
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/ico_setting"
             android:gravity="center"
-            android:text="我的"
+            android:text="@string/mine"
             android:textColor="@color/text"
             android:textSize="14sp" />
     </RadioGroup>

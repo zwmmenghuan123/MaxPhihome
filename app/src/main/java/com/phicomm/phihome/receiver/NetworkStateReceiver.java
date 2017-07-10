@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
-import android.util.Log;
 
 import com.phicomm.phihome.PhApplication;
 import com.phicomm.phihome.event.NetworkNameChangeEvent;
@@ -22,19 +21,19 @@ import org.greenrobot.eventbus.EventBus;
 public class NetworkStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        if (NetworkUtils.isWifiConnect()) {
-            ConnectivityManager connectMgr = (ConnectivityManager) PhApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo info = connectMgr.getActiveNetworkInfo();
-            if (info != null && info.isConnected() ) {
-                WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
-                if (wifiInfo != null) {
-                    EventBus.getDefault().post(new NetworkNameChangeEvent(wifiInfo.getSSID()));
-                }
-
+        if (!ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+            return;
+        }
+        if (!NetworkUtils.isWifiConnect()) {
+            return;
+        }
+        ConnectivityManager connectMgr = (ConnectivityManager) PhApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectMgr.getActiveNetworkInfo();
+        if (info != null && info.isConnected()) {
+            WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
+            if (wifiInfo != null) {
+                EventBus.getDefault().post(new NetworkNameChangeEvent(wifiInfo.getSSID()));
             }
         }
-
-
     }
 }
