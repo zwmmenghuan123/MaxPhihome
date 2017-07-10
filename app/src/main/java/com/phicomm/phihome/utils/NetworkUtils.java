@@ -25,7 +25,11 @@ public class NetworkUtils {
 
     private NetworkUtils() {
         /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
+        try {
+            throw new UnsupportedOperationException("cannot be instantiated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

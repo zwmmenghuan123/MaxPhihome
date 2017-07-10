@@ -36,14 +36,19 @@ public class FileUtils {
             out = new FileOutputStream(file, isAppend);
             writer = new BufferedWriter(new OutputStreamWriter(out));
             writer.write(content);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -62,14 +67,19 @@ public class FileUtils {
             bos = new BufferedOutputStream(out);
             bos.write(bytes);
             bos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (bos != null) {
                 try {
                     bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -84,18 +94,23 @@ public class FileUtils {
         try {
             in = new FileInputStream(file);
             reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (in != null) {
+                try {
+                    in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

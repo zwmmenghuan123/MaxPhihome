@@ -6,7 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.phicomm.phihome.R;
@@ -36,7 +35,7 @@ public class WifiScanListActivity extends BaseActivity {
     public void afterInitView() {
         mList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new MyDecoration(this,MyDecoration.VERTICAL_LIST));
+        mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.VERTICAL_LIST));
         mAdapter = new WifiScanListAdapter(R.layout.activity_wifi_scan_list_item, mList);
         mAdapter.setOnRefreshEnabled(false);
         mAdapter.enableLoadMoreEndClick(false);
@@ -44,7 +43,11 @@ public class WifiScanListActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("ssid", mList.get(position));
+                String ssid = "";
+                if (position < mList.size()) {
+                    ssid = mList.get(position);
+                }
+                intent.putExtra("ssid", ssid);
                 setResult(RESULT_OK, intent);
                 WifiScanListActivity.this.finish();
             }

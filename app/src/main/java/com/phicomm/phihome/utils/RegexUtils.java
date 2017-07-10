@@ -501,8 +501,15 @@ public class RegexUtils {
         }
         StringBuffer sbBinaryVal = new StringBuffer();
         StringBuffer sbBinaryStr = new StringBuffer();
-        for (int i = 0; i < ips.length; i++) {
-            String binaryStr = Integer.toBinaryString(Integer.parseInt(ips[i]));
+        for (String ip : ips) {
+            int binaryParam = 0;
+            try {
+                binaryParam = Integer.parseInt(ip);
+            } catch (NumberFormatException e) {
+                binaryParam = 0;
+            }
+
+            String binaryStr = Integer.toBinaryString(binaryParam);
 
             sbBinaryStr.setLength(0);
             sbBinaryStr.append(binaryStr);

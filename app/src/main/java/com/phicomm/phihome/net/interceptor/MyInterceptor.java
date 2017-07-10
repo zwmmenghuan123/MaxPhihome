@@ -142,7 +142,11 @@ public final class MyInterceptor implements Interceptor {
      */
     public MyInterceptor setLevel(Level level) {
         if (level == null) {
-            throw new NullPointerException("level == null. Use Level.NONE instead.");
+            try {
+                throw new NullPointerException("level == null. Use Level.NONE instead.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         this.level = level;
         return this;

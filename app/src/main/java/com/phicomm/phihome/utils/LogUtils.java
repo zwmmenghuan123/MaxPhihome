@@ -57,7 +57,11 @@ public class LogUtils {
     private static final String LOG_DATE = "logDate";
 
     private LogUtils() {
-        throw new UnsupportedOperationException("can not instantiate LogUtils...");
+        try {
+            throw new UnsupportedOperationException("can not instantiate LogUtils...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void init() {
@@ -372,14 +376,28 @@ public class LogUtils {
         Calendar calendar = Calendar.getInstance();
         int date = calendar.get(Calendar.DAY_OF_MONTH);
         //SP中记录最新的日志打印日期信息，如果当前日志和SP中最新的日志打印日期是同一天，则不打印设备信息，以此保证日志信息中，关于设备信息，一天只有打一次
-        if ((Integer.parseInt(SpfUtils.get(LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH)).toString()) != date)) {//这里应该为!=，方便调试每次都打印改为==
+
+
+        boolean result = false;
+        Object object = SpfUtils.get(LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH));
+        if (null != object) {
+            String in = object.toString();
+            try {
+                int left = Integer.parseInt(in);
+                result = left != date;
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+
+        if (result) {//这里应该为!=，方便调试每次都打印改为==
             //打印设备信息，并更新SP
-            String phoneInfo = String.format("%n手机品牌:%s%n型号:%s%n操作系统:%s %n手机系统版本:%s %nApp版本:%s %n"
-                    , SystemUtils.getDeviceBrand()
-                    , SystemUtils.getSystemModel()
-                    , Build.VERSION.SDK_INT
-                    , SystemUtils.getSystemVer()
-                    , AppInfoUtils.getAppVersionName());
+            String phoneInfo = String.format("%n手机品牌:%s%n型号:%s%n操作系统:%s %n手机系统版本:%s %nApp版本:%s %n",
+                    SystemUtils.getDeviceBrand(),
+                    SystemUtils.getSystemModel(),
+                    Build.VERSION.SDK_INT,
+                    SystemUtils.getSystemVer(),
+                    AppInfoUtils.getAppVersionName());
 
             Log.i("DeviceInfo", phoneInfo);
             SpfUtils.put(LOG_DATE, calendar.get(Calendar.DAY_OF_MONTH));

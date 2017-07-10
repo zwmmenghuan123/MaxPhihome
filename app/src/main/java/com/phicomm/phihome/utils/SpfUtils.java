@@ -27,7 +27,12 @@ public class SpfUtils {
 
     public SpfUtils() {
         /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
+        try{
+            throw new UnsupportedOperationException("cannot be instantiated");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**

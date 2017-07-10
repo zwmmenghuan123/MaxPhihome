@@ -37,7 +37,11 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
     //设置屏幕的方向
     public void setOrientation(int orientation) {
         if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
-            throw new IllegalArgumentException("invalid orientation");
+            try {
+                throw new IllegalArgumentException("invalid orientation");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         mOrientation = orientation;
     }
