@@ -11,41 +11,45 @@ import java.util.Map;
  */
 
 public class SoftApDeviceView {
-    public void readDeviceSsidSSuccess(Map<String,String> wifi_scan){
-
-    }
-    public void readDeviceSsidFail(int code, String msg){
+    public void readDeviceSsidSSuccess(Map<String, String> wifiScan) {
 
     }
 
-    public void connecting(){
-
-    }
-    public void connectOver(){
+    public void readDeviceSsidFail(int code, String msg) {
 
     }
 
-    public void writeSsidSSuccess(WriteSsidInfoBean writeSsidInfoBean){
-
-    }
-    public void writeSsidFail(int code, String msg){
+    public void connecting() {
 
     }
 
-    public void getConnStateSuccess(GetConnStateBean getConnStateBean){
-
-    }
-    public void getConnStateFail(int code, String msg){
+    public void connectOver() {
 
     }
 
-    public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean){
-
-    }
-    public void closeSoftApFail(int code, String msg){
+    public void writeSsidSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
 
     }
 
+    public void writeSsidFail(int code, String msg) {
+
+    }
+
+    public void getConnStateSuccess(GetConnStateBean getConnStateBean) {
+
+    }
+
+    public void getConnStateFail(int code, String msg) {
+
+    }
+
+    public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean) {
+
+    }
+
+    public void closeSoftApFail(int code, String msg) {
+
+    }
 
 
 }

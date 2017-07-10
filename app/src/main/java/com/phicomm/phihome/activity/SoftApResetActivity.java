@@ -40,8 +40,8 @@ public class SoftApResetActivity extends BaseActivity {
 
     private String currentDeviceSsid = "PhiHomeTest";
     private static final int STATE_GETTING_WIFI = 0;
-    private final int STATE_GET_WIFI_SUCCESS = 1;
-    private final int STATE_GET_WIFI_FAIL = 2;
+    private static final int STATE_GET_WIFI_SUCCESS = 1;
+    private static final int STATE_GET_WIFI_FAIL = 2;
 
     private boolean isWaitingJump = false;
 
@@ -82,11 +82,11 @@ public class SoftApResetActivity extends BaseActivity {
         }
         if (configAndConnectWifi()) {
 //            waitJumpNext();   //轮询方式，不再使用。改用等待网络连接的方式。
-            if (isCurrentSsid()){
+            if (isCurrentSsid()) {
                 mProgressBar.setVisibility(View.GONE);
                 Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
                 startActivity(intent);
-            }else{
+            } else {
                 isWaitingJump = true;
                 //等待网络监听事件回调执行
             }
@@ -103,25 +103,26 @@ public class SoftApResetActivity extends BaseActivity {
         return wifiManager.enableNetwork(wcgId, true);
     }
 
-    private void waitJumpNext(){
-        if (isCurrentSsid()){
+    private void waitJumpNext() {
+        if (isCurrentSsid()) {
             mProgressBar.setVisibility(View.GONE);
             Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
             startActivity(intent);
-        }else{
-            if (mProgressBar!=null){
-                mProgressBar.postDelayed(runnable,50);
+        } else {
+            if (mProgressBar != null) {
+                mProgressBar.postDelayed(runnable, 50);
             }
         }
     }
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (isCurrentSsid()){
+            if (isCurrentSsid()) {
                 mProgressBar.setVisibility(View.GONE);
                 Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
                 startActivity(intent);
-            }else{
+            } else {
                 waitJumpNext();
             }
         }
@@ -137,7 +138,7 @@ public class SoftApResetActivity extends BaseActivity {
             if (info != null && info.isConnected()) {
                 WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
                 if (wifiInfo != null) {
-                    return currentDeviceSsid.equals(wifiInfo.getSSID().replace("\"",""));
+                    return currentDeviceSsid.equals(wifiInfo.getSSID().replace("\"", ""));
                 }
             }
         }
@@ -148,18 +149,18 @@ public class SoftApResetActivity extends BaseActivity {
     /**
      * 配置wifi
      *
-     * @param Ssid     要配置的wifi名称
-     * @param Password wifi密码
+     * @param ssid     要配置的wifi名称
+     * @param password wifi密码
      * @param type     密码类型 1-无密码，2- wep加密 3-wpa家吗
      */
-    private WifiConfiguration createWifiInfo(String Ssid, String Password, int type) {
+    private WifiConfiguration createWifiInfo(String ssid, String password, int type) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
         config.allowedKeyManagement.clear();
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
-        config.SSID = "\"" + Ssid + "\"";
+        config.SSID = "\"" + ssid + "\"";
 
         if (type == 1) { // WIFICIPHER_NOPASS
 //            config.wepKeys[0] = "";
@@ -168,7 +169,7 @@ public class SoftApResetActivity extends BaseActivity {
         }
         if (type == 2) { // WIFICIPHER_WEP
             config.hiddenSSID = true;
-            config.wepKeys[0] = "\"" + Password + "\"";
+            config.wepKeys[0] = "\"" + password + "\"";
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -178,7 +179,7 @@ public class SoftApResetActivity extends BaseActivity {
             config.wepTxKeyIndex = 0;
         }
         if (type == 3) { // WIFICIPHER_WPA
-            config.preSharedKey = "\"" + Password + "\"";
+            config.preSharedKey = "\"" + password + "\"";
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -195,8 +196,8 @@ public class SoftApResetActivity extends BaseActivity {
 
     @Subscribe
     public void onEventMainThread(NetworkNameChangeEvent event) {
-        if (isWaitingJump){
-            if (isCurrentSsid()){
+        if (isWaitingJump) {
+            if (isCurrentSsid()) {
                 mProgressBar.setVisibility(View.GONE);
                 isWaitingJump = false;
                 Intent intent = new Intent(SoftApResetActivity.this, DeviceConfigNetActivity.class);
@@ -207,15 +208,15 @@ public class SoftApResetActivity extends BaseActivity {
 
     private void checkAndConnectWifi() {
         setState(STATE_GETTING_WIFI, "");
-        if (NetworkUtils.isWifiConnect()) {//是wifi连接时
+        if (NetworkUtils.isWifiConnect()) { //是wifi连接时
             checkWifiName();
-        } else {//非wifi连接
-            if (wifiManager.isWifiEnabled()) {//wifi可用
+        } else { //非wifi连接
+            if (wifiManager.isWifiEnabled()) { //wifi可用
                 scanAndHandlerResults();
-            } else {//wifi不可用
-                if (wifiOpen()) {//开启wifi成功
+            } else { //wifi不可用
+                if (wifiOpen()) { //开启wifi成功
                     scanAndHandlerResults();
-                } else {//开启wifi失败
+                } else { //开启wifi失败
                     ToastUtil.show(this, R.string.auto_open_wifi_fail);
                     setState(STATE_GET_WIFI_FAIL, null);
                 }
@@ -306,9 +307,9 @@ public class SoftApResetActivity extends BaseActivity {
     }
 
     //判定指定WIFI是否已经配置好,依据WIFI的地址BSSID,返回NetId
-    public int isConfiguration(List<WifiConfiguration> wifiConfigList, String Ssid) {
+    public int isConfiguration(List<WifiConfiguration> wifiConfigList, String ssid) {
         for (int i = 0; i < wifiConfigList.size(); i++) {
-            if (wifiConfigList.get(i).SSID.equals("\"" + Ssid + "\"")) {//地址相同
+            if (wifiConfigList.get(i).SSID.equals("\"" + ssid + "\"")) { //地址相同
                 return wifiConfigList.get(i).networkId;
             }
         }
@@ -320,7 +321,7 @@ public class SoftApResetActivity extends BaseActivity {
         for (int i = 0; i < wifiConfigList.size(); i++) {
             WifiConfiguration wifi = wifiConfigList.get(i);
             if (wifi.networkId == wifiId) {
-                while (!(wifiManager.enableNetwork(wifiId, true))) {//激活该Id，建立连接
+                while (!(wifiManager.enableNetwork(wifiId, true))) { //激活该Id，建立连接
                     //status:0--已经连接，1--不可连接，2--可以连接
                     Log.e("ConnectWifi", String.valueOf(wifiConfigList.get(wifiId).status));
                 }
@@ -343,6 +344,8 @@ public class SoftApResetActivity extends BaseActivity {
             case STATE_GET_WIFI_SUCCESS:
                 break;
             case STATE_GET_WIFI_FAIL:
+                break;
+            default:
                 break;
         }
 

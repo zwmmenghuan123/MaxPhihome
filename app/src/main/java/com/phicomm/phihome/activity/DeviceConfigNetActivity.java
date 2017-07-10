@@ -40,9 +40,8 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
     Map<String, String> mWifiScan;
 
-    private final int SELECT_SSID = 1;
+    private static final int SELECT_SSID = 1;
     private String mSsid = null;
-
 
 
     @Override
@@ -55,14 +54,14 @@ public class DeviceConfigNetActivity extends BaseActivity {
         setPageTitle(R.string.device_connect_to_router);
         mSoftApDevicePresenter = new SoftApDevicePresenter(new SoftApDeviceView() {
             @Override
-            public void readDeviceSsidSSuccess(Map<String, String> wifi_scan) {
-                if (wifi_scan == null || wifi_scan.size() == 0) {
+            public void readDeviceSsidSSuccess(Map<String, String> wifiScan) {
+                if (wifiScan == null || wifiScan.size() == 0) {
                     readDeviceSsidFail(0, null);
                 } else {
                     mSsid = "";
-                    mWifiScan = wifi_scan;
+                    mWifiScan = wifiScan;
                     mTvGettingWifi.setText("");
-                    for (String value : wifi_scan.values()) {
+                    for (String value : wifiScan.values()) {
                         if (!TextUtils.isEmpty(value)) {
                             mTvGettingWifi.setText(value);
                             mSsid = value;
