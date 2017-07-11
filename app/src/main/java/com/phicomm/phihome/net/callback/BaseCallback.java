@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.phicomm.phihome.bean.BaseResponse;
-import com.phicomm.phihome.constants.NetConfig;
 import com.phicomm.phihome.net.engine.Err2MsgUtils;
 import com.phicomm.phihome.net.engine.OkHttpUtil;
 import com.phicomm.phihome.utils.LogUtils;
@@ -47,9 +46,9 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         if (e instanceof SocketTimeoutException) {
-            toUiError(NetConfig.ERROR_TIMEOUT_CODE, null, call.request());
+            toUiError(Err2MsgUtils.CODE_NET_TIMEOUT, null, call.request());
         } else {
-            toUiError(NetConfig.ERROR_UNKNOW_CODE, null, call.request());
+            toUiError(Err2MsgUtils.CODE_UNKNOW_ERROR, null, call.request());
         }
     }
 
@@ -64,13 +63,13 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         if (response == null) {
-            toUiError(NetConfig.ERROR_SERVER_NO_RESPONSE_CODE, null, call.request());
+            toUiError(Err2MsgUtils.CODE_NO_RESPONSE, null, call.request());
             return;
         }
         if (response.isSuccessful()) {
             onSucessResponse(response);
         } else {
-            toUiError(NetConfig.ERROR_UNKNOW_CODE, null, call.request());
+            toUiError(Err2MsgUtils.CODE_UNKNOW_ERROR, null, call.request());
         }
     }
 
@@ -82,7 +81,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
     public void onSucessResponse(Response response) {
         ResponseBody body = response.body();
         if (body == null) {
-            toUiError(NetConfig.ERROR_SERVER_NO_RESPONSE_CODE, null, response.request());
+            toUiError(Err2MsgUtils.CODE_NO_RESPONSE, null, response.request());
         } else {
             String bodyStr = null;
             try {
@@ -91,7 +90,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
                 e.printStackTrace();
             }
             if (TextUtils.isEmpty(bodyStr)) {
-                toUiError(NetConfig.ERROR_SERVER_NO_RESPONSE_CODE, null, response.request());
+                toUiError(Err2MsgUtils.CODE_NO_RESPONSE, null, response.request());
                 return;
             }
 
@@ -102,7 +101,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
                 LogUtils.debug(e);
             }
             if (baseObj == null) {
-                toUiError(NetConfig.ERROR_PARSE_RESULT_CODE, null, response.request());
+                toUiError(Err2MsgUtils.CODE_PARSE_ERROR, null, response.request());
                 return;
             }
 
@@ -114,7 +113,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
                 toUiSuccess(bodyStr, response.request());
             } else if (tokenStatus > 0) {
                 //token需要刷新，目前做法是直接回调错误，让用户重新登录。后面做成调用接口以刷新token
-                toUiError(NetConfig.ERROR_TOKEN_REFRESH_CODE, message, response.request());
+                toUiError(Err2MsgUtils.CODE_TOKEN_TIMEOUT, message, response.request());
             } else {
                 toUiError(error, message, response.request());
             }

@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import com.phicomm.phihome.BuildConfig;
 import com.phicomm.phihome.bean.CloudAccount;
 import com.phicomm.phihome.constants.AppConstans;
-import com.phicomm.phihome.presenter.AccountCloudPresenter;
-import com.phicomm.phihome.presenter.viewback.AccountCloudView;
+import com.phicomm.phihome.presenter.CloudAccountPresenter;
+import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.AppInfoUtils;
 import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.SpfUtils;
@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity {
     private static final long SPLASH_TIME = 2000;
     Handler mHandler;
     private boolean mIsLoginSuccess;
-    private AccountCloudPresenter mPresenter;
+    private CloudAccountPresenter mPresenter;
     private String mPhone;
     private String mPwd;
 
@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initPresenter() {
-        mPresenter = new AccountCloudPresenter(new AccountCloudView() {
+        mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             //获取授权码失败，终止整个流程
             @Override
             public void onAuthorizationError(int code, String msg) {

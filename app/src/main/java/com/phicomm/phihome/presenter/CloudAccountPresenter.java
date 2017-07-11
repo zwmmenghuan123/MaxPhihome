@@ -4,13 +4,14 @@ import android.text.TextUtils;
 
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.Authorization;
+import com.phicomm.phihome.bean.Captcha;
 import com.phicomm.phihome.bean.CloudAccount;
 import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.manager.AccountManager;
-import com.phicomm.phihome.model.AccountCloudModel;
+import com.phicomm.phihome.model.CloudAccountModel;
 import com.phicomm.phihome.net.callback.BaseCallback;
 import com.phicomm.phihome.net.callback.BeanCallback;
-import com.phicomm.phihome.presenter.viewback.AccountCloudView;
+import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.CommonUtils;
 import com.phicomm.phihome.utils.EntryUtils;
 import com.phicomm.phihome.utils.SpfUtils;
@@ -21,19 +22,20 @@ import okhttp3.Request;
  * 云账号Presenter
  * Created by qisheng.lv on 2017/4/12.
  */
-public class AccountCloudPresenter {
+public class CloudAccountPresenter {
     private static final String CLIENT_ID = "7";
     private static final String CLIENT_SECRET = "feixun*123";
     private static final String RESPONSE_TYPE = "code";
     private static final String SCOPE = "write";
+    private static final String VER_CODE_TYPE = "0";
 
-    private AccountCloudView mView;
-    private AccountCloudModel mModel;
+    private CloudAccountView mView;
+    private CloudAccountModel mModel;
     private AccountManager mManager;
 
-    public AccountCloudPresenter(AccountCloudView accountView) {
+    public CloudAccountPresenter(CloudAccountView accountView) {
         this.mView = accountView;
-        mModel = new AccountCloudModel();
+        mModel = new CloudAccountModel();
         mManager = new AccountManager();
     }
 
@@ -131,5 +133,44 @@ public class AccountCloudPresenter {
 
     }
 
+    public void getCaptcha() {
+        mModel.getCaptcha(mManager.getAuthCode(), new BeanCallback<Captcha>() {
+
+            @Override
+            public void onError(int code, String msg) {
+                if (mView != null) {
+                    mView.onGetCaptchaError(code, msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(Captcha captcha) {
+                if (mView != null) {
+                    mView.onGetCaptchaSuccess(captcha);
+                }
+            }
+        });
+    }
+
+    public void getVerCode(String captcha, String captchaId, String phonenumber) {
+        String authCode = mManager.getAuthCode();
+        mModel.getVerCode(mManager.getAuthCode(), captcha, captchaId, null, null, phonenumber, VER_CODE_TYPE, new BaseCallback() {
+            @Override
+            public void onError(int code, String msg) {
+                if (mView != null) {
+                    mView.onGetVerCodeError(code, msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(String result, Request request) {
+                if (mView != null) {
+                    mView.onGetVerCodeSuccess();
+                }
+            }
+        });
+
+
+    }
 
 }

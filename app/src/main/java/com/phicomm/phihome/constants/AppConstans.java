@@ -22,6 +22,15 @@ public interface AppConstans {
     }
 
     /**
+     * 网络配置相关
+     */
+    interface NetConfig {
+        int HTTP_CONNECT_TIME_OUT = 10 * 1000;
+        int HTTP_READ_TIME_OUT = 20 * 1000;
+        int HTTP_WRITE_TIME_OUT = 20 * 1000;
+    }
+
+    /**
      * SharedPreferences
      */
     interface Sp {
@@ -58,7 +67,7 @@ public interface AppConstans {
 
         int ERR_CODE_PARAMS_ILLEGAL = 105;
     }
-    
+
     /**
      * 第三方相关
      */
@@ -66,7 +75,6 @@ public interface AppConstans {
 
 
     }
-
 
 
 }

@@ -9,8 +9,8 @@ import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.CloudAccount;
 import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.manager.AccountManager;
-import com.phicomm.phihome.presenter.AccountCloudPresenter;
-import com.phicomm.phihome.presenter.viewback.AccountCloudView;
+import com.phicomm.phihome.presenter.CloudAccountPresenter;
+import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.RegexUtils;
 import com.phicomm.phihome.utils.SpfUtils;
 import com.phicomm.phihome.utils.ToastUtil;
@@ -30,11 +30,10 @@ public class LoginCloudActivity extends BaseActivity {
     @BindView(R.id.et_pwd)
     EditText mEtPwd;
 
-    private AccountCloudPresenter mPresenter;
+    private CloudAccountPresenter mPresenter;
     private AccountManager mManager;
     private String mUser;
     private String mPwd;
-
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class LoginCloudActivity extends BaseActivity {
 
 
     private void initPresenter() {
-        mPresenter = new AccountCloudPresenter(new AccountCloudView() {
+        mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             //获取授权码失败，终止整个流程
             @Override
             public void onAuthorizationError(int code, String msg) {
@@ -114,6 +113,11 @@ public class LoginCloudActivity extends BaseActivity {
         return true;
     }
 
+    @OnClick(R.id.tv_register)
+    public void tv_register() {
+        gotoVerCodeActivity();
+    }
+
 
     /**
      * 有授权码，直接登陆，否则先获取授权码。
@@ -142,11 +146,15 @@ public class LoginCloudActivity extends BaseActivity {
     }
 
     /**
-     * 页面跳转
+     * 进入主页
      */
     private void gotoMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    private void gotoVerCodeActivity() {
+        startActivity(new Intent(this, VerificationCodeActivity.class));
     }
 
 

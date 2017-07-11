@@ -30,12 +30,22 @@
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_APP_CHANNEL}" />
 
+        <receiver
+            android:name=".receiver.NetworkStateReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,11 +56,9 @@
         <activity android:name=".activity.SoftApResetActivity" />
         <activity android:name=".activity.DeviceConfigNetActivity" />
         <activity android:name=".activity.WifiScanListActivity" />
-        <activity
-            android:name=".activity.X5WebActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.VerificationCodeActivity"/>
+        <activity android:name=".activity.AccountRegisterActivity" />
 
 
         <receiver android:name=".receiver.NetworkStateReceiver"

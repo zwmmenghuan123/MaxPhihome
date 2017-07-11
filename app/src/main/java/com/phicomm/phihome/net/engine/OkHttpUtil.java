@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.phicomm.phihome.PhApplication;
-import com.phicomm.phihome.constants.NetConfig;
+import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.net.callback.BaseCallback;
 import com.phicomm.phihome.net.interceptor.MyInterceptor;
 import com.phicomm.phihome.net.request.GetRequest;
@@ -37,9 +37,9 @@ public class OkHttpUtil {
 
     private OkHttpUtil() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(NetConfig.HTTP_CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
-        builder.readTimeout(NetConfig.HTTP_READ_TIME_OUT, TimeUnit.MILLISECONDS);
-        builder.writeTimeout(NetConfig.HTTP_WRITE_TIME_OUT, TimeUnit.MILLISECONDS);
+        builder.connectTimeout(AppConstans.NetConfig.HTTP_CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
+        builder.readTimeout(AppConstans.NetConfig.HTTP_READ_TIME_OUT, TimeUnit.MILLISECONDS);
+        builder.writeTimeout(AppConstans.NetConfig.HTTP_WRITE_TIME_OUT, TimeUnit.MILLISECONDS);
 //        builder.cookieJar(new CookieManager());
         builder.addInterceptor(new MyInterceptor().setLevel(MyInterceptor.Level.BODY));
 
@@ -87,7 +87,7 @@ public class OkHttpUtil {
 
     public static <T> Call execute(Request request, BaseCallback<T> callback) {
         if (!NetworkUtils.isNetAvailable()) {
-            callback.onError(NetConfig.ERROR_NET_UNAVALIABLE_CODE, NetConfig.ERROR_NET_UNAVALIABLE);
+            callback.onError(Err2MsgUtils.CODE_NET_DISABLE, Err2MsgUtils.getErrMsg(Err2MsgUtils.CODE_NET_DISABLE));
             return null;
         }
         Call call = getHttpClient().newCall(request);

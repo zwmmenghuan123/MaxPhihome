@@ -2,11 +2,14 @@
     <string name="app_name">PhiHome</string>
     <string name="loading">加载中&#8230;</string>
     <string name="app_exit_hit">再按一次退出程序</string>
+    <string name="next_step">下一步</string>
+    <string name="submit">提交</string>
+
 
     <string name="hint_select_device">当前界面应该显示选择要添加的设备的类型的列表，
     暂时用文本替代。正式开发此文本框删掉。点击进入插座的重置界面。</string>
 
-    <!--登陆相关-->
+    <!--账号入口相关-->
     <string name="title_login_cloud">云账号登录</string>
     <string name="login">登录</string>
     <string name="login_user_hint">请输入手机号</string>
@@ -16,11 +19,23 @@
     <string name="login_auth_fail">未获取到授权码</string>
     <string name="login_token_fail">登录失败</string>
     <string name="logout_success">已登出</string>
+    <string name="register">注册</string>
+    <string name="register_now">立即注册</string>
+    <string name="get_verification_code">获取验证码</string>
+    <string name="phone">手机号</string>
+    <string name="captcha">图形验证码</string>
+    <string name="captcha_not_request">请先获取图形验证码</string>
+    <string name="captcha_illegal">请输入正确的图形验证码</string>
+    <string name="captcha_failure">获取图形验证码失败</string>
+    <string name="verifiaction_code">验证码</string>
+    <string name="verifiaction_code_illegal">请输入正确的短信验证码</string>
+    <string name="password">密&#x0020;&#x0020;码</string>
+    <string name="password_comfirm">确认密码</string>
+    <string name="password_set">设置密码</string>
 
     <string name="common_image_description">通用图片描述</string>
     <string name="add_device">添加设备</string>
     <string name="reset_hint">接通电源，长按开关5s,直至指示灯红色闪烁。</string>
-    <string name="next_step">下一步</string>
 
     <string name="add_x1_smart_inserts">添加X1智能排插</string>
     <string name="add_smart_devices">添加智能设备</string>

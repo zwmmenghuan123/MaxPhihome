@@ -1,7 +1,7 @@
 package com.phicomm.phihome.net.callback;
 
 import com.alibaba.fastjson.JSON;
-import com.phicomm.phihome.constants.NetConfig;
+import com.phicomm.phihome.net.engine.Err2MsgUtils;
 import com.phicomm.phihome.utils.GenericUtils;
 import com.phicomm.phihome.utils.LogUtils;
 
@@ -26,7 +26,7 @@ public abstract class BeanCallback<T> extends BaseCallback<T> {
         }
 
         if (obj == null) {
-            toUiError(NetConfig.ERROR_PARSE_RESULT_CODE, null, request);
+            toUiError(Err2MsgUtils.CODE_PARSE_ERROR, null, request);
         } else {
             onSuccess(obj);
         }

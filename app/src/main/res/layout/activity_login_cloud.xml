@@ -7,8 +7,6 @@
     <include layout="@layout/include_common_header" />
 
     <EditText
-        android:textSize="16sp"
-        android:maxLength="11"
         android:id="@+id/et_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,24 +14,42 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="50dp"
         android:hint="@string/login_user_hint"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:maxLength="11"
+        android:textSize="16sp" />
 
     <EditText
-        android:textSize="16sp"
-
-        android:maxLength="20"
         android:id="@+id/et_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:hint="@string/login_pwd_hint" />
+        android:hint="@string/login_pwd_hint"
+        android:maxLength="20"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:text="@string/login" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/register_now"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
 </LinearLayout>

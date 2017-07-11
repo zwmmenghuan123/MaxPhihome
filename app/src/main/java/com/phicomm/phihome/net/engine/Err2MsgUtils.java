@@ -1,49 +1,62 @@
 package com.phicomm.phihome.net.engine;
 
-import com.phicomm.phihome.constants.NetConfig;
+import android.text.TextUtils;
+
+import com.phicomm.phihome.constants.AppConstans;
+import com.phicomm.phihome.utils.LogUtils;
+import com.phicomm.phihome.utils.SpfUtils;
+
+import java.util.HashMap;
 
 /**
  * 该工具类统一将网络请求的错误码转化成对应的信息，以便上层解读
  * Created by qisheng.lv on 2017/4/12.
  */
 public class Err2MsgUtils {
+    public static final int CODE_UNKNOW_ERROR = 301;
+    public static final int CODE_NET_DISABLE = 302;
+    public static final int CODE_NET_TIMEOUT = 303;
+    public static final int CODE_NO_RESPONSE = 304;
+    public static final int CODE_PARSE_ERROR = 305;
+    public static final int CODE_TOKEN_TIMEOUT = 306;
+
+    private static HashMap<Integer, String> mMap;
+
+    static {
+        mMap = new HashMap<>();
+        initMsg();
+    }
+
+    private static void initMsg() {
+        //自定义错误
+        mMap.put(CODE_UNKNOW_ERROR, "请求失败");
+        mMap.put(CODE_NET_DISABLE, "网络不可用");
+        mMap.put(CODE_NET_TIMEOUT, "网络超时");
+        mMap.put(CODE_NO_RESPONSE, "服务器无响应");
+        mMap.put(CODE_PARSE_ERROR, "解析出错");
+        mMap.put(CODE_TOKEN_TIMEOUT, "登录过期，请重新登录");
+
+        //服务器返回的错误
+        mMap.put(5, "token失效");
+        mMap.put(7, "用户不存在");
+        mMap.put(8, "密码错误");
+        mMap.put(11, "授权码错误");
+        mMap.put(12, "参数错误");
+        mMap.put(13, "获取验证码失败");
+        mMap.put(38, "验证码请求过快");
+        mMap.put(39, "验证码请求超出限制");
+        mMap.put(50, "服务器异常");
+    }
+
 
     public static String getErrMsg(int code) {
-        switch (code) {
-            case NetConfig.ERROR_NET_UNAVALIABLE_CODE:
-                return NetConfig.ERROR_NET_UNAVALIABLE;
-
-            case NetConfig.ERROR_TIMEOUT_CODE:
-                return NetConfig.ERROR_TIMEOUT;
-
-            case NetConfig.ERROR_SERVER_NO_RESPONSE_CODE:
-                return NetConfig.ERROR_SERVER_NO_RESPONSE;
-
-            case NetConfig.ERROR_PARSE_RESULT_CODE:
-                return NetConfig.ERROR_PARSE_RESULT;
-
-            case NetConfig.ERROR_TOKEN_INVALID_CODE:
-                return NetConfig.ERROR_TOKEN_INVALID;
-
-            case NetConfig.ERROR_USER_NOET_EXIST_CODE:
-                return NetConfig.ERROR_USER_NOET_EXIST;
-
-            case NetConfig.ERROR_CLOUD_PASSWORD_CODE:
-                return NetConfig.ERROR_CLOUD_PASSWORD;
-
-            case NetConfig.ERROR_AUTHCODE_CODE:
-                return NetConfig.ERROR_AUTHCODE;
-
-            case NetConfig.ERROR_PARAMS_CODE:
-                return NetConfig.ERROR_PARAMS;
-
-            case NetConfig.ERROR_TOKEN_REFRESH_CODE:
-                return NetConfig.ERROR_TOKEN_REFRESH;
-
-            default:
-                return NetConfig.ERROR_UNKNOW;
+        //授权码错误，将保存在本地的授权码清空
+        if (code == 11) {
+            SpfUtils.put(AppConstans.Sp.AUTHORIZATION_CODE, "");
         }
-
+        String message = mMap.get(code);
+        LogUtils.debug("Err2MsgUtils getErrMsg: " + code + " * " + message);
+        return TextUtils.isEmpty(message) ? mMap.get(CODE_UNKNOW_ERROR) : message;
     }
 
 }
