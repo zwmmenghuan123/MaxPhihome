@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.phicomm.phihome.PhApplication;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.Captcha;
+import com.phicomm.phihome.manager.AccountManager;
 import com.phicomm.phihome.presenter.CloudAccountPresenter;
 import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.Base64Utils;
@@ -89,7 +90,7 @@ public class VerificationCodeActivity extends BaseActivity {
 
             @Override
             public void onGetVerCodeSuccess() {
-                gotoRegister();
+                ToastUtil.show(VerificationCodeActivity.this, "获取验证码成功");
             }
 
         });
@@ -125,14 +126,22 @@ public class VerificationCodeActivity extends BaseActivity {
      * 获取图形验证码
      */
     private void getCaptcha() {
-        mPresenter.getCaptcha();
+        if (AccountManager.getInstance().hasAuthCode()) {
+            mPresenter.getCaptcha();
+        } else {
+            mPresenter.authorization();
+        }
     }
 
     /**
      * 获取短信验证码
      */
     private void getVerCode() {
-        mPresenter.getVerCode(mChaCode, mCaptcha.getCaptchaid(), mPhone);
+        if (AccountManager.getInstance().hasAuthCode()) {
+            mPresenter.getVerCode(mChaCode, mCaptcha.getCaptchaid(), mPhone);
+        } else {
+            mPresenter.authorization();
+        }
     }
 
     private void showCaptcha(Captcha captcha) {
@@ -145,12 +154,23 @@ public class VerificationCodeActivity extends BaseActivity {
         mIvCaptcha.setImageDrawable(image);
     }
 
+    /**
+     * 进入真正的注册页面
+     */
     private void gotoRegister() {
         Intent intent = new Intent(this, AccountRegisterActivity.class);
+        intent.putExtra("register_phone", mPhone);
         intent.putExtra("ver_code", mVerCode);
         startActivityForResult(intent, REQUEST_CODE_REGISTER);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_REGISTER && resultCode == RESULT_OK) {
+            finish();
+        }
+    }
 
     private boolean checkChaCode() {
         if (!RegexUtils.checkMobilePhone(mPhone)) {

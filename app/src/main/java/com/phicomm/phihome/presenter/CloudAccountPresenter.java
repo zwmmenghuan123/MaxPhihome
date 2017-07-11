@@ -28,6 +28,7 @@ public class CloudAccountPresenter {
     private static final String RESPONSE_TYPE = "code";
     private static final String SCOPE = "write";
     private static final String VER_CODE_TYPE = "0";
+    private static final String REGISTER_SOURCE = "7";
 
     private CloudAccountView mView;
     private CloudAccountModel mModel;
@@ -36,7 +37,7 @@ public class CloudAccountPresenter {
     public CloudAccountPresenter(CloudAccountView accountView) {
         this.mView = accountView;
         mModel = new CloudAccountModel();
-        mManager = new AccountManager();
+        mManager = AccountManager.getInstance();
     }
 
     /**
@@ -74,9 +75,8 @@ public class CloudAccountPresenter {
      * @param password
      */
     public void loginCloud(final String phonenumber, final String password) {
-        String authCode = mManager.getAuthCode();
         String md5Pwd = EntryUtils.getMd5(password);
-        mModel.loginCloud(authCode, null, md5Pwd, phonenumber, null, new BeanCallback<CloudAccount>() {
+        mModel.loginCloud(mManager.getAuthCode(), null, md5Pwd, phonenumber, null, new BeanCallback<CloudAccount>() {
 
             @Override
             public void onError(int code, String msg) {
@@ -153,7 +153,6 @@ public class CloudAccountPresenter {
     }
 
     public void getVerCode(String captcha, String captchaId, String phonenumber) {
-        String authCode = mManager.getAuthCode();
         mModel.getVerCode(mManager.getAuthCode(), captcha, captchaId, null, null, phonenumber, VER_CODE_TYPE, new BaseCallback() {
             @Override
             public void onError(int code, String msg) {
@@ -170,7 +169,26 @@ public class CloudAccountPresenter {
             }
         });
 
+    }
+
+    public void register(String password, String phonenumber, String verificationcode) {
+        mModel.register(mManager.getAuthCode(), null, null, password, phonenumber, REGISTER_SOURCE, null, verificationcode, new BaseCallback() {
+            @Override
+            public void onError(int code, String msg) {
+                if (mView != null) {
+                    mView.onRegisterError(code, msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(String result, Request request) {
+                if (mView != null) {
+                    mView.onRegisterSuccess();
+                }
+            }
+        });
 
     }
+
 
 }

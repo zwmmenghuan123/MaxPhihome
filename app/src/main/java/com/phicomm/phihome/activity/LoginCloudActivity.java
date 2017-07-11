@@ -31,7 +31,6 @@ public class LoginCloudActivity extends BaseActivity {
     EditText mEtPwd;
 
     private CloudAccountPresenter mPresenter;
-    private AccountManager mManager;
     private String mUser;
     private String mPwd;
 
@@ -44,7 +43,6 @@ public class LoginCloudActivity extends BaseActivity {
     public void afterInitView() {
         hideBack();
         setPageTitle(getString(R.string.title_login_cloud));
-        mManager = new AccountManager();
         initPresenter();
         getUser();
     }
@@ -124,7 +122,7 @@ public class LoginCloudActivity extends BaseActivity {
      */
     private void loginPrepare() {
 //        showLoading();
-        if (mManager.hasAuthCode()) {
+        if (AccountManager.getInstance().hasAuthCode()) {
             doLogin();
         } else {
             authorization();

@@ -26,8 +26,8 @@ public class MainActivity extends BaseFragmentActivity {
     RadioButton mRbDevice;
     @BindView(R.id.rb_scene)
     RadioButton mRbScene;
-    @BindView(R.id.rb_my)
-    RadioButton mRbMy;
+    @BindView(R.id.rb_mine)
+    RadioButton mRbMine;
 
     private long mFirstTime;
 
@@ -51,13 +51,13 @@ public class MainActivity extends BaseFragmentActivity {
         togglePage(1);
     }
 
-    @OnClick(R.id.rb_my)
+    @OnClick(R.id.rb_mine)
     public void rb_my() {
         togglePage(2);
     }
 
     /**
-     * 切换页面
+     * 切换Fragment
      * @param position
      */
     private void togglePage(int position) {
@@ -65,14 +65,14 @@ public class MainActivity extends BaseFragmentActivity {
 
         toggleRb(getResources().getDrawable(R.drawable.ico_home), mRbDevice, getResources().getColor(R.color.text));
         toggleRb(getResources().getDrawable(R.drawable.ico_setting), mRbScene, getResources().getColor(R.color.text));
-        toggleRb(getResources().getDrawable(R.drawable.ico_setting), mRbMy, getResources().getColor(R.color.text));
+        toggleRb(getResources().getDrawable(R.drawable.ico_setting), mRbMine, getResources().getColor(R.color.text));
 
         if (position == 0) {
             toggleRb(getResources().getDrawable(R.drawable.ico_home_focus), mRbDevice, getResources().getColor(R.color.status_bar));
         } else if (position == 1) {
             toggleRb(getResources().getDrawable(R.drawable.ico_setting_focus), mRbScene, getResources().getColor(R.color.status_bar));
         } else {
-            toggleRb(getResources().getDrawable(R.drawable.ico_setting_focus), mRbMy, getResources().getColor(R.color.status_bar));
+            toggleRb(getResources().getDrawable(R.drawable.ico_setting_focus), mRbMine, getResources().getColor(R.color.status_bar));
         }
 
     }

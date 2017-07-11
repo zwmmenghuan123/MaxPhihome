@@ -14,6 +14,24 @@ import com.phicomm.phihome.utils.SpfUtils;
 
 public class AccountManager {
 
+    private static AccountManager mInstance;
+
+    private AccountManager() {
+
+    }
+
+    public static AccountManager getInstance() {
+        if (mInstance == null) {
+            synchronized (AccountManager.class) {
+                if (mInstance == null) {
+                    mInstance = new AccountManager();
+                }
+            }
+        }
+        return mInstance;
+    }
+
+
     public void saveAuthCode(String code) {
         if (!TextUtils.isEmpty(code)) {
             SpfUtils.put(AppConstans.Sp.AUTHORIZATION_CODE, code);
@@ -21,7 +39,7 @@ public class AccountManager {
     }
 
     public String getAuthCode() {
-        return (String) SpfUtils.get( AppConstans.Sp.AUTHORIZATION_CODE, "");
+        return (String) SpfUtils.get(AppConstans.Sp.AUTHORIZATION_CODE, "");
     }
 
     public boolean hasAuthCode() {
