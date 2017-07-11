@@ -30,24 +30,6 @@
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_APP_CHANNEL}" />
 
-
-        <!-- Bugly -->
-        <meta-data
-            android:name="BUGLY_APPID"
-            android:value="${BUGLY_APPID}" />
-        <meta-data
-            android:name="BUGLY_APP_CHANNEL"
-            android:value="${BUGLY_APP_CHANNEL}" />
-
-        <receiver
-            android:name=".receiver.NetworkStateReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"

@@ -5,12 +5,6 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.phicomm.phihome.R;
-import com.phicomm.phihome.manager.AccountManager;
-import com.phicomm.phihome.presenter.CloudAccountPresenter;
-import com.phicomm.phihome.presenter.viewback.CloudAccountView;
-import com.phicomm.phihome.utils.LogUtils;
-import com.phicomm.phihome.utils.RegexUtils;
-import com.phicomm.phihome.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
