@@ -113,7 +113,7 @@ public class CloudAccountModel {
      */
     public void register(String authorizationcode, String data, String mailaddress, String password, String phonenumber,
                          String registersource, String username, String verificationcode, BaseCallback callback) {
-        OkHttpUtil.post(UrlConfig.CloudAccountUrl.GET_VER_CODE)
+        OkHttpUtil.post(UrlConfig.CloudAccountUrl.REGISTER)
                 .addParams("authorizationcode", authorizationcode)
                 .addParams("data", data)
                 .addParams("mailaddress", mailaddress)

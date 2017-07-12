@@ -38,13 +38,13 @@ public class SoftApDevicePresenter {
                     if (readDeviceInfoBean != null) {
                         mSoftApDeviceView.readDeviceSsidSSuccess(readDeviceInfoBean.getWifi_scan());
                     } else {
-                        mSoftApDeviceView.readDeviceSsidFail(0, CommonUtils.getString(R.string.get_device_wifi_fail));
+                        mSoftApDeviceView.readDeviceSsidFail("0", CommonUtils.getString(R.string.get_device_wifi_fail));
                     }
                 }
             }
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mSoftApDeviceView != null) {
                     mSoftApDeviceView.readDeviceSsidFail(code, msg);
                     mSoftApDeviceView.connectOver();
@@ -72,7 +72,7 @@ public class SoftApDevicePresenter {
             }
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mSoftApDeviceView != null) {
                     mSoftApDeviceView.readDeviceSsidFail(code, msg);
                 }
@@ -94,7 +94,7 @@ public class SoftApDevicePresenter {
             }
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mSoftApDeviceView != null) {
                     mSoftApDeviceView.getConnStateFail(code, msg);
                 }
@@ -116,7 +116,7 @@ public class SoftApDevicePresenter {
             }
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mSoftApDeviceView != null) {
                     mSoftApDeviceView.closeSoftApFail(code, msg);
                 }

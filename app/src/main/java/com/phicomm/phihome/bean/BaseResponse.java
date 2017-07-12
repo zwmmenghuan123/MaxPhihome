@@ -11,7 +11,7 @@ public class BaseResponse implements Serializable {
 
     private static final long serialVersionUID = 1183820018943887365L;
 
-    private int error;
+    private String error = "0";
 
     private String reason;
 
@@ -24,11 +24,11 @@ public class BaseResponse implements Serializable {
 
     private String httpCode = "200";
 
-    public int getError() {
+    public String getError() {
         return error;
     }
 
-    public void setError(int error) {
+    public void setError(String error) {
         this.error = error;
     }
 

@@ -49,7 +49,7 @@ public class SplashActivity extends BaseActivity {
         mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             //获取授权码失败，终止整个流程
             @Override
-            public void onAuthorizationError(int code, String msg) {
+            public void onAuthorizationError(String code, String msg) {
                 LogUtils.debug("onAuthorizationError: " + msg);
             }
 
@@ -61,7 +61,7 @@ public class SplashActivity extends BaseActivity {
 
             //登录失败
             @Override
-            public void onLoginError(int code, String msg) {
+            public void onLoginError(String code, String msg) {
                 LogUtils.debug("onLoginError: " + msg);
             }
 

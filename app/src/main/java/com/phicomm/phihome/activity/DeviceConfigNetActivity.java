@@ -56,7 +56,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             @Override
             public void readDeviceSsidSSuccess(Map<String, String> wifiScan) {
                 if (wifiScan == null || wifiScan.size() == 0) {
-                    readDeviceSsidFail(0, null);
+                    readDeviceSsidFail("0", null);
                 } else {
                     mSsid = "";
                     mWifiScan = wifiScan;
@@ -72,7 +72,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             }
 
             @Override
-            public void readDeviceSsidFail(int code, String msg) {
+            public void readDeviceSsidFail(String code, String msg) {
                 msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.get_device_wifi_fail) : msg;
                 mTvGettingWifi.setText(msg);
                 mSoftApDevicePresenter.readDeviceInfo();
@@ -99,16 +99,16 @@ public class DeviceConfigNetActivity extends BaseActivity {
                         getConnectionState();
                     } else {
                         String msg = writeSsidInfoBean.getMessage();
-                        writeSsidFail(0, msg);
+                        writeSsidFail("0", msg);
                     }
                 } else {
                     String msg = CommonUtils.getString(R.string.write_ssid_info_fail);
-                    writeSsidFail(0, msg);
+                    writeSsidFail("0", msg);
                 }
             }
 
             @Override
-            public void writeSsidFail(int code, String msg) {
+            public void writeSsidFail(String code, String msg) {
                 msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
                 ToastUtil.show(DeviceConfigNetActivity.this, msg);
             }
@@ -120,15 +120,15 @@ public class DeviceConfigNetActivity extends BaseActivity {
                         ToastUtil.show(DeviceConfigNetActivity.this, R.string.close_device_soft_ap);
                         closeSoftAp();
                     } else {
-                        getConnStateFail(0, null);
+                        getConnStateFail("0", null);
                     }
                 } else {
-                    getConnStateFail(0, null);
+                    getConnStateFail("0", null);
                 }
             }
 
             @Override
-            public void getConnStateFail(int code, String msg) {
+            public void getConnStateFail(String code, String msg) {
                 getConnectionState();
             }
 
@@ -138,7 +138,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             }
 
             @Override
-            public void closeSoftApFail(int code, String msg) {
+            public void closeSoftApFail(String code, String msg) {
 
             }
         });

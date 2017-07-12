@@ -9,7 +9,7 @@ import com.phicomm.phihome.bean.CloudAccount;
  * Created by qisheng.lv on 2017/4/12.
  */
 public class CloudAccountView {
-    public void onAuthorizationError(int code, String msg) {
+    public void onAuthorizationError(String code, String msg) {
 
     }
 
@@ -17,7 +17,7 @@ public class CloudAccountView {
 
     }
 
-    public void onLoginError(int code, String msg) {
+    public void onLoginError(String code, String msg) {
 
     }
 
@@ -25,7 +25,7 @@ public class CloudAccountView {
 
     }
 
-    public void onLogoutError(int code, String msg) {
+    public void onLogoutError(String code, String msg) {
 
     }
 
@@ -34,7 +34,7 @@ public class CloudAccountView {
     }
 
 
-    public void onGetCaptchaError(int code, String msg) {
+    public void onGetCaptchaError(String code, String msg) {
 
     }
 
@@ -43,7 +43,7 @@ public class CloudAccountView {
     }
 
 
-    public void onGetVerCodeError(int code, String msg) {
+    public void onGetVerCodeError(String code, String msg) {
 
     }
 
@@ -51,7 +51,7 @@ public class CloudAccountView {
 
     }
 
-    public void onRegisterError(int code, String msg) {
+    public void onRegisterError(String code, String msg) {
 
     }
 

@@ -47,7 +47,7 @@ public class AccountRegisterActivity extends BaseActivity {
     private void initPresenter() {
         mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             @Override
-            public void onAuthorizationError(int code, String msg) {
+            public void onAuthorizationError(String code, String msg) {
                 ToastUtil.show(msg);
             }
 
@@ -57,7 +57,7 @@ public class AccountRegisterActivity extends BaseActivity {
             }
 
             @Override
-            public void onRegisterError(int code, String msg) {
+            public void onRegisterError(String code, String msg) {
                 ToastUtil.show(msg);
             }
 

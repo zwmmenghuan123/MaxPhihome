@@ -59,7 +59,7 @@ public class VerificationCodeActivity extends BaseActivity {
     private void initPresenter() {
         mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             @Override
-            public void onAuthorizationError(int code, String msg) {
+            public void onAuthorizationError(String code, String msg) {
                 ToastUtil.show(VerificationCodeActivity.this, msg);
             }
 
@@ -73,7 +73,7 @@ public class VerificationCodeActivity extends BaseActivity {
             }
 
             @Override
-            public void onGetCaptchaError(int code, String msg) {
+            public void onGetCaptchaError(String code, String msg) {
                 ToastUtil.show(VerificationCodeActivity.this, msg);
             }
 
@@ -84,13 +84,13 @@ public class VerificationCodeActivity extends BaseActivity {
             }
 
             @Override
-            public void onGetVerCodeError(int code, String msg) {
+            public void onGetVerCodeError(String code, String msg) {
                 ToastUtil.show(VerificationCodeActivity.this, msg);
             }
 
             @Override
             public void onGetVerCodeSuccess() {
-                ToastUtil.show(VerificationCodeActivity.this, "获取验证码成功");
+                ToastUtil.show(VerificationCodeActivity.this, R.string.get_vercode_success);
             }
 
         });
@@ -120,7 +120,6 @@ public class VerificationCodeActivity extends BaseActivity {
             gotoRegister();
         }
     }
-
 
     /**
      * 获取图形验证码
@@ -155,7 +154,7 @@ public class VerificationCodeActivity extends BaseActivity {
     }
 
     /**
-     * 进入真正的注册页面
+     * 进入设置密码页面
      */
     private void gotoRegister() {
         Intent intent = new Intent(this, AccountRegisterActivity.class);

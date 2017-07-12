@@ -14,6 +14,7 @@ import com.phicomm.phihome.net.callback.BeanCallback;
 import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.CommonUtils;
 import com.phicomm.phihome.utils.EntryUtils;
+import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.SpfUtils;
 
 import okhttp3.Request;
@@ -46,7 +47,7 @@ public class CloudAccountPresenter {
     public void authorization() {
         mModel.authorization(CLIENT_ID, CLIENT_SECRET, null, RESPONSE_TYPE, SCOPE, new BeanCallback<Authorization>() {
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onAuthorizationError(code, msg);
                 }
@@ -56,7 +57,7 @@ public class CloudAccountPresenter {
             public void onSuccess(Authorization authorization) {
                 if (mView != null) {
                     if (TextUtils.isEmpty(authorization.getAuthorizationcode())) {
-                        mView.onAuthorizationError(0, CommonUtils.getString(R.string.login_auth_fail));
+                        mView.onAuthorizationError("0", CommonUtils.getString(R.string.login_auth_fail));
                     } else {
                         mManager.saveAuthCode(authorization.getAuthorizationcode());
                         mView.onAuthorizationSuccess(authorization.getAuthorizationcode());
@@ -79,7 +80,7 @@ public class CloudAccountPresenter {
         mModel.loginCloud(mManager.getAuthCode(), null, md5Pwd, phonenumber, null, new BeanCallback<CloudAccount>() {
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onLoginError(code, msg);
                 }
@@ -91,7 +92,7 @@ public class CloudAccountPresenter {
                 SpfUtils.put(AppConstans.Sp.CLOUD_ACCOUNT_PWD, password);
                 if (mView != null) {
                     if (TextUtils.isEmpty(cloudLogin.getAccess_token()) || TextUtils.isEmpty(cloudLogin.getUid())) {
-                        mView.onLoginError(0, CommonUtils.getString(R.string.login_token_fail));
+                        mView.onLoginError("0", CommonUtils.getString(R.string.login_token_fail));
                     } else {
                         if (!TextUtils.isEmpty(cloudLogin.getUid())) {
                             mManager.saveUid(cloudLogin.getUid());
@@ -117,7 +118,7 @@ public class CloudAccountPresenter {
 
         mModel.logoutCloud(new BaseCallback() {
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onLogoutError(code, msg);
                 }
@@ -137,7 +138,7 @@ public class CloudAccountPresenter {
         mModel.getCaptcha(mManager.getAuthCode(), new BeanCallback<Captcha>() {
 
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onGetCaptchaError(code, msg);
                 }
@@ -155,7 +156,7 @@ public class CloudAccountPresenter {
     public void getVerCode(String captcha, String captchaId, String phonenumber) {
         mModel.getVerCode(mManager.getAuthCode(), captcha, captchaId, null, null, phonenumber, VER_CODE_TYPE, new BaseCallback() {
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onGetVerCodeError(code, msg);
                 }
@@ -172,9 +173,10 @@ public class CloudAccountPresenter {
     }
 
     public void register(String password, String phonenumber, String verificationcode) {
-        mModel.register(mManager.getAuthCode(), null, null, password, phonenumber, REGISTER_SOURCE, null, verificationcode, new BaseCallback() {
+        String md5Pwd = EntryUtils.getMd5(password);
+        mModel.register(mManager.getAuthCode(), null, null, md5Pwd, phonenumber, REGISTER_SOURCE, null, verificationcode, new BaseCallback() {
             @Override
-            public void onError(int code, String msg) {
+            public void onError(String code, String msg) {
                 if (mView != null) {
                     mView.onRegisterError(code, msg);
                 }

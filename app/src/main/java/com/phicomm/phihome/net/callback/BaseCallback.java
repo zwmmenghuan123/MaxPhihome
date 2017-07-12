@@ -28,7 +28,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
      * @param code
      * @param msg
      */
-    public abstract void onError(int code, String msg);
+    public abstract void onError(String code, String msg);
 
     /**
      * 最终UI线程回调：请求成功
@@ -105,11 +105,11 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
                 return;
             }
 
-            int error = baseObj.getError();
+            String error = baseObj.getError();
             int tokenStatus = baseObj.getToken_status();
             String message = baseObj.getMessage();
             String httpCode = baseObj.getHttpCode();
-            if (error == 0 && tokenStatus == 0 && httpCode.equals("200")) {
+            if (error.equals("0") && tokenStatus == 0 && httpCode.equals("200")) {
                 toUiSuccess(bodyStr, response.request());
             } else if (tokenStatus > 0) {
                 //token需要刷新，目前做法是直接回调错误，让用户重新登录。后面做成调用接口以刷新token
@@ -127,7 +127,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
      * @param code
      * @param message
      */
-    public void toUiError(final int code, final String message, final Request request) {
+    public void toUiError(final String code, final String message, final Request request) {
         OkHttpUtil.getInstance().postRunable(new Runnable() {
             @Override
             public void run() {
