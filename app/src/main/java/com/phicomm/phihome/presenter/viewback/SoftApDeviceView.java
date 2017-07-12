@@ -15,7 +15,7 @@ public class SoftApDeviceView {
 
     }
 
-    public void readDeviceSsidFail(String code, String msg) {
+    public void readDeviceSsidError(String code, String msg) {
 
     }
 
@@ -31,7 +31,7 @@ public class SoftApDeviceView {
 
     }
 
-    public void writeSsidFail(String code, String msg) {
+    public void writeSsidError(String code, String msg) {
 
     }
 
@@ -39,7 +39,7 @@ public class SoftApDeviceView {
 
     }
 
-    public void getConnStateFail(String code, String msg) {
+    public void getConnStateError(String code, String msg) {
 
     }
 
@@ -47,7 +47,7 @@ public class SoftApDeviceView {
 
     }
 
-    public void closeSoftApFail(String code, String msg) {
+    public void closeSoftApError(String code, String msg) {
 
     }
 

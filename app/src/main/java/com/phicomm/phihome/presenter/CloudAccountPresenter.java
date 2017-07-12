@@ -14,7 +14,6 @@ import com.phicomm.phihome.net.callback.BeanCallback;
 import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.CommonUtils;
 import com.phicomm.phihome.utils.EntryUtils;
-import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.SpfUtils;
 
 import okhttp3.Request;
@@ -72,8 +71,8 @@ public class CloudAccountPresenter {
     /**
      * 登陆云账号
      *
-     * @param phonenumber
-     * @param password
+     * @param phonenumber 账号
+     * @param password  密码
      */
     public void loginCloud(final String phonenumber, final String password) {
         String md5Pwd = EntryUtils.getMd5(password);
