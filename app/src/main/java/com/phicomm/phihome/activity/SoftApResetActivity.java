@@ -34,7 +34,7 @@ public class SoftApResetActivity extends BaseActivity {
 
     WifiManager wifiManager;
 
-    private String currentDeviceSsid = "PhiHomeTest";
+    private String currentDeviceSsid = "EasyLink_500C49";
 //    private static final int STATE_GETTING_WIFI = 0;
 //    private static final int STATE_GET_WIFI_SUCCESS = 1;
 //    private static final int STATE_GET_WIFI_FAIL = 2;

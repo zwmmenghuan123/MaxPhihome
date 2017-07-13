@@ -25,8 +25,9 @@ public class DevicesPresenter {
         mDevicesModel.getDevices(new BeanCallback<DeviceBeanResult>() {
             @Override
             public void onSuccess(DeviceBeanResult response) {
-                Log.e("=====getDevices", "onSuccess: " + response.toString());
-
+                if (mDevicesView != null) {
+                    mDevicesView.getDevicesSuccess(response);
+                }
 
             }
 

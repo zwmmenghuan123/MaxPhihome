@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class WifiScanListAdapter extends BasePullUpDownAdapter<String, BaseViewHolder> {
-    public WifiScanListAdapter(@LayoutRes int layoutResId, @Nullable List data) {
+    public WifiScanListAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 
