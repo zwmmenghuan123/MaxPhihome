@@ -2,6 +2,7 @@ package com.phicomm.phihome.presenter;
 
 import android.util.Log;
 
+import com.phicomm.phihome.bean.DeviceBeanResult;
 import com.phicomm.phihome.model.DevicesModel;
 import com.phicomm.phihome.net.callback.BeanCallback;
 import com.phicomm.phihome.presenter.viewback.DevicesView;
@@ -21,10 +22,12 @@ public class DevicesPresenter {
     }
 
     public void getDevices() {
-        mDevicesModel.getDevices(new BeanCallback<String>() {
+        mDevicesModel.getDevices(new BeanCallback<DeviceBeanResult>() {
             @Override
-            public void onSuccess(String str) {
-                Log.e("=====getDevices", "onSuccess: " + str);
+            public void onSuccess(DeviceBeanResult response) {
+                Log.e("=====getDevices", "onSuccess: " + response.toString());
+
+
             }
 
             @Override

@@ -13,7 +13,7 @@ import com.phicomm.phihome.net.engine.OkHttpUtil;
 public class DevicesModel {
     public void getDevices(BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.SzUrl.DEVICES_URL)
-                .addHeader("token", AccountManager.getInstance().getToken())
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
                 .run(null, callback);
     }
 }
