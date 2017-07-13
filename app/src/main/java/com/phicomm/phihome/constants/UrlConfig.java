@@ -25,7 +25,7 @@ public interface UrlConfig {
     }
 
     interface SoftApInfoUrl {
-        String URL_HOST = "http://192.168.2.139:8000";
+        String URL_HOST = "http://10.10.10.1:8000";
         String READ_DEVICE_INFO_URL = URL_HOST + "/config-read";
         String WRITE_SSID_INFO_URL = URL_HOST + "/config-write-uap";
         String GET_CONN_STATE_URL = URL_HOST + "/conn-state";
