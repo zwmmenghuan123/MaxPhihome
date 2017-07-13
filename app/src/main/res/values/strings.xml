@@ -63,4 +63,9 @@
     <string name="device">设备</string>
     <string name="scene">场景</string>
     <string name="mine">我的</string>
+
+    <!--插座开关-->
+    <string name="page_socket_control">插座</string>
+    <string name="toggle">开关</string>
+
 </resources>

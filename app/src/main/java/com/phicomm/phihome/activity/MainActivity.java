@@ -1,5 +1,6 @@
 package com.phicomm.phihome.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -39,6 +40,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void afterInitView() {
         mViewPager.setAdapter(new MainVpAdapter(getSupportFragmentManager()));
+        startActivity(new Intent(this,SocketControlActivity.class));
     }
 
     @OnClick(R.id.rb_device)

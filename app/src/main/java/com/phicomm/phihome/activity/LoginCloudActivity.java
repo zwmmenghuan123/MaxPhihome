@@ -107,7 +107,7 @@ public class LoginCloudActivity extends BaseActivity {
 //        String url = "file:///android_asset/test.html";
 //        String url = "http://geek.csdn.net/";
 //        startActivity(new Intent(this, X5WebActivity.class).putExtra(AppConstans.Common.INTENT_URL, url));
-        startActivity(new Intent(this, TestActivity.class));
+        startActivity(new Intent(this, SocketControlActivity.class));
         return true;
     }
 

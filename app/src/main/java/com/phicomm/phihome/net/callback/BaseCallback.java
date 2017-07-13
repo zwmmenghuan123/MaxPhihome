@@ -168,6 +168,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
         }
 
         if (status == SZ_SUCCESS_CODE && resultObj != null && resultObj.getRet_status() == SZ_SUCCESS_CODE) {
+            LogUtils.debug("resultObj: " + JSON.toJSONString(resultObj));
             toUiSuccess(JSON.toJSONString(resultObj), response.request());
         } else if (status != SZ_SUCCESS_CODE) {
             toUiError(status + "", TextUtils.isEmpty(message) ? ERROR_MSG_DEFAULT : message, response.request());
@@ -214,7 +215,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
             @Override
             public void run() {
                 try {
-                    String errorMsg = Err2MsgUtils.getErrMsg(code);
+                    String errorMsg = TextUtils.isEmpty(message) ? Err2MsgUtils.getErrMsg(code) : message;
                     onError(code, errorMsg);
                 } catch (Exception e) {
                     LogUtils.debug(e);
