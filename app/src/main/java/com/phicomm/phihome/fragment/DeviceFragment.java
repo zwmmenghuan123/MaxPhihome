@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.activity.ProductsActivity;
+import com.phicomm.phihome.presenter.DevicesPresenter;
+import com.phicomm.phihome.presenter.viewback.DevicesView;
 
 import butterknife.OnClick;
 
@@ -14,6 +16,8 @@ import butterknife.OnClick;
  * Created by qisheng.lv on 2017/7/5.
  */
 public class DeviceFragment extends BaseFragment {
+    DevicesPresenter mDevicesPresenter;
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_device, null);
@@ -21,7 +25,19 @@ public class DeviceFragment extends BaseFragment {
 
     @Override
     public void afterInitView() {
+        mDevicesPresenter = new DevicesPresenter(new DevicesView() {
+            @Override
+            public void getDevicesSuccess() {
+                super.getDevicesSuccess();
+            }
 
+            @Override
+            public void getDevicesError(String errorCode, String errorInfo) {
+                super.getDevicesError(errorCode, errorInfo);
+            }
+        });
+
+        mDevicesPresenter.getDevices();
     }
 
     @OnClick(R.id.iv_add)

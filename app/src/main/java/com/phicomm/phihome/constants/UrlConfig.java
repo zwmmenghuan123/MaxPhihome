@@ -32,5 +32,10 @@ public interface UrlConfig {
         String CLOSE_DEVICE_AP_URL = URL_HOST + "/close-ap";
     }
 
+    interface CommonUrl {
+        String URL_HOST = "http://172.31.34.8:8090";
+        String DEVICES_URL = URL_HOST + "/phihome/v1/user/devices";
+    }
+
 
 }

@@ -18,7 +18,6 @@ public class SoftApDeviceModel {
      */
     public void readDeviceInfo(BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.SoftApInfoUrl.READ_DEVICE_INFO_URL)
-                .addParams("", "")
                 .run(null, callback);
     }
 
