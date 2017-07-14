@@ -8,11 +8,13 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.phicomm.phihome.PhApplication;
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.constants.CurrentDevice;
 import com.phicomm.phihome.constants.Products;
 import com.phicomm.phihome.event.NetworkNameChangeEvent;
 import com.phicomm.phihome.utils.NetworkUtils;
@@ -20,6 +22,8 @@ import com.phicomm.phihome.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -134,6 +138,9 @@ public class SoftApResetActivity extends BaseActivity {
             if (info != null && info.isConnected()) {
                 WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
                 if (wifiInfo != null) {
+
+                    CurrentDevice.MAC = wifiInfo.getMacAddress().toUpperCase(Locale.CHINA);
+                    Log.e("=====MACADDRESS", "isCurrentSsid: " + CurrentDevice.MAC);
                     return currentDeviceSsid.equals(wifiInfo.getSSID().replace("\"", ""));
                 }
             }
