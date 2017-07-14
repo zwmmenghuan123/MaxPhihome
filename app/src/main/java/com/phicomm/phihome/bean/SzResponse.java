@@ -8,14 +8,13 @@ import java.io.Serializable;
  */
 
 public class SzResponse implements Serializable{
-
-    private static final long serialVersionUID = -2784682168478897555L;
+    private static final long serialVersionUID = -2686590170564090399L;
 
     private int status;
 
     private String message;
 
-    private Result result;
+    private String result;
 
     public int getStatus() {
         return status;
@@ -33,15 +32,17 @@ public class SzResponse implements Serializable{
         this.message = message;
     }
 
-    public Result getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(String result) {
         this.result = result;
     }
 
-    public class Result {
+    public static class Result implements Serializable{
+        private static final long serialVersionUID = 7129453343920505854L;
+
         private int ret_status;
 
         private String ret_message;

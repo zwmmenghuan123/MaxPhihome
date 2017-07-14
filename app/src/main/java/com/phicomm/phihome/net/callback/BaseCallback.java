@@ -138,9 +138,9 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
             toUiSuccess(bodyStr, response.request());
         } else if (tokenStatus > 0) {
             //token需要刷新，目前做法是直接回调错误，让用户重新登录。后面做成调用接口以刷新token
-            toUiError(Err2MsgUtils.CODE_TOKEN_TIMEOUT, message, response.request());
+            toUiError(Err2MsgUtils.CODE_TOKEN_TIMEOUT, null, response.request());
         } else {
-            toUiError(error, message, response.request());
+            toUiError(error, null, response.request());
         }
     }
 
@@ -158,9 +158,21 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
 
         int status = szObj.getStatus();
         String message = szObj.getMessage();
+
         String retMsg = null;
         int retStatus = 0;
-        SzResponse.Result resultObj = szObj.getResult();
+
+        String resultStr = szObj.getResult();
+        LogUtils.debug("resultObj: " + resultStr);
+
+        SzResponse.Result resultObj;
+        try {
+            resultObj = JSON.parseObject(resultStr, SzResponse.Result.class);
+        } catch (Exception e) {
+            LogUtils.debug("parseSzResponse exception: " + e.toString());
+            toUiError(Err2MsgUtils.CODE_PARSE_ERROR, null, response.request());
+            return;
+        }
 
         if (resultObj != null) {
             retMsg = resultObj.getRet_message();
@@ -168,8 +180,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
         }
 
         if (status == SZ_SUCCESS_CODE && resultObj != null && resultObj.getRet_status() == SZ_SUCCESS_CODE) {
-            LogUtils.debug("resultObj: " + JSON.toJSONString(resultObj));
-            toUiSuccess(JSON.toJSONString(resultObj), response.request());
+            toUiSuccess(resultStr, response.request());
         } else if (status != SZ_SUCCESS_CODE) {
             toUiError(status + "", TextUtils.isEmpty(message) ? ERROR_MSG_DEFAULT : message, response.request());
         } else {
@@ -207,8 +218,8 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
     /**
      * 从子线程转到UI线程
      *
-     * @param code
-     * @param message
+     * @param code 错误码
+     * @param message 错误信息，如果需要Eee2MsgUtils根据code来转化message，直接传null
      */
     public void toUiError(final String code, final String message, final Request request) {
         OkHttpUtil.getInstance().postRunable(new Runnable() {

@@ -1,6 +1,5 @@
 package com.phicomm.phihome.activity;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -40,7 +39,6 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void afterInitView() {
         mViewPager.setAdapter(new MainVpAdapter(getSupportFragmentManager()));
-        startActivity(new Intent(this,SocketControlActivity.class));
     }
 
     @OnClick(R.id.rb_device)
@@ -88,7 +86,7 @@ public class MainActivity extends BaseFragmentActivity {
     private void toggleRb(Drawable drawable, RadioButton rb, int color) {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         rb.setCompoundDrawables(null, drawable, null, null);
-        rb.setTextColor(color);
+        rb.setTextColor(color);git
     }
 
     @Override

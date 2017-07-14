@@ -104,10 +104,10 @@ public class LoginCloudActivity extends BaseActivity {
 
     @OnLongClick(R.id.btn_login)
     public boolean btn_login_long() {
-//        String url = "file:///android_asset/test.html";
+        String url = "file:///android_asset/test.html";
 //        String url = "http://geek.csdn.net/";
-//        startActivity(new Intent(this, X5WebActivity.class).putExtra(AppConstans.Common.INTENT_URL, url));
-        startActivity(new Intent(this, SocketControlActivity.class));
+        startActivity(new Intent(this, X5WebActivity.class).putExtra(AppConstans.Common.INTENT_URL, url));
+//        startActivity(new Intent(this, SocketControlActivity.class));
         return true;
     }
 
