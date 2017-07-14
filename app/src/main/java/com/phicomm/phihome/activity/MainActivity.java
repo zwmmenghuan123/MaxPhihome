@@ -86,7 +86,7 @@ public class MainActivity extends BaseFragmentActivity {
     private void toggleRb(Drawable drawable, RadioButton rb, int color) {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         rb.setCompoundDrawables(null, drawable, null, null);
-        rb.setTextColor(color);git
+        rb.setTextColor(color);
     }
 
     @Override

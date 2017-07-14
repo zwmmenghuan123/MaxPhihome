@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.activity.ProductsActivity;
 import com.phicomm.phihome.adapter.DeviceListAdapter;
 import com.phicomm.phihome.bean.DeviceBean;
-import com.phicomm.phihome.bean.DeviceBeanResult;
 import com.phicomm.phihome.presenter.DevicesPresenter;
 import com.phicomm.phihome.presenter.viewback.DevicesView;
 import com.phicomm.phihome.utils.ToastUtil;
@@ -41,6 +40,10 @@ public class DeviceFragment extends BaseFragment {
     DeviceListAdapter mAdapter;
     List<DeviceBean> mList;
 
+    private View emptyView;
+    private View errorView;
+
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_device, null);
@@ -48,13 +51,36 @@ public class DeviceFragment extends BaseFragment {
 
     @Override
     public void afterInitView() {
+
+        emptyView = getActivity().getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        emptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.setRefreshing(true);
+                mAdapter.getRefreshListener().onRefresh();
+            }
+        });
+
+        errorView = getActivity().getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.setRefreshing(true);
+                mAdapter.getRefreshListener().onRefresh();
+            }
+        });
+
+
         mList = new ArrayList<>();
         mAdapter = new DeviceListAdapter(R.layout.fragment_device_item, mList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new MyDecoration(getActivity(), MyDecoration.VERTICAL_LIST));
         mAdapter.setOnRefreshEnabled(true);
+        mAdapter.setEnableLoadMore(false);
         mAdapter.enableLoadMoreEndClick(false);
+
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -65,28 +91,52 @@ public class DeviceFragment extends BaseFragment {
         mAdapter.bind(mSwipeRefreshLayout, mRecyclerView, new RefreshLoadListener() {
             @Override
             public void onRefresh() {
-                mDevicesPresenter.getDevices();
+                mDevicesPresenter.getDevices(true);
             }
 
             @Override
             public void onLoadMore() {
-
+                mDevicesPresenter.getDevices(false);
             }
         });
 
 
         mDevicesPresenter = new DevicesPresenter(new DevicesView() {
             @Override
-            public void getDevicesSuccess(DeviceBeanResult response) {
-                Log.e("=====getDevices", "onSuccess: " + response.toString());
+            public void getDevicesSuccess(List<DeviceBean> devices) {
+                mList.clear();
+                mAdapter.setRefreshing(false);
+                if (devices != null) {
+                    if (devices.size() != 0) {
+                        mList.addAll(devices);
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        mAdapter.setNewData(null);
+                        mAdapter.setEmptyView(emptyView);
+                    }
+
+                } else {
+                    mAdapter.setNewData(null);
+                    mAdapter.setEmptyView(errorView);
+                }
             }
 
             @Override
             public void getDevicesError(String errorCode, String errorInfo) {
-                super.getDevicesError(errorCode, errorInfo);
+                mAdapter.setRefreshing(false);
+                mAdapter.setNewData(null);
+                mAdapter.setEmptyView(errorView);
             }
         });
 
+
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setRefreshing(true);
+                mAdapter.getRefreshListener().onRefresh();
+            }
+        });
 
     }
 

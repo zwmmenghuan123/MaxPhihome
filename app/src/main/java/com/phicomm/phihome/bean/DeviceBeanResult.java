@@ -11,7 +11,6 @@ import java.util.List;
 public class DeviceBeanResult implements Serializable {
     private static final long serialVersionUID = -4119449488547142469L;
 
-
     private int has_more_page;
     private List<DeviceBean> devices;
 

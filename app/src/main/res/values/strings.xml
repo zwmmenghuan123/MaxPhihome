@@ -68,4 +68,8 @@
     <string name="page_socket_control">插座</string>
     <string name="toggle">开关</string>
 
+
+    <string name="empty_no_data">There is no data, Click Retry</string>
+    <string name="empty_network_error">Network error, Click Retry</string>
+
 </resources>

@@ -1,6 +1,8 @@
 package com.phicomm.phihome.presenter.viewback;
 
-import com.phicomm.phihome.bean.DeviceBeanResult;
+import com.phicomm.phihome.bean.DeviceBean;
+
+import java.util.List;
 
 /**
  * 获取账户绑定的设备列表
@@ -8,7 +10,7 @@ import com.phicomm.phihome.bean.DeviceBeanResult;
  */
 
 public class DevicesView {
-    public void getDevicesSuccess(DeviceBeanResult response) {
+    public void getDevicesSuccess(List<DeviceBean> devices) {
 
     }
 
