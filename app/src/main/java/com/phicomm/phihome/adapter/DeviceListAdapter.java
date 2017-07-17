@@ -23,10 +23,6 @@ public class DeviceListAdapter extends BasePullUpDownAdapter<DeviceBean, BaseVie
     @Override
     protected void convert(BaseViewHolder holder, DeviceBean item) {
         holder.setText(R.id.tv_device_id, item == null ? "" : item.getDevice_id());
-        holder.setText(R.id.sw0, item == null ? "" : item.getSw1());
-        holder.setText(R.id.sw1, item == null ? "" : item.getSw2());
-        holder.setText(R.id.sw2, item == null ? "" : item.getSw3());
-        holder.setText(R.id.sw3, item == null ? "" : item.getSw4());
     }
 
 

@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.phicomm.phihome.fragment.DeviceFragment;
-import com.phicomm.phihome.fragment.MyFragment;
+import com.phicomm.phihome.fragment.MineFragment;
 import com.phicomm.phihome.fragment.SceneFragment;
 
 /**
@@ -24,7 +24,7 @@ public class MainVpAdapter extends FragmentPagerAdapter {
         } else if (position == 1) {
             return new SceneFragment();
         } else {
-            return new MyFragment();
+            return new MineFragment();
         }
     }
 

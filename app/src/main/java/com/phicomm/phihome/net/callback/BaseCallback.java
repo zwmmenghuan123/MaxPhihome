@@ -163,7 +163,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
         int retStatus = 0;
 
         String resultStr = szObj.getResult();
-        LogUtils.debug("resultStr1111: " + resultStr);
+//        LogUtils.debug("resultStr1111: " + resultStr);
 
         SzResponse.Result resultObj;
         try {

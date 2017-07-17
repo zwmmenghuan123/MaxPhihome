@@ -39,6 +39,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void afterInitView() {
         mViewPager.setAdapter(new MainVpAdapter(getSupportFragmentManager()));
+        mViewPager.setOffscreenPageLimit(2);
     }
 
     @OnClick(R.id.rb_device)

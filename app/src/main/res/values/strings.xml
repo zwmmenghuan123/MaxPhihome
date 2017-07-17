@@ -4,6 +4,7 @@
     <string name="app_exit_hit">再按一次退出程序</string>
     <string name="next_step">下一步</string>
     <string name="submit">提交</string>
+    <string name="save">保存</string>
 
 
     <string name="hint_select_device">当前界面应该显示选择要添加的设备的类型的列表，
@@ -12,6 +13,7 @@
     <!--账号入口相关-->
     <string name="title_login_cloud">云账号登录</string>
     <string name="login">登录</string>
+    <string name="exit_login">退出登录</string>
     <string name="login_user_hint">请输入手机号</string>
     <string name="login_pwd_hint">请输入密码</string>
     <string name="login_user_illegal">请输入正确的手机号</string>
@@ -66,7 +68,12 @@
 
     <!--插座开关-->
     <string name="page_socket_control">插座</string>
-    <string name="toggle">开关</string>
+    <string name="scoket1">插孔1</string>
+    <string name="scoket2">插孔2</string>
+    <string name="scoket3">插孔3</string>
+    <string name="scoket4">插孔4</string>
+    <string name="scoket5">插孔5</string>
+    <string name="scoket6">插孔6</string>
 
 
     <string name="empty_no_data">There is no data, Click Retry</string>
