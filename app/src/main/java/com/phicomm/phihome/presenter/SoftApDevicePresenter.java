@@ -74,7 +74,7 @@ public class SoftApDevicePresenter {
             @Override
             public void onError(String code, String msg) {
                 if (mSoftApDeviceView != null) {
-                    mSoftApDeviceView.readDeviceSsidError(code, msg);
+                    mSoftApDeviceView.writeSsidError(code, msg);
                 }
             }
         });
@@ -124,4 +124,27 @@ public class SoftApDevicePresenter {
             }
         });
     }
+
+
+    /**
+     * 获取设备与ssid之间的连接状态
+     */
+    public void bindDevice(String macAddress) {
+        mSoftApDeviceModel.bindDevice(macAddress, new BeanCallback() {
+            @Override
+            public void onSuccess(Object o) {
+                if (mSoftApDeviceView != null) {
+                    mSoftApDeviceView.bindDeviceSuccess();
+                }
+            }
+
+            @Override
+            public void onError(String code, String msg) {
+                if (mSoftApDeviceView != null) {
+                    mSoftApDeviceView.bindDeviceError(code, msg);
+                }
+            }
+        });
+    }
+
 }

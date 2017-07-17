@@ -19,6 +19,7 @@ public class PostJsonRequest extends BaseRequest {
     public PostJsonRequest(String url) {
         this.mUrl = url;
         jsonObj = new JSONObject();
+        mBuilder = new Request.Builder().url(url);
     }
 
     @Override

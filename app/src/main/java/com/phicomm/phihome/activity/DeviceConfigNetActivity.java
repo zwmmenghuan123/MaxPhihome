@@ -3,6 +3,7 @@ package com.phicomm.phihome.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.GetConnStateBean;
 import com.phicomm.phihome.bean.WriteSsidInfoBean;
+import com.phicomm.phihome.constants.CurrentDevice;
 import com.phicomm.phihome.presenter.SoftApDevicePresenter;
 import com.phicomm.phihome.presenter.viewback.SoftApDeviceView;
 import com.phicomm.phihome.utils.CommonUtils;
@@ -93,24 +95,43 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
             @Override
             public void writeSsidSSuccess(WriteSsidInfoBean writeSsidInfoBean) {
-                if (writeSsidInfoBean != null) {
-                    if (0 == writeSsidInfoBean.getErrorCode()) {
-                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.write_ssid_info_success);
-                        getConnectionState();
-                    } else {
-                        String msg = writeSsidInfoBean.getMessage();
-                        writeSsidError("0", msg);
+                mTvGettingWifi.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSoftApDevicePresenter.bindDevice(CurrentDevice.MAC);
                     }
-                } else {
-                    String msg = CommonUtils.getString(R.string.write_ssid_info_fail);
-                    writeSsidError("0", msg);
-                }
+                }, 5000);
+
+//                if (writeSsidInfoBean != null) {
+//                    if (0 == writeSsidInfoBean.getErrorCode()) {
+//                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.write_ssid_info_success);
+////                        getConnectionState();
+//                        Log.e("=======", "writeSsidSSuccess: 写入成功");
+//
+//                    } else {
+//                        String msg = writeSsidInfoBean.getMessage();
+//                        Log.e("=======", "writeSsidSSuccess: " + msg);
+//                        writeSsidError("0", msg);
+//                    }
+//                } else {
+//                    String msg = CommonUtils.getString(R.string.write_ssid_info_fail);
+//                    Log.e("=======", "writeSsidSSuccess: " + msg);
+//                    writeSsidError("0", msg);
+//                }
             }
 
             @Override
             public void writeSsidError(String code, String msg) {
-                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
-                ToastUtil.show(DeviceConfigNetActivity.this, msg);
+//                Log.e("=======", "writeSsidError: " + msg);
+//                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
+//                ToastUtil.show(DeviceConfigNetActivity.this, msg);
+                mTvGettingWifi.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSoftApDevicePresenter.bindDevice(CurrentDevice.MAC);
+                    }
+                }, 5000);
+
             }
 
             @Override
@@ -140,6 +161,25 @@ public class DeviceConfigNetActivity extends BaseActivity {
             @Override
             public void closeSoftApError(String code, String msg) {
 
+            }
+
+            @Override
+            public void bindDeviceSuccess() {
+                Log.e("======", "bindDeviceSuccess: ");
+                ToastUtil.show(DeviceConfigNetActivity.this, "绑定成功");
+                Intent intent = new Intent(DeviceConfigNetActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void bindDeviceError(String code, String msg) {
+                Log.e("======", "bindDeviceError: " + msg);
+                mTvGettingWifi.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSoftApDevicePresenter.bindDevice(CurrentDevice.MAC);
+                    }
+                }, 5000);
             }
         });
 

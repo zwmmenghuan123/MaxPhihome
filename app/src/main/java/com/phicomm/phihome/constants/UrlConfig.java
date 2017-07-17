@@ -33,7 +33,7 @@ public interface UrlConfig {
     }
 
     interface SzUrl {
-        String URL_HOST = "http://172.31.34.8:8090";
+        String URL_HOST = "http://172.31.34.55:8090";
         String DEVICES_URL = URL_HOST + "/phihome/v1/user/devices";
     }
 

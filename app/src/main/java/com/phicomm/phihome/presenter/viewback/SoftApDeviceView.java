@@ -51,5 +51,13 @@ public class SoftApDeviceView {
 
     }
 
+    public void bindDeviceSuccess() {
+
+    }
+
+    public void bindDeviceError(String code, String msg) {
+
+    }
+
 
 }

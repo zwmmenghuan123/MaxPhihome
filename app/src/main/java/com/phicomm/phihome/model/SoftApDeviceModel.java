@@ -1,6 +1,7 @@
 package com.phicomm.phihome.model;
 
 import com.phicomm.phihome.constants.UrlConfig;
+import com.phicomm.phihome.manager.AccountManager;
 import com.phicomm.phihome.net.callback.BaseCallback;
 import com.phicomm.phihome.net.engine.OkHttpUtil;
 
@@ -27,7 +28,7 @@ public class SoftApDeviceModel {
      * @param callback
      */
     public void writeSsidInfo(String ssid, String password, BaseCallback callback) {
-        OkHttpUtil.post(UrlConfig.SoftApInfoUrl.WRITE_SSID_INFO_URL)
+        OkHttpUtil.postJson(UrlConfig.SoftApInfoUrl.WRITE_SSID_INFO_URL)
                 .addParams("GATEWAY", "10.10.10.1")
                 .addParams("DNS1", "10.10.10.1")
                 .addParams("IDENTIFIER", String.valueOf(168430083))
@@ -45,7 +46,6 @@ public class SoftApDeviceModel {
      */
     public void getConnState(BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.SoftApInfoUrl.GET_CONN_STATE_URL)
-                .addParams("", "")
                 .run(null, callback);
     }
 
@@ -54,10 +54,18 @@ public class SoftApDeviceModel {
      */
     public void closeSoftAp(BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.SoftApInfoUrl.CLOSE_DEVICE_AP_URL)
-                .addParams("", "")
                 .run(null, callback);
     }
 
+    /**
+     * 手机通过可联网的网络绑定设备
+     */
+    public void bindDevice(String macAddress, BaseCallback callback) {
+        String url = "/phihome/v1/devices/" + macAddress + "/bind";
+        OkHttpUtil.post(UrlConfig.SzUrl.URL_HOST + url)
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .run(null, callback);
+    }
 
 
 }
