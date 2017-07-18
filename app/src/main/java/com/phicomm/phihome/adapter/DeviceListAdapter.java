@@ -1,6 +1,5 @@
 package com.phicomm.phihome.adapter;
 
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,8 +15,8 @@ import java.util.List;
  */
 
 public class DeviceListAdapter extends BasePullUpDownAdapter<DeviceBean, BaseViewHolder> {
-    public DeviceListAdapter(@LayoutRes int layoutResId, @Nullable List<DeviceBean> data) {
-        super(layoutResId, data);
+    public DeviceListAdapter(@Nullable List<DeviceBean> data) {
+        super(R.layout.fragment_device_item, data);
     }
 
     @Override

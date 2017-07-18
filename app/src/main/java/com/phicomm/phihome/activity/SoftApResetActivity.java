@@ -38,7 +38,7 @@ public class SoftApResetActivity extends BaseActivity {
 
     WifiManager wifiManager;
 
-    private String currentDeviceSsid = "EasyLink_500C49";
+    private String currentDeviceSsid = "";
 //    private static final int STATE_GETTING_WIFI = 0;
 //    private static final int STATE_GET_WIFI_SUCCESS = 1;
 //    private static final int STATE_GET_WIFI_FAIL = 2;
@@ -56,6 +56,11 @@ public class SoftApResetActivity extends BaseActivity {
             setPageTitle(R.string.add_x1_smart_inserts);
         } else {
             setPageTitle(R.string.add_smart_devices);
+        }
+
+        currentDeviceSsid = getIntent().getStringExtra("ssid");
+        if (currentDeviceSsid == null) {
+            currentDeviceSsid = "";
         }
 
         wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
@@ -76,6 +81,16 @@ public class SoftApResetActivity extends BaseActivity {
 
     @OnClick(R.id.tv_next_step)
     public void tv_next_step() {
+//        PackageManager pm = getPackageManager();
+//        boolean permissionCHANGE_WIFI_STATE = PackageManager.PERMISSION_GRANTED == pm.checkPermission("android.permission.CHANGE_WIFI_STATE", "com.phicomm.phihome");
+//        boolean permissionACCESS_WIFI_STATE = PackageManager.PERMISSION_GRANTED == pm.checkPermission("android.permission.ACCESS_WIFI_STATE", "com.phicomm.phihome");
+//        boolean permissionACCESS_NETWORK_STATE = PackageManager.PERMISSION_GRANTED == pm.checkPermission("android.permission.ACCESS_NETWORK_STATE", "com.phicomm.phihome");
+//        boolean permissionCHANGE_WIFI_MULTICAST_STATE = PackageManager.PERMISSION_GRANTED == pm.checkPermission("android.permission.CHANGE_WIFI_MULTICAST_STATE", "com.phicomm.phihome");
+//        Log.e("======", "permissionCHANGE_WIFI_STATE: " + permissionCHANGE_WIFI_STATE);
+//        Log.e("======", "permissionACCESS_WIFI_STATE: " + permissionACCESS_WIFI_STATE);
+//        Log.e("======", "permissionACCESS_NETWORK_STATE: " + permissionACCESS_NETWORK_STATE);
+//        Log.e("======", "permissionCHANGE_WIFI_MULTICAST_STATE: " + permissionCHANGE_WIFI_MULTICAST_STATE);
+
         mProgressBar.setVisibility(View.VISIBLE);
         if (!wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(true);

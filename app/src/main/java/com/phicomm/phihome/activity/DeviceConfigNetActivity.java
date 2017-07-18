@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,8 +34,8 @@ public class DeviceConfigNetActivity extends BaseActivity {
     TextView mTvGettingWifi;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-    @BindView(R.id.tv_right_arrow)
-    TextView mTvRightArrow;
+    @BindView(R.id.iv_right_arrow)
+    ImageView mIvRightArrow;
     @BindView(R.id.et_password)
     EditText mEtPassword;
 
@@ -87,13 +88,16 @@ public class DeviceConfigNetActivity extends BaseActivity {
             @Override
             public void connecting() {
                 mProgressBar.setVisibility(View.VISIBLE);
-                mTvRightArrow.setVisibility(View.GONE);
+                mIvRightArrow.setVisibility(View.GONE);
             }
 
             @Override
             public void connectOver() {
-                mProgressBar.setVisibility(View.GONE);
-                mTvRightArrow.setVisibility(View.VISIBLE);
+                if (mProgressBar != null) {
+                    mProgressBar.setVisibility(View.GONE);
+                }
+
+                mIvRightArrow.setVisibility(View.VISIBLE);
             }
 
             @Override

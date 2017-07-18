@@ -1,6 +1,5 @@
 package com.phicomm.phihome.adapter;
 
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,8 +14,9 @@ import java.util.List;
  */
 
 public class WifiScanListAdapter extends BasePullUpDownAdapter<String, BaseViewHolder> {
-    public WifiScanListAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
-        super(layoutResId, data);
+
+    public WifiScanListAdapter(@Nullable List<String> data) {
+        super(R.layout.activity_wifi_scan_list_item, data);
     }
 
     @Override

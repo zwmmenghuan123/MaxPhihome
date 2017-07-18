@@ -36,7 +36,7 @@ public class WifiScanListActivity extends BaseActivity {
         mList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.VERTICAL_LIST));
-        mAdapter = new WifiScanListAdapter(R.layout.activity_wifi_scan_list_item, mList);
+        mAdapter = new WifiScanListAdapter(mList);
         mAdapter.setOnRefreshEnabled(false);
         mAdapter.enableLoadMoreEndClick(false);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

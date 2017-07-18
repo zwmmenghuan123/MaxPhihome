@@ -16,7 +16,6 @@ import com.phicomm.phihome.adapter.DeviceListAdapter;
 import com.phicomm.phihome.bean.DeviceBean;
 import com.phicomm.phihome.presenter.DevicesPresenter;
 import com.phicomm.phihome.presenter.viewback.DevicesView;
-import com.phicomm.phihome.utils.ToastUtil;
 import com.phicomm.phihome.views.recyclerview.MyDecoration;
 import com.phicomm.phihome.views.recyclerview.RefreshLoadListener;
 
@@ -73,7 +72,7 @@ public class DeviceFragment extends BaseFragment {
 
 
         mList = new ArrayList<>();
-        mAdapter = new DeviceListAdapter(R.layout.fragment_device_item, mList);
+        mAdapter = new DeviceListAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new MyDecoration(getActivity(), MyDecoration.VERTICAL_LIST));
