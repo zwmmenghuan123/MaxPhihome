@@ -38,6 +38,9 @@ public class DeviceConfigNetActivity extends BaseActivity {
     @BindView(R.id.et_password)
     EditText mEtPassword;
 
+    @BindView(R.id.progress_bar_root)
+    ProgressBar mProgressBarRoot;
+
     SoftApDevicePresenter mSoftApDevicePresenter;
 
     Map<String, String> mWifiScan;
@@ -165,21 +168,29 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
             @Override
             public void bindDeviceSuccess() {
+                mProgressBarRoot.setVisibility(View.GONE);
                 Log.e("======", "bindDeviceSuccess: ");
                 ToastUtil.show(DeviceConfigNetActivity.this, "绑定成功");
                 Intent intent = new Intent(DeviceConfigNetActivity.this, MainActivity.class);
                 startActivity(intent);
             }
 
+            //code=11002 被其他设备绑定
             @Override
             public void bindDeviceError(String code, String msg) {
                 Log.e("======", "bindDeviceError: " + msg);
-                mTvGettingWifi.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSoftApDevicePresenter.bindDevice(CurrentDevice.MAC);
-                    }
-                }, 5000);
+
+                if ("11002".equals(code)) {
+                    mProgressBarRoot.setVisibility(View.GONE);
+                    ToastUtil.show(DeviceConfigNetActivity.this, TextUtils.isEmpty(msg) ? "设备已经被绑定，请先解除绑定" : msg);
+                } else {
+                    mTvGettingWifi.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSoftApDevicePresenter.bindDevice(CurrentDevice.MAC);
+                        }
+                    }, 5000);
+                }
             }
         });
 
@@ -224,6 +235,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             if (mEtPassword.getText() == null) {
                 mEtPassword.setText("");
             }
+            mProgressBarRoot.setVisibility(View.VISIBLE);
             mSoftApDevicePresenter.writeSsidInfo(mSsid, mEtPassword.getText().toString());
         }
 
