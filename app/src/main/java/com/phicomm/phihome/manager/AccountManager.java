@@ -14,7 +14,7 @@ import com.phicomm.phihome.utils.SpfUtils;
 
 public class AccountManager {
 
-    private volatile static AccountManager mInstance;
+    private static volatile AccountManager mInstance;
 
     private AccountManager() {
 

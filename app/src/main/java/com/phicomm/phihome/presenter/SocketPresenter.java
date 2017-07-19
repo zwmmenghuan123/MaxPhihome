@@ -21,8 +21,8 @@ public class SocketPresenter {
         this.mView = socketView;
     }
 
-    public void getStatus(String device_id) {
-        mModel.getStatus(device_id, new BeanCallback<SocketDevice>() {
+    public void getStatus(String deviceId) {
+        mModel.getStatus(deviceId, new BeanCallback<SocketDevice>() {
 
             @Override
             public void onError(String code, String msg) {
@@ -40,8 +40,8 @@ public class SocketPresenter {
         });
     }
 
-    public void setStatus(String device_id, int sw0, int sw1, int sw2, int sw3, int sw4, int sw5) {
-        mModel.setStatus(device_id, sw0, sw1, sw2, sw3, sw4, sw5, new BaseCallback() {
+    public void setStatus(String deviceId, int sw0, int sw1, int sw2, int sw3, int sw4, int sw5) {
+        mModel.setStatus(deviceId, sw0, sw1, sw2, sw3, sw4, sw5, new BaseCallback() {
             @Override
             public void onError(String code, String msg) {
                 if (mView != null) {
