@@ -49,6 +49,17 @@ public interface AppConstans {
         String CLOUD_ACCOUNT_UID = "CLOUD_ACCOUNT_UID";
     }
 
+    interface Products {
+        int TYPE_INSERTS = 1; //插座
+    }
+
+    /**
+     * 取图
+     */
+    interface GetPhoto {
+        int GET_PHOTO_FROM_CAMERA = 1; //拍照
+        int GET_PHOTO_FROM_ALBUM = 2; //相册取图
+    }
 
     /**
      * JSBridge

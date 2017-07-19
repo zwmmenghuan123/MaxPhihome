@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.ProductTypeBean;
-import com.phicomm.phihome.constants.Products;
+import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.views.recyclerview.BasePullUpDownAdapter;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ProductsTypeAdapter extends BasePullUpDownAdapter<ProductTypeBean, 
     protected void convert(BaseViewHolder helper, ProductTypeBean item) {
         helper.setText(R.id.tv_product_type, item.getProductTypeName() == null ? "" : item.getProductTypeName());
         switch (item.getProductType()) {
-            case Products.TYPE_INSERTS:
+            case AppConstans.Products.TYPE_INSERTS:
                 helper.setImageResource(R.id.iv_product_type, R.mipmap.ic_launcher);
                 break;
             default:
