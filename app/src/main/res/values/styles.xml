@@ -32,4 +32,25 @@
     </style>
 
 
+    <!--左进左出-->
+    <style name="PopupLeftAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>
+    </style>
+    <!--右进右出-->
+    <style name="PopupRightAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_right_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_right_exit</item>
+    </style>
+    <!--底进底出-->
+    <style name="PopupBottomAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_bottom_exit</item>
+    </style>
+    <!--顶进顶出-->
+    <style name="PopupTopAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_top_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_top_exit</item>
+    </style>
+
 </resources>

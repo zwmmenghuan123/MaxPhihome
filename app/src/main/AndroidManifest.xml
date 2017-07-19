@@ -63,6 +63,10 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <activity
+            android:name=".activity.PersonalInformationActivity"
+            android:label="@string/title_activity_personal_information"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

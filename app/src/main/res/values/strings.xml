@@ -75,4 +75,19 @@
     <string name="empty_no_data">There is no data, Click Retry</string>
     <string name="empty_network_error">Network error, Click Retry</string>
 
+    <string name="nickname">昵称</string>
+    <string name="home_manage">家庭管理</string>
+    <string name="my_home">我的家</string>
+    <string name="message_reminding">消息提醒</string>
+    <string name="about">关于</string>
+    <string name="title_activity_personal_information">PersonalInformationActivity</string>
+    <string name="me">我</string>
+    <string name="head_portrait">头像</string>
+    <string name="not_set">未设置</string>
+    <string name="space_phone_number">18579465666</string>
+    <string name="modify_password">修改密码</string>
+    <string name="take_a_photo">拍照</string>
+    <string name="get_a_photo_from_mobile_album">从手机相册选择</string>
+    <string name="cancel">取消</string>
+
 </resources>
