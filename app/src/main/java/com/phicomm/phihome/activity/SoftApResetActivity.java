@@ -154,7 +154,7 @@ public class SoftApResetActivity extends BaseActivity {
                 WifiInfo wifiInfo = NetworkUtils.getWifiInfo();
                 if (wifiInfo != null) {
 
-                    CurrentDevice.MAC = wifiInfo.getMacAddress().toUpperCase(Locale.CHINA);
+                    CurrentDevice.MAC = wifiInfo.getBSSID().toUpperCase(Locale.CHINA);
                     Log.e("=====MACADDRESS", "isCurrentSsid: " + CurrentDevice.MAC);
                     return currentDeviceSsid.equals(wifiInfo.getSSID().replace("\"", ""));
                 }
