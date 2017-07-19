@@ -117,8 +117,9 @@ public final class Base64Utils {
                 System.out.println("k4   = " + (k << 4));
                 System.out.println("vak  = " + (val2 | (k << 4)));
             }
-
-            encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            if (val1 < lookUpBase64Alphabet.length) {
+                encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            }
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val2 | (k << 4)];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[(l << 2) | val3];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[b3 & 0x3f];
@@ -126,19 +127,25 @@ public final class Base64Utils {
 
         // form integral number of 6-bit groups
         if (fewerThan24bits == EIGHTBIT) {
-            b1 = binaryData[dataIndex];
+            if (dataIndex < binaryData.length) {
+                b1 = binaryData[dataIndex];
+            }
             k = (byte) (b1 & 0x03);
             if (fDebug) {
                 System.out.println("b1=" + b1);
                 System.out.println("b1<<2 = " + (b1 >> 2));
             }
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
-            encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            if (val1 < lookUpBase64Alphabet.length) {
+                encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            }
             encodedData[encodedIndex++] = lookUpBase64Alphabet[k << 4];
             encodedData[encodedIndex++] = PAD;
             encodedData[encodedIndex++] = PAD;
         } else if (fewerThan24bits == SIXTEENBIT) {
-            b1 = binaryData[dataIndex];
+            if (dataIndex < binaryData.length) {
+                b1 = binaryData[dataIndex];
+            }
             b2 = binaryData[dataIndex + 1];
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
@@ -146,7 +153,9 @@ public final class Base64Utils {
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             byte val2 = ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
 
-            encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            if (val1 < lookUpBase64Alphabet.length) {
+                encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
+            }
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val2 | (k << 4)];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[l << 2];
             encodedData[encodedIndex++] = PAD;
@@ -203,10 +212,18 @@ public final class Base64Utils {
                 return null;
             } // if found "no data" just return null
 
-            b1 = base64Alphabet[d1];
-            b2 = base64Alphabet[d2];
-            b3 = base64Alphabet[d3];
-            b4 = base64Alphabet[d4];
+            if (d1 < base64Alphabet.length) {
+                b1 = base64Alphabet[d1];
+            }
+            if (d2 < base64Alphabet.length) {
+                b2 = base64Alphabet[d2];
+            }
+            if (d3 < base64Alphabet.length) {
+                b3 = base64Alphabet[d3];
+            }
+            if (d4 < base64Alphabet.length) {
+                b4 = base64Alphabet[d4];
+            }
 
             decodedData[encodedIndex++] = (byte) (b1 << 2 | b2 >> 4);
             decodedData[encodedIndex++] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
@@ -217,8 +234,12 @@ public final class Base64Utils {
             return null;// if found "no data" just return null
         }
 
-        b1 = base64Alphabet[d1];
-        b2 = base64Alphabet[d2];
+        if (d1 < base64Alphabet.length) {
+            b1 = base64Alphabet[d1];
+        }
+        if (d2 < base64Alphabet.length) {
+            b2 = base64Alphabet[d2];
+        }
 
         d3 = base64Data[dataIndex++];
         d4 = base64Data[dataIndex++];
@@ -229,10 +250,14 @@ public final class Base64Utils {
                 }
                 byte[] tmp = new byte[i * 3 + 1];
                 System.arraycopy(decodedData, 0, tmp, 0, i * 3);
-                tmp[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+                if (encodedIndex < tmp.length) {
+                    tmp[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+                }
                 return tmp;
             } else if (!isPad(d3) && isPad(d4)) {
-                b3 = base64Alphabet[d3];
+                if (d3 < base64Alphabet.length) {
+                    b3 = base64Alphabet[d3];
+                }
                 if ((b3 & 0x3) != 0) { // last 2 bits should be zero
                     return null;
                 }

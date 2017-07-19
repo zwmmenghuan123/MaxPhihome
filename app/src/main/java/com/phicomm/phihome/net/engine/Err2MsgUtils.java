@@ -58,7 +58,11 @@ public class Err2MsgUtils {
         if (code.equals("11")) {
             SpfUtils.put(AppConstans.Sp.AUTHORIZATION_CODE, "");
         }
-        String message = mMap.get(code);
+        String message = "";
+        if (mMap != null) {
+            message = mMap.get(code);
+        }
+
         LogUtils.debug("Err2MsgUtils getErrMsg: " + code + " * " + message);
         return TextUtils.isEmpty(message) ? mMap.get(CODE_UNKNOW_ERROR) : message;
     }
