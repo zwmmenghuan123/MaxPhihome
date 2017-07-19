@@ -89,30 +89,30 @@ public final class Foo {
     </rule>
 
 
-    <rule name="UselessOverridingMethod"
-    since="3.3"
-    message="80. 不必要的重载 Overriding method merely calls super"
-    class="net.sourceforge.pmd.lang.java.rule.unnecessary.UselessOverridingMethodRule"
-          externalInfoUrl="https://pmd.github.io/pmd-5.4.0/pmd-java/rules/java/unnecessary.html#UselessOverridingMethod">
-        <description>
-The overriding method merely calls the same method defined in a superclass.
-        </description>
-        <priority>3</priority>
-        <example><![CDATA[
-public void foo(String bar) {
-  super.foo(bar);      // why bother overriding?
-}
+    <!--<rule name="UselessOverridingMethod"-->
+    <!--since="3.3"-->
+    <!--message="80. 不必要的重载 Overriding method merely calls super"-->
+    <!--class="net.sourceforge.pmd.lang.java.rule.unnecessary.UselessOverridingMethodRule"-->
+          <!--externalInfoUrl="https://pmd.github.io/pmd-5.4.0/pmd-java/rules/java/unnecessary.html#UselessOverridingMethod">-->
+        <!--<description>-->
+<!--The overriding method merely calls the same method defined in a superclass.-->
+        <!--</description>-->
+        <!--<priority>3</priority>-->
+        <!--<example><![CDATA[-->
+<!--public void foo(String bar) {-->
+  <!--super.foo(bar);      // why bother overriding?-->
+<!--}-->
 
-public String foo() {
-	return super.foo();  // why bother overriding?
-}
+<!--public String foo() {-->
+	<!--return super.foo();  // why bother overriding?-->
+<!--}-->
 
-@Id
-public Long getId() {
-  return super.getId();  // OK if 'ignoreAnnotations' is false, which is the default behavior
-}
-        ]]></example>
-    </rule>
+<!--@Id-->
+<!--public Long getId() {-->
+  <!--return super.getId();  // OK if 'ignoreAnnotations' is false, which is the default behavior-->
+<!--}-->
+        <!--]]></example>-->
+    <!--</rule>-->
 
     <rule  name="UselessOperationOnImmutable"
            since="3.5"

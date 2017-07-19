@@ -140,7 +140,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
             //token需要刷新，目前做法是直接回调错误，让用户重新登录。后面做成调用接口以刷新token
             toUiError(Err2MsgUtils.CODE_TOKEN_TIMEOUT, null, response.request());
         } else {
-            toUiError(error, null, response.request());
+            toUiError(error, message, response.request());
         }
     }
 
@@ -182,9 +182,9 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
         if (status == SZ_SUCCESS_CODE && resultObj != null && resultObj.getRet_status() == SZ_SUCCESS_CODE) {
             toUiSuccess(resultStr, response.request());
         } else if (status != SZ_SUCCESS_CODE) {
-            toUiError(status + "", TextUtils.isEmpty(message) ? ERROR_MSG_DEFAULT : message, response.request());
+            toUiError(String.valueOf(status), TextUtils.isEmpty(message) ? ERROR_MSG_DEFAULT : message, response.request());
         } else {
-            toUiError(retStatus + "", TextUtils.isEmpty(retMsg) ? ERROR_MSG_DEFAULT : retMsg, response.request());
+            toUiError(String.valueOf(retStatus), TextUtils.isEmpty(retMsg) ? ERROR_MSG_DEFAULT : retMsg, response.request());
         }
     }
 
@@ -218,7 +218,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
     /**
      * 从子线程转到UI线程
      *
-     * @param code 错误码
+     * @param code    错误码
      * @param message 错误信息，如果需要Eee2MsgUtils根据code来转化message，直接传null
      */
     public void toUiError(final String code, final String message, final Request request) {
