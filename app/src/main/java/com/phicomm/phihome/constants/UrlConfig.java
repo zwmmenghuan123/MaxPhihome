@@ -20,7 +20,7 @@ public interface UrlConfig {
         String LOGIN = URL_HOST + "/v1/login"; //登陆云
         String LOGOUT = URL_HOST + "/v1/logout"; //退出登陆
         String GET_CAPTCHA = URL_HOST + "/v1/captcha"; //获取图形验证码
-        String GET_VER_CODE = URL_HOST + "/v1/verificationCode"; //获取验证码
+        String GET_VER_CODE = URL_HOST + "/v1/verificationMsg"; //获取验证码
         String REGISTER = URL_HOST + "/v1/account"; //注册账号
     }
 

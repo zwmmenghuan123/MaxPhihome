@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.activity.ProductsActivity;
-import com.phicomm.phihome.activity.SocketControlActivity;
 import com.phicomm.phihome.adapter.DeviceListAdapter;
 import com.phicomm.phihome.bean.DeviceBean;
 import com.phicomm.phihome.presenter.DevicesPresenter;
@@ -22,6 +21,7 @@ import com.phicomm.phihome.views.recyclerview.RefreshLoadListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -83,9 +83,7 @@ public class DeviceFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), SocketControlActivity.class);
-                intent.putExtra("device_id", mList.get(position).getDevice_id());
-                startActivity(intent);
+
             }
         });
 
