@@ -37,15 +37,21 @@ public class PathUtils {
     }
 
 
-    public static String getCameraImage() {
-        String imageCache = EXTERNAL_PHIHOME + "camera";
-        File file = new File(imageCache);
-        if (!file.exists()) {
-            file.mkdirs();
+    public static String getCameraImageDir() {
+        String imageCacheDir = EXTERNAL_PHIHOME + "camera" + File.separator;
+        File file = new File(imageCacheDir);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                return imageCacheDir;
+            }
         }
-        return imageCache;
-    }
+        boolean success = file.mkdirs();
+        if (success) {
+            return imageCacheDir;
+        }
+        return null;
 
+    }
 
 
     public static String getDownload() {

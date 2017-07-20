@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.PopupWindow.OnDismissListener;
 
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.listener.GetPhotoListener;
 
 /**
  * 拍照、相册取图的弹窗
@@ -19,25 +20,41 @@ import com.phicomm.phihome.R;
  */
 
 public class GetPhotoPopup {
-    private TextView mTvTakePhoto;
-    private TextView mTvGetPhotoFromAlbum;
-    private TextView mTvCancel;
 
 
     private Activity mContext;
     private PopupWindow popupWindow;
 
-    public GetPhotoPopup(Activity context) {
+    public GetPhotoPopup(Activity context, final GetPhotoListener listener) {
         mContext = context;
 
+
         View photoView = LayoutInflater.from(context).inflate(R.layout.popup_get_photo, null);
-        mTvTakePhoto = (TextView) photoView.findViewById(R.id.tv_take_photo);
-        mTvGetPhotoFromAlbum = (TextView) photoView.findViewById(R.id.tv_get_photo_from_album);
-        mTvCancel = (TextView) photoView.findViewById(R.id.tv_cancel);
+        TextView mTvTakePhoto = (TextView) photoView.findViewById(R.id.tv_take_photo);
+        TextView mTvGetPhotoFromAlbum = (TextView) photoView.findViewById(R.id.tv_get_photo_from_album);
+        TextView mTvCancel = (TextView) photoView.findViewById(R.id.tv_cancel);
         popupWindow = new PopupWindow(photoView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(0x000000));
 
 
+        mTvTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                if (listener != null) {
+                    listener.getPhotoFromCamera();
+                }
+            }
+        });
+        mTvGetPhotoFromAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                if (listener != null) {
+                    listener.getPhotoFromAlbum();
+                }
+            }
+        });
         mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +71,7 @@ public class GetPhotoPopup {
 
     }
 
-    // 下拉式 弹出 pop菜单 parent 右下角
+
     public void showAsDropDown(View parent) {
         backgroundAlpha(0.7f);
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
