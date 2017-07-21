@@ -43,6 +43,9 @@ android {
                 jniLibs.srcDirs = ['libs']
             }
         }
+
+        //线上环境
+        buildConfigField "String", "host_cloud_acount", "\"https://account.phicomm.com\""
     }
 
     lintOptions {
@@ -74,6 +77,9 @@ android {
     productFlavors {
         qa {
             versionName BASE_VERSION_NAME + "." + qaNumber + "." + buildNumber
+
+            //测试环境
+            buildConfigField "String", "host_cloud_acount", "\"http://test.account.phiwifi.com\""
         }
 
         productFlavors.all { flavor ->

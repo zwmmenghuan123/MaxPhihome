@@ -3,6 +3,7 @@ package com.phicomm.phihome.net.callback;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.phicomm.phihome.BuildConfig;
 import com.phicomm.phihome.bean.CommonResponse;
 import com.phicomm.phihome.bean.FxResponse;
 import com.phicomm.phihome.bean.SzResponse;
@@ -83,7 +84,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
      *
      * @param response
      */
-    public void onSucessResponse(Response response) {
+    private void onSucessResponse(Response response) {
         ResponseBody body = response.body();
         if (body == null) {
             toUiError(Err2MsgUtils.CODE_NO_RESPONSE, null, response.request());
@@ -102,7 +103,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
             String url = response.request().url().toString();
 
             //处理斐讯云响应
-            if (url.startsWith(UrlConfig.CloudAccountUrl.URL_HOST)) {
+            if (url.startsWith(BuildConfig.host_cloud_acount)) {
                 parseFxResponse(bodyStr, response);
                 return;
             }
@@ -222,7 +223,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
      * @param message 错误信息，如果需要Eee2MsgUtils根据code来转化message，直接传null
      */
     public void toUiError(final String code, final String message, final Request request) {
-        OkHttpUtil.getInstance().postRunable(new Runnable() {
+        OkHttpUtil.postRunable(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -242,7 +243,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
      * @param result
      */
     public void toUiSuccess(final String result, final Request request) {
-        OkHttpUtil.getInstance().postRunable(new Runnable() {
+        OkHttpUtil.postRunable(new Runnable() {
             @Override
             public void run() {
                 onSuccess(result, request);

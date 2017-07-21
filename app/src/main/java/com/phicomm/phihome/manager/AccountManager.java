@@ -39,7 +39,8 @@ public class AccountManager {
     }
 
     public String getAuthCode() {
-        return (String) SpfUtils.get(AppConstans.Sp.AUTHORIZATION_CODE, "");
+//        return (String) SpfUtils.get(AppConstans.Sp.AUTHORIZATION_CODE, "");
+        return "feixun.SH_7";
     }
 
     public boolean hasAuthCode() {

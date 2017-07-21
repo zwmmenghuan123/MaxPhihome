@@ -50,7 +50,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.VerificationCodeActivity" />
+        <activity android:name=".activity.RegisterCodeActivity" />
         <activity android:name=".activity.AccountRegisterActivity" />
         <activity android:name=".activity.PersonalInformationActivity" />
         <activity android:name=".activity.CropImageActivity" />

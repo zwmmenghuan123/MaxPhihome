@@ -31,11 +31,10 @@ import okhttp3.Response;
  * Created by qisheng.lv on 2017/4/12.
  */
 public class OkHttpUtil {
-    private static volatile OkHttpUtil mOkHttpUtls;
     private static volatile OkHttpClient mHttpClient;
-    private Handler mHandler;
+    private static volatile Handler mHandler;
 
-    private OkHttpUtil() {
+    static {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(AppConstans.NetConfig.HTTP_CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
         builder.readTimeout(AppConstans.NetConfig.HTTP_READ_TIME_OUT, TimeUnit.MILLISECONDS);
@@ -51,23 +50,12 @@ public class OkHttpUtil {
         mHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static OkHttpUtil getInstance() {
-        if (mOkHttpUtls == null) {
-            synchronized (OkHttpUtil.class) {
-                if (mOkHttpUtls == null) {
-                    mOkHttpUtls = new OkHttpUtil();
-                }
-            }
-        }
-        return mOkHttpUtls;
-    }
+    private OkHttpUtil() {
 
-    public static OkHttpClient getHttpClient() {
-        return getInstance().mHttpClient;
     }
 
     public static void postRunable(Runnable runnable) {
-        getInstance().mOkHttpUtls.mHandler.post(runnable);
+        mHandler.post(runnable);
     }
 
     public static GetRequest get(String url) {
@@ -83,14 +71,12 @@ public class OkHttpUtil {
         return new PostJsonRequest(url);
     }
 
-
-
     public static <T> Call execute(Request request, BaseCallback<T> callback) {
         if (!NetworkUtils.isNetAvailable()) {
             callback.onError(Err2MsgUtils.CODE_NET_DISABLE, Err2MsgUtils.getErrMsg(Err2MsgUtils.CODE_NET_DISABLE));
             return null;
         }
-        Call call = getHttpClient().newCall(request);
+        Call call = mHttpClient.newCall(request);
 
         if (!PhApplication.isJunitTest) {
             call.enqueue(callback);

@@ -61,6 +61,21 @@ public class CloudAccountModel {
     }
 
     /**
+     * 校验手机号是否已注册
+     *
+     * @param authorizationcode
+     * @param phonenumber
+     * @param callback
+     */
+    public void checkPhone(String authorizationcode, String mailaddress, String phonenumber, BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.CloudAccountUrl.CHECK_PHONE)
+                .addParams("authorizationcode", authorizationcode)
+                .addParams("mailaddress", mailaddress)
+                .addParams("phonenumber", phonenumber)
+                .run(null, callback);
+    }
+
+    /**
      * 获取图形验证码
      *
      * @param authorizationcode
@@ -85,8 +100,8 @@ public class CloudAccountModel {
      * @param verificationtype
      * @param callback
      */
-    public void getVerCode(String authorizationcode, String captcha, String captchaid, String mailaddress,String notsend,
-                           String phonenumber,String verificationtype, BaseCallback callback) {
+    public void getVerCode(String authorizationcode, String captcha, String captchaid, String mailaddress, String notsend,
+                           String phonenumber, String verificationtype, BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.CloudAccountUrl.GET_VER_CODE)
                 .addParams("authorizationcode", authorizationcode)
                 .addParams("captcha", captcha)
@@ -95,6 +110,22 @@ public class CloudAccountModel {
                 .addParams("notsend", notsend)
                 .addParams("phonenumber", phonenumber)
                 .addParams("verificationtype", verificationtype)
+                .run(null, callback);
+    }
+
+    /**
+     * 校验短信验证码
+     *
+     * @param authorizationcode
+     * @param phonenumber
+     * @param verificationcode
+     * @param callback
+     */
+    public void checkVerCode(String authorizationcode, String phonenumber, String verificationcode, BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.CloudAccountUrl.CHECK_VER_CODE)
+                .addParams("authorizationcode", authorizationcode)
+                .addParams("phonenumber", phonenumber)
+                .addParams("verificationcode", verificationcode)
                 .run(null, callback);
     }
 

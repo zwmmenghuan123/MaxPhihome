@@ -152,7 +152,7 @@ public class LoginCloudActivity extends BaseActivity {
     }
 
     private void gotoVerCodeActivity() {
-        startActivity(new Intent(this, VerificationCodeActivity.class));
+        startActivity(new Intent(this, RegisterCodeActivity.class));
     }
 
 
