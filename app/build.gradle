@@ -112,7 +112,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.tencent.bugly:crashreport:latest.release'
 
-//  拍照、取图、裁图的一个工具类 https://github.com/crazycodeboy/TakePhoto#%E6%BC%94%E7%A4%BA
+//  拍照、取图、裁图的一个工具类 https://github.com/crazycodeboy/TakePhoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
 
+//   图片压缩方法 https://github.com/Curzibn/Luban
+    compile 'top.zibin:Luban:1.1.2'
 }

@@ -52,22 +52,18 @@
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.VerificationCodeActivity" />
         <activity android:name=".activity.AccountRegisterActivity" />
+        <activity android:name=".activity.PersonalInformationActivity" />
+        <activity android:name=".activity.CropImageActivity" />
 
 
-        <receiver android:name=".receiver.NetworkStateReceiver"
+        <receiver
+            android:name=".receiver.NetworkStateReceiver"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <activity
-            android:name=".activity.PersonalInformationActivity"
-            android:label="@string/title_activity_personal_information"
-            android:theme="@style/AppTheme"/>
-            android:theme="@style/AppTheme" />
-
 
         <provider
             android:name="android.support.v4.content.FileProvider"

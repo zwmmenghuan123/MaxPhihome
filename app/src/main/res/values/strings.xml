@@ -89,5 +89,6 @@
     <string name="take_a_photo">拍照</string>
     <string name="get_a_photo_from_mobile_album">从手机相册选择</string>
     <string name="cancel">取消</string>
+    <string name="crop">裁剪</string>
 
 </resources>

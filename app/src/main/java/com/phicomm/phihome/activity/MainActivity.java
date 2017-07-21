@@ -1,6 +1,5 @@
 package com.phicomm.phihome.activity;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;

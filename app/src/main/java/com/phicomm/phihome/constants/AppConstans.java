@@ -59,6 +59,7 @@ public interface AppConstans {
     interface GetPhoto {
         int GET_PHOTO_FROM_CAMERA = 1; //拍照
         int GET_PHOTO_FROM_ALBUM = 2; //相册取图
+        int CROP_IMAGE = 3; //裁剪
 
         int UPLOAD_IMG_SRC_WIDTH = 100; //头像的宽
         int UPLOAD_IMG_SRC_HEIGHT = 100; //头像的高
