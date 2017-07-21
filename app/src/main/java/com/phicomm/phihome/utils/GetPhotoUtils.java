@@ -167,7 +167,6 @@ public class GetPhotoUtils {
                     if (!file.exists()) {
                         return;
                     }
-                    Log.e("=========1", imagePath + "======onSuccess: " + file.length() / 1024);
                     Luban.with(mContext)
                             .load(file)                     //传入要压缩的图片
                             .setCompressListener(new OnCompressListener() { //设置回调
@@ -179,7 +178,6 @@ public class GetPhotoUtils {
                                 @Override
                                 public void onSuccess(File file) {
                                     // TODO 压缩成功后调用，返回压缩后的图片文件
-                                    Log.e("=========2", file.getAbsolutePath() + "onSuccess: " + file.length() / 1024);
                                     ImageLoader.getLoader(mContext).load(file.getAbsoluteFile()).into(imageView);
                                 }
 
