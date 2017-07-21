@@ -49,6 +49,22 @@ public interface AppConstans {
         String CLOUD_ACCOUNT_UID = "CLOUD_ACCOUNT_UID";
     }
 
+    interface Products {
+        int TYPE_INSERTS = 1; //插座
+    }
+
+    /**
+     * 取图
+     */
+    interface GetPhoto {
+        int GET_PHOTO_FROM_CAMERA = 1; //拍照
+        int GET_PHOTO_FROM_ALBUM = 2; //相册取图
+        int CROP_IMAGE = 3; //裁剪
+
+        int UPLOAD_IMG_SRC_WIDTH = 100; //头像的宽
+        int UPLOAD_IMG_SRC_HEIGHT = 100; //头像的高
+        int UPLOAD_IMG_SRC_LENGTH = 300; //头像的大小，单位为K
+    }
 
     /**
      * JSBridge

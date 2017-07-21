@@ -132,7 +132,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
 
         String error = fxObj.getError();
         int tokenStatus = fxObj.getToken_status();
-        String message = fxObj.getMessage();
+//        String message = fxObj.getMessage();
         String httpCode = fxObj.getHttpCode();
         if (error.equals("0") && tokenStatus == 0 && httpCode.equals("200")) {
             toUiSuccess(bodyStr, response.request());
@@ -140,7 +140,7 @@ public abstract class BaseCallback<T> implements okhttp3.Callback {
             //token需要刷新，目前做法是直接回调错误，让用户重新登录。后面做成调用接口以刷新token
             toUiError(Err2MsgUtils.CODE_TOKEN_TIMEOUT, null, response.request());
         } else {
-            toUiError(error, message, response.request());
+            toUiError(error, null, response.request());
         }
     }
 

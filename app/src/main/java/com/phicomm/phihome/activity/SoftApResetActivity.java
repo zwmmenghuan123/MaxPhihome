@@ -14,8 +14,8 @@ import android.widget.ProgressBar;
 
 import com.phicomm.phihome.PhApplication;
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.constants.CurrentDevice;
-import com.phicomm.phihome.constants.Products;
 import com.phicomm.phihome.event.NetworkNameChangeEvent;
 import com.phicomm.phihome.utils.NetworkUtils;
 import com.phicomm.phihome.utils.ToastUtil;
@@ -52,7 +52,7 @@ public class SoftApResetActivity extends BaseActivity {
 
     @Override
     public void afterInitView() {
-        if (Products.TYPE_INSERTS == getIntent().getIntExtra("type", 0)) {
+        if (AppConstans.Products.TYPE_INSERTS == getIntent().getIntExtra("type", 0)) {
             setPageTitle(R.string.add_x1_smart_inserts);
         } else {
             setPageTitle(R.string.add_smart_devices);

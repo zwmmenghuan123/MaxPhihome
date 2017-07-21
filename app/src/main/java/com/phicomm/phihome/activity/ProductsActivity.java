@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.adapter.ProductsTypeAdapter;
 import com.phicomm.phihome.bean.ProductTypeBean;
-import com.phicomm.phihome.constants.Products;
+import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.views.recyclerview.MyDecoration;
 import com.phicomm.phihome.views.recyclerview.RefreshLoadListener;
 
@@ -100,7 +100,7 @@ public class ProductsActivity extends BaseActivity {
     private void getData() {
         if (mList.size() == 0) {
             ProductTypeBean productTypeBean = new ProductTypeBean();
-            productTypeBean.setProductType(Products.TYPE_INSERTS);
+            productTypeBean.setProductType(AppConstans.Products.TYPE_INSERTS);
             productTypeBean.setProductTypeName("X1智能插排");
             productTypeBean.setProductTypeSsid("EasyLink_500C49");
             mList.add(productTypeBean);

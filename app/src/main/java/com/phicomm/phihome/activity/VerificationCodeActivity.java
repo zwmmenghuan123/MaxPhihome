@@ -121,6 +121,7 @@ public class VerificationCodeActivity extends BaseActivity {
         }
     }
 
+
     /**
      * 获取图形验证码
      */

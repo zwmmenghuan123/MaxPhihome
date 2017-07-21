@@ -100,15 +100,12 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.31'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okio:okio:1.11.0'
-    compile 'com.tencent.mars:mars-core:1.1.4'
     compile 'org.xutils:xutils:3.5.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.tencent.bugly:crashreport:latest.release'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.tencent.bugly:crashreport:latest.release'
-
+    compile 'com.tencent.mars:mars-core:1.1.4' //腾讯日志框架
+    compile 'org.greenrobot:eventbus:3.0.0' //eventbus
+    compile 'com.github.bumptech.glide:glide:3.7.0' //图片加载
+    compile 'com.tencent.bugly:crashreport:latest.release' //bugly
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22' //下拉刷新和上拉加载
+    compile 'com.jph.takephoto:takephoto_library:4.0.3' //拍照、取图、裁图 https://github.com/crazycodeboy/TakePhoto
+    compile 'top.zibin:Luban:1.1.2' //图片压缩https://github.com/Curzibn/Luban
 }

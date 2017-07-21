@@ -23,6 +23,7 @@ public class PathUtils {
      */
     public static final String EXTERNAL_PHIHOME = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "phihome" + File.separator;
 
+
     public static final String INTERNAL_COMMON = INTERNAL_CACHE + "common" + File.separator;
     public static final String EXTERNAL_COMMON = EXTERNAL_PHIHOME + "common" + File.separator;
 
@@ -34,6 +35,24 @@ public class PathUtils {
         }
         return imageCache;
     }
+
+
+    public static String getCameraImageDir() {
+        String imageCacheDir = EXTERNAL_PHIHOME + "camera" + File.separator;
+        File file = new File(imageCacheDir);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                return imageCacheDir;
+            }
+        }
+        boolean success = file.mkdirs();
+        if (success) {
+            return imageCacheDir;
+        }
+        return null;
+
+    }
+
 
     public static String getDownload() {
         if (FileUtils.isSDCardAvailable()) {

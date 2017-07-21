@@ -30,22 +30,12 @@
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_APP_CHANNEL}" />
 
-        <receiver
-            android:name=".receiver.NetworkStateReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -62,17 +52,28 @@
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.VerificationCodeActivity" />
         <activity android:name=".activity.AccountRegisterActivity" />
-        <activity android:name=".activity.SocketControlActivity"></activity>
+        <activity android:name=".activity.PersonalInformationActivity" />
+        <activity android:name=".activity.CropImageActivity" />
 
 
-        <receiver android:name=".receiver.NetworkStateReceiver"
+        <receiver
+            android:name=".receiver.NetworkStateReceiver"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.phicomm.phihome.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

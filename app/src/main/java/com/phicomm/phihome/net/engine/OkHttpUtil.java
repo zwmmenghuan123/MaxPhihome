@@ -32,7 +32,7 @@ import okhttp3.Response;
  */
 public class OkHttpUtil {
     private static volatile OkHttpUtil mOkHttpUtls;
-    private static OkHttpClient mHttpClient;
+    private static volatile OkHttpClient mHttpClient;
     private Handler mHandler;
 
     private OkHttpUtil() {
