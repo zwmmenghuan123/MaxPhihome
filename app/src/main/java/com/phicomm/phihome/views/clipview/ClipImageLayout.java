@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
