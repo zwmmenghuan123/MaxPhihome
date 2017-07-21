@@ -2,7 +2,6 @@ package com.phicomm.phihome.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.ImageView;
@@ -10,9 +9,9 @@ import android.widget.RelativeLayout;
 
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.constants.AppConstans;
-import com.phicomm.phihome.listener.GetPhotoListener;
+import com.phicomm.phihome.listener.GetPhotoBeforeListener;
+import com.phicomm.phihome.manager.imageloader.ImageLoader;
 import com.phicomm.phihome.popup.GetPhotoPopup;
-import com.phicomm.phihome.utils.GetPhotoUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,14 +20,12 @@ import butterknife.OnClick;
  * 个人信息界面
  * Created by xiaolei.yang on 2017/7/19.
  */
-public class PersonalInformationActivity extends BaseActivity implements GetPhotoListener {
+public class PersonalInformationActivity extends BaseActivity implements GetPhotoBeforeListener {
     @BindView(R.id.rl_head_portrait)
     RelativeLayout mRlHeadPortrait;
 
     @BindView(R.id.iv_head_portrait)
     ImageView mIvHeadPortrait;
-
-    Uri imageUri;
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
@@ -75,35 +72,30 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
 
     @Override
     public void getPhotoFromCamera() {
-        imageUri = GetPhotoUtils.startTakePhoto(this);
+        Intent intent = new Intent(this, GetPhotoActivity.class);
+        intent.putExtra("type", AppConstans.GetPhoto.GET_PHOTO_FROM_CAMERA);
+        startActivityForResult(intent, AppConstans.GetPhoto.ONE_DRAGON);
     }
 
     @Override
     public void getPhotoFromAlbum() {
-        GetPhotoUtils.startChoosePhoto(this);
-
-    }
-
-    @Override
-    public void getPhotoFromCameraComplete(Uri uri) {
-        GetPhotoUtils.startCropImage(this, uri);
-    }
-
-    @Override
-    public void getPhotoFromAlbumComplete(Uri uri) {
-        GetPhotoUtils.startCropImage(this, uri);
+        Intent intent = new Intent(this, GetPhotoActivity.class);
+        intent.putExtra("type", AppConstans.GetPhoto.GET_PHOTO_FROM_ALBUM);
+        startActivityForResult(intent, AppConstans.GetPhoto.ONE_DRAGON);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AppConstans.GetPhoto.GET_PHOTO_FROM_CAMERA) {
-            GetPhotoUtils.onActivityResultForTakePhoto(requestCode, resultCode, imageUri, this);
-        } else if (requestCode == AppConstans.GetPhoto.GET_PHOTO_FROM_ALBUM) {
-            GetPhotoUtils.onActivityResultForChoosePhoto(requestCode, resultCode, data, this);
-        } else if (requestCode == AppConstans.GetPhoto.CROP_IMAGE) {
-            GetPhotoUtils.onActivityResultForCropImage(requestCode, resultCode, data, this, mIvHeadPortrait, true);
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case AppConstans.GetPhoto.ONE_DRAGON:
+                if (resultCode == RESULT_OK && data != null) {
+                    String path = data.getStringExtra("path");
+                    ImageLoader.getLoader(this).load(path).into(mIvHeadPortrait);
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
 
     }

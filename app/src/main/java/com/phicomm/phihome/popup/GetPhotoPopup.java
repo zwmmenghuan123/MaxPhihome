@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.TextView;
 
 import com.phicomm.phihome.R;
-import com.phicomm.phihome.listener.GetPhotoListener;
+import com.phicomm.phihome.listener.GetPhotoBeforeListener;
 
 /**
  * 拍照、相册取图的弹窗
@@ -25,7 +25,7 @@ public class GetPhotoPopup {
     private Activity mContext;
     private PopupWindow popupWindow;
 
-    public GetPhotoPopup(Activity context, final GetPhotoListener listener) {
+    public GetPhotoPopup(Activity context, final GetPhotoBeforeListener listener) {
         mContext = context;
 
 
