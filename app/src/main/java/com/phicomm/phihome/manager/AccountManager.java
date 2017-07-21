@@ -40,6 +40,7 @@ public class AccountManager {
 
     public String getAuthCode() {
         return (String) SpfUtils.get(AppConstans.Sp.AUTHORIZATION_CODE, "");
+//        return "feixun.SH_7";
     }
 
     public boolean hasAuthCode() {
@@ -76,6 +77,35 @@ public class AccountManager {
 
     public String getUid() {
         return (String) SpfUtils.get(AppConstans.Sp.CLOUD_ACCOUNT_UID, "");
+    }
+
+    public void saveRegisterCodeTime(int left) {
+        SpfUtils.put("register_code_time", System.currentTimeMillis() / 1000 + "-" + left);
+    }
+
+    public int getRegisterCodeTime() {
+        String lastStr = (String) SpfUtils.get("register_code_time", "");
+        if (TextUtils.isEmpty(lastStr)) {
+            return AppConstans.Common.REGISTER_CODE_TIME;
+        }
+
+        try {
+            String[] split = lastStr.split("-");
+            int lastExitTime = Integer.valueOf(split[0]);
+            int lastLef = Integer.valueOf(split[1]);
+            int now = (int) (System.currentTimeMillis() / 1000);
+
+            int now2Last = now - lastExitTime;
+            if (lastLef > now2Last) {
+                return lastLef - now2Last;
+            }
+
+            return AppConstans.Common.REGISTER_CODE_TIME;
+
+        } catch (Exception e) {
+            LogUtils.debug("getRegisterCodeTime exception: " + e);
+        }
+        return AppConstans.Common.REGISTER_CODE_TIME;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.phicomm.phihome.constants;
 
 
+import com.phicomm.phihome.BuildConfig;
 import com.phicomm.phihome.utils.NetworkUtils;
 
 /**
@@ -15,12 +16,15 @@ public interface UrlConfig {
     }
 
     interface CloudAccountUrl {
-        String URL_HOST = "https://account.phicomm.com";
+        String URL_HOST = BuildConfig.host_cloud_acount;
         String GET_AUTHORIZATION = URL_HOST + "/v1/authorization"; //获取授权码
         String LOGIN = URL_HOST + "/v1/login"; //登陆云
+        String CHECK_PHONE = URL_HOST + "/v1/checkPhonenumber"; //退出登陆
         String LOGOUT = URL_HOST + "/v1/logout"; //退出登陆
         String GET_CAPTCHA = URL_HOST + "/v1/captcha"; //获取图形验证码
         String GET_VER_CODE = URL_HOST + "/v1/verificationMsg"; //获取验证码
+//        String GET_VER_CODE = "https://account.phicomm.com" + "/v1/verificationMsg"; //获取验证码
+        String CHECK_VER_CODE = URL_HOST + "/v1/verifyVerificationCode"; //校验短信验证码
         String REGISTER = URL_HOST + "/v1/account"; //注册账号
     }
 

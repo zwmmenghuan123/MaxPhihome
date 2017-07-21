@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.phicomm.phihome.activity.VerificationCodeActivity">
+    tools:context="com.phicomm.phihome.activity.RegisterCodeActivity">
 
     <include layout="@layout/include_common_header" />
 
@@ -87,8 +87,9 @@
             android:maxLength="6" />
 
         <TextView
+            android:gravity="center"
             android:id="@+id/tv_get_code"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

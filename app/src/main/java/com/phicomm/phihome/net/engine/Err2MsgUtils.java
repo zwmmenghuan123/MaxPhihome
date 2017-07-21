@@ -37,8 +37,8 @@ public class Err2MsgUtils {
         mMap.put(CODE_TOKEN_TIMEOUT, "登录过期，请重新登录");
 
         //服务器返回的错误
-        mMap.put("1", "验证码错误");
-        mMap.put("2", "验证码过期");
+        mMap.put("1", "短信验证码错误");
+        mMap.put("2", "短信验证码过期");
         mMap.put("5", "token失效");
         mMap.put("7", "用户不存在");
         mMap.put("8", "密码错误");
@@ -48,8 +48,8 @@ public class Err2MsgUtils {
         mMap.put("32", "密码格式错误");
         mMap.put("36", "请刷新图形验证码");
         mMap.put("37", "图片验证码不正确");
-        mMap.put("38", "验证码请求过快");
-        mMap.put("39", "验证码请求超出限制");
+        mMap.put("38", "短信验证码请求过快");
+        mMap.put("39", "短信验证码请求超出限制");
         mMap.put("50", "服务器异常");
     }
 

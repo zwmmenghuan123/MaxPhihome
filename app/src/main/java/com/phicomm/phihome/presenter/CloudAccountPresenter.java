@@ -23,8 +23,10 @@ import okhttp3.Request;
  * Created by qisheng.lv on 2017/4/12.
  */
 public class CloudAccountPresenter {
-    private static final String CLIENT_ID = "7";
-    private static final String CLIENT_SECRET = "feixun*123";
+    //    private static final String CLIENT_ID = "7";
+//    private static final String CLIENT_SECRET = "feixun*123";
+    private static final String CLIENT_ID = "9167601";
+    private static final String CLIENT_SECRET = "C6D63F7BA902865E7EEB024BA21DAD39";
     private static final String RESPONSE_TYPE = "code";
     private static final String SCOPE = "write";
     private static final String VER_CODE_TYPE = "0";
@@ -72,7 +74,7 @@ public class CloudAccountPresenter {
      * 登陆云账号
      *
      * @param phonenumber 账号
-     * @param password  密码
+     * @param password    密码
      */
     public void loginCloud(final String phonenumber, final String password) {
         String md5Pwd = EntryUtils.getMd5(password);
@@ -133,6 +135,35 @@ public class CloudAccountPresenter {
 
     }
 
+    /**
+     * 检查手机号是否已注册
+     *
+     * @param phonenumber
+     */
+    public void checkPhone(String phonenumber) {
+        mModel.checkPhone(mManager.getAuthCode(), null, phonenumber, new BaseCallback() {
+
+            @Override
+            public void onError(String code, String msg) {
+                if (mView != null) {
+                    if (code.equals("14")) {
+                        mView.onCheckPhoneSuccess(true);
+                    } else {
+                        mView.onCheckPhoneError(code, msg);
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(String result, Request request) {
+                if (mView != null) {
+                    mView.onCheckPhoneSuccess(false);
+                }
+            }
+        });
+
+    }
+
     public void getCaptcha() {
         mModel.getCaptcha(mManager.getAuthCode(), new BeanCallback<Captcha>() {
 
@@ -169,6 +200,24 @@ public class CloudAccountPresenter {
             }
         });
 
+    }
+
+    public void checkVerCode(String phonenumber, String verificationcode) {
+        mModel.checkVerCode(mManager.getAuthCode(), phonenumber, verificationcode, new BaseCallback() {
+            @Override
+            public void onError(String code, String msg) {
+                if (mView != null) {
+                    mView.onCheckVerCodeError(code, msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(String result, Request request) {
+                if (mView != null) {
+                    mView.onCheckVerCodeSuccess();
+                }
+            }
+        });
     }
 
     public void register(String password, String phonenumber, String verificationcode) {

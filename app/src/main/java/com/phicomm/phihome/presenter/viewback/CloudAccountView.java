@@ -34,6 +34,14 @@ public class CloudAccountView {
     }
 
 
+    public void onCheckPhoneError(String code,String msg){
+
+    }
+
+    public void onCheckPhoneSuccess(boolean isExist){
+
+    }
+
     public void onGetCaptchaError(String code, String msg) {
 
     }
@@ -48,6 +56,14 @@ public class CloudAccountView {
     }
 
     public void onGetVerCodeSuccess() {
+
+    }
+
+    public void onCheckVerCodeError(String code,String msg){
+
+    }
+
+    public void onCheckVerCodeSuccess(){
 
     }
 

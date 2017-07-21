@@ -36,6 +36,7 @@
     <string name="register_pwd_diff">两次输入的密码不一致</string>
     <string name="register_no_info">请重新输入信息</string>
     <string name="register_success">注册成功</string>
+    <string name="check_phone_already_register">该手机号已注册，你可以直接登录</string>
 
 
     <string name="common_image_description">通用图片描述</string>
