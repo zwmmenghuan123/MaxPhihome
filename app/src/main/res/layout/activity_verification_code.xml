@@ -87,8 +87,9 @@
             android:maxLength="6" />
 
         <TextView
+            android:gravity="center"
             android:id="@+id/tv_get_code"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

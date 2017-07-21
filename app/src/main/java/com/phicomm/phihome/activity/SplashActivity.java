@@ -23,6 +23,7 @@ public class SplashActivity extends BaseActivity {
     private CloudAccountPresenter mPresenter;
     private String mPhone;
     private String mPwd;
+    private boolean mIsAutoLogin = true;
 
     Runnable mR = new Runnable() {
         @Override
@@ -40,9 +41,11 @@ public class SplashActivity extends BaseActivity {
     public void afterInitView() {
         mHandler = new Handler();
         showTargetVersionAlert();
-        mHandler.postDelayed(mR, SPLASH_TIME);
         initPresenter();
-        getAuthorization();
+        if (mIsAutoLogin) {
+            getAuthorization();
+        }
+        mHandler.postDelayed(mR, SPLASH_TIME);
     }
 
     private void initPresenter() {
@@ -73,14 +76,15 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-
+    /**
+     * 获取授权码
+     */
     private void getAuthorization() {
         mPhone = (String) SpfUtils.get(AppConstans.Sp.CLOUD_ACCOUNT_PHONE, "");
         mPwd = (String) SpfUtils.get(AppConstans.Sp.CLOUD_ACCOUNT_PWD, "");
         if (!TextUtils.isEmpty(mPhone) && !TextUtils.isEmpty(mPwd)) {
             mPresenter.authorization();
         }
-
     }
 
     private void doLogin() {

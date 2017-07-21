@@ -13,12 +13,11 @@ public interface AppConstans {
     interface Common {
         String PLATFORM_ID = "2015100011";
 
-        /**
-         * header头部
-         */
         String AUTHORIZATION = "Authorization";
 
         String INTENT_URL = "INTENT_URL";
+
+        int REGISTER_CODE_TIME = 60; //短信验证码默认倒计时
     }
 
     /**
