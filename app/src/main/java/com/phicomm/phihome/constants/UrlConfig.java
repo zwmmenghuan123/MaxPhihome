@@ -31,6 +31,7 @@ public interface UrlConfig {
         String AVATAR_URL = URL_HOST + "/pic/avatarUrl"; //获取头像url
         String ACCOUNT_DETAIL = URL_HOST + "/v1/accountDetail"; //获取用户云账户公共信息
         String PROPERTY = URL_HOST + "/v1/property"; //修改用户云账户公共信息
+        String PASSWORD = URL_HOST +"/v1/password"; //修改密码
     }
 
     interface SoftApInfoUrl {

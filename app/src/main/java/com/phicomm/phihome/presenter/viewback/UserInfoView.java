@@ -1,6 +1,7 @@
 package com.phicomm.phihome.presenter.viewback;
 
 import com.phicomm.phihome.bean.AccountDetailsBean;
+import com.phicomm.phihome.bean.FxResponse;
 import com.phicomm.phihome.bean.UploadBaseBean;
 
 /**
@@ -38,6 +39,14 @@ public class UserInfoView {
     }
 
     public void propertyError(String code, String msg) {
+
+    }
+
+    public void modifyPasswordSuccess(FxResponse fxResponse) {
+//        {"token_status":"0","error":"0"}
+    }
+
+    public void modifyPasswordError(String code, String msg) {
 
     }
 

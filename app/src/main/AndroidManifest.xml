@@ -56,6 +56,7 @@
         <activity android:name=".activity.CropImageActivity" />
         <activity android:name=".activity.GetPhotoActivity" />
         <activity android:name=".activity.ChangeNicknameActivity" />
+        <activity android:name=".activity.ModifyPasswordActivity"/>
 
 
         <receiver

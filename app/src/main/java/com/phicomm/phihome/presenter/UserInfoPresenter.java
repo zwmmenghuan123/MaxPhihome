@@ -8,6 +8,7 @@ import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.model.UserInfoModel;
 import com.phicomm.phihome.net.callback.BeanCallback;
 import com.phicomm.phihome.presenter.viewback.UserInfoView;
+import com.phicomm.phihome.utils.EntryUtils;
 
 /**
  * 用户信息
@@ -99,6 +100,24 @@ public class UserInfoPresenter {
             public void onError(String code, String msg) {
                 if (mUserInfoView != null) {
                     mUserInfoView.propertyError(code, msg);
+                }
+            }
+        });
+    }
+
+    public void password(String oldPassword, String newPassword) {
+        mUserInfoModel.password(EntryUtils.getMd5(oldPassword), EntryUtils.getMd5(newPassword), new BeanCallback<FxResponse>() {
+            @Override
+            public void onSuccess(FxResponse fxResponse) {
+                if (mUserInfoView != null) {
+                    mUserInfoView.modifyPasswordSuccess(fxResponse);
+                }
+            }
+
+            @Override
+            public void onError(String code, String msg) {
+                if (mUserInfoView != null) {
+                    mUserInfoView.modifyPasswordError(code, msg);
                 }
             }
         });

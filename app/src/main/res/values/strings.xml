@@ -92,4 +92,6 @@
     <string name="cancel">取消</string>
     <string name="crop">裁剪</string>
 
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
 </resources>

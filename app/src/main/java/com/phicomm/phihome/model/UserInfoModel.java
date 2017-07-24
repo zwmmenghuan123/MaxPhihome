@@ -63,5 +63,20 @@ public class UserInfoModel {
                 .run(null, callback);
     }
 
+    /**
+     * 修改密码
+     *
+     * @param oldPassword 旧密码（用户明文密码的MD5值）
+     * @param newPassword 新密码（用户明文密码的MD5值）
+     * @param callback
+     */
+    public void password(String oldPassword, String newPassword, BaseCallback callback) {
+        OkHttpUtil.post(UrlConfig.CloudAccountUrl.PASSWORD)
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .addParams("newpassword", newPassword)
+                .addParams("oldpassword", oldPassword)
+                .run(null, callback);
+    }
+
 
 }

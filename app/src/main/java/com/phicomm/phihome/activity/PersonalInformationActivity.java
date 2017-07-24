@@ -164,6 +164,12 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
         startActivity(intent);
     }
 
+    @OnClick(R.id.tv_modify_password)
+    public void tv_modify_password() {
+        Intent intent = new Intent(this, ModifyPasswordActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btn_exit)
     public void btn_exit() {
         new AlertDialog.Builder(this).setMessage("退出后将无法控制设备，无法接收消息提醒，确定要退出吗？")
