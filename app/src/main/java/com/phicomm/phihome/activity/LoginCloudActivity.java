@@ -43,9 +43,8 @@ public class LoginCloudActivity extends BaseActivity {
     public void afterInitView() {
         hideBack();
         setPageTitle(getString(R.string.title_login_cloud));
-//        initPresenter();
-//        getUser();
-        gotoMainActivity();
+        initPresenter();
+        getUser();
     }
 
     private void getUser() {

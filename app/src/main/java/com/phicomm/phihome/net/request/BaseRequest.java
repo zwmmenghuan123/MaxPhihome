@@ -2,7 +2,6 @@ package com.phicomm.phihome.net.request;
 
 import android.text.TextUtils;
 
-import com.phicomm.phihome.manager.AccountManager;
 import com.phicomm.phihome.net.callback.BaseCallback;
 import com.phicomm.phihome.net.engine.OkHttpUtil;
 
@@ -53,7 +52,6 @@ public abstract class BaseRequest {
     public <T> Call run(String tag, BaseCallback<T> callback) {
         Request request = generateRequest();
         mBuilder.tag(TextUtils.isEmpty(tag) ? request.url() : tag);
-        addHeader("Authorization", AccountManager.getInstance().getToken());
         return OkHttpUtil.execute(request, callback);
     }
 

@@ -4,16 +4,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.listener.GetPhotoBeforeListener;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 import com.phicomm.phihome.popup.GetPhotoPopup;
+import com.phicomm.phihome.presenter.UploadBasePresenter;
+import com.phicomm.phihome.presenter.viewback.UploadBaseView;
 import com.phicomm.phihome.utils.Base64Utils;
+import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.PathUtils;
+import com.phicomm.phihome.utils.ToastUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,6 +42,8 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
     @BindView(R.id.iv_head_portrait)
     ImageView mIvHeadPortrait;
 
+    UploadBasePresenter mUploadBasePresenter;
+
     @Override
     public void initLayout(Bundle savedInstanceState) {
         setContentView(R.layout.activity_personal_information);
@@ -45,6 +53,23 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
     @Override
     public void afterInitView() {
         setPageTitle("个人信息");
+        mUploadBasePresenter = new UploadBasePresenter(new UploadBaseView() {
+            @Override
+            public void uploadBaseSuccess(UploadBaseBean uploadBaseBean) {
+                if (uploadBaseBean == null) {
+                    uploadBaseError("0", null);
+                } else {
+                    String url = uploadBaseBean.getUrl();
+                    LogUtils.error("=======", "url:" + url);
+                }
+            }
+
+            @Override
+            public void uploadBaseError(String code, String msg) {
+                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "上传图片失败，请稍后再试。" : msg);
+            }
+        });
+
     }
 
     @Override
@@ -117,6 +142,8 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
                         e.printStackTrace();
                     }
                     ImageLoader.getLoader(this).load(file.getAbsolutePath()).into(mIvHeadPortrait);
+
+                    mUploadBasePresenter.uploadBase64(imageString, "1");
                 }
                 break;
             default:
