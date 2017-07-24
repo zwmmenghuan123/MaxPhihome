@@ -58,7 +58,7 @@ public class ChangeNicknameActivity extends BaseActivity {
 
             @Override
             public void propertyError(String code, String msg) {
-                ToastUtil.show(ChangeNicknameActivity.this, TextUtils.isEmpty(msg) ? "" : msg);
+                ToastUtil.show(TextUtils.isEmpty(msg) ? "" : msg);
             }
         });
 
@@ -67,11 +67,11 @@ public class ChangeNicknameActivity extends BaseActivity {
     @OnClick(R.id.tv_save)
     public void tv_save() {
         if (TextUtils.isEmpty(mEtNickname.getText()) || TextUtils.isEmpty(mEtNickname.getText().toString())) {
-            ToastUtil.show(this, "昵称不可为空");
+            ToastUtil.show("昵称不可为空");
             return;
         }
         if (mEtNickname.getText().toString().equals(mNickname)) {
-            ToastUtil.show(this, "昵称与原昵称相同");
+            ToastUtil.show("昵称与原昵称相同");
             return;
         }
         AccountDetailsBean bean = new AccountDetailsBean();

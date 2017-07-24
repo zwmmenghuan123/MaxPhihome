@@ -64,7 +64,7 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void accountDetailError(String code, String msg) {
-                ToastUtil.show(getActivity(), TextUtils.isEmpty(msg) ? "获取个人信息失败，请稍后再试" : msg);
+                ToastUtil.show(TextUtils.isEmpty(msg) ? "获取个人信息失败，请稍后再试" : msg);
             }
         });
 

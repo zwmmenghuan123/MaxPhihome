@@ -45,7 +45,7 @@ public class ModifyPasswordActivity extends BaseActivity {
 
             @Override
             public void modifyPasswordError(String code, String msg) {
-                ToastUtil.show(ModifyPasswordActivity.this, TextUtils.isEmpty(msg) ? "修改密码失败" : msg);
+                ToastUtil.show(TextUtils.isEmpty(msg) ? "修改密码失败" : msg);
             }
         });
 
@@ -54,15 +54,15 @@ public class ModifyPasswordActivity extends BaseActivity {
     @OnClick(R.id.tv_save)
     public void tv_save() {
         if (TextUtils.isEmpty(mEtOldPassword.getText()) || TextUtils.isEmpty(mEtOldPassword.getText().toString())) {
-            ToastUtil.show(ModifyPasswordActivity.this, "请输入旧密码");
+            ToastUtil.show("请输入旧密码");
             return;
         }
         if (TextUtils.isEmpty(mEtNewPassword.getText()) || TextUtils.isEmpty(mEtNewPassword.getText().toString())) {
-            ToastUtil.show(ModifyPasswordActivity.this, "请输入新密码");
+            ToastUtil.show( "请输入新密码");
             return;
         }
         if (mEtNewPassword.getText().toString().length() < 6 || mEtNewPassword.getText().toString().length() > 20) {
-            ToastUtil.show(ModifyPasswordActivity.this, "请输入0~20位的新密码");
+            ToastUtil.show("请输入0~20位的新密码");
             return;
         }
 

@@ -21,7 +21,6 @@ import com.phicomm.phihome.popup.GetPhotoPopup;
 import com.phicomm.phihome.presenter.UserInfoPresenter;
 import com.phicomm.phihome.presenter.viewback.UserInfoView;
 import com.phicomm.phihome.utils.Base64Utils;
-import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.PathUtils;
 import com.phicomm.phihome.utils.ToastUtil;
 
@@ -73,14 +72,13 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
                     uploadBaseError("0", null);
                 } else {
                     String url = uploadBaseBean.getUrl();
-                    LogUtils.error("=======", "url:" + url);
                     EventBus.getDefault().post(new UploadHeadPortraitEvent(url));
                 }
             }
 
             @Override
             public void uploadBaseError(String code, String msg) {
-                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "上传图片失败，请稍后再试。" : msg);
+                ToastUtil.show( TextUtils.isEmpty(msg) ? "上传图片失败，请稍后再试。" : msg);
             }
 
             @Override
@@ -95,7 +93,7 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
 
             @Override
             public void avatarUrlError(String code, String msg) {
-                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "获取头像失败，请稍后再试。" : msg);
+                ToastUtil.show( TextUtils.isEmpty(msg) ? "获取头像失败，请稍后再试。" : msg);
             }
 
             @Override
@@ -113,7 +111,7 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
 
             @Override
             public void accountDetailError(String code, String msg) {
-                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "获取个人信息失败，请稍后再试" : msg);
+                ToastUtil.show( TextUtils.isEmpty(msg) ? "获取个人信息失败，请稍后再试" : msg);
             }
         });
 
