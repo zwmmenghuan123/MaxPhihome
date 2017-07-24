@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.activity.PersonalInformationActivity;
 import com.phicomm.phihome.bean.AccountDetailsBean;
+import com.phicomm.phihome.event.ChangeNicknameEvent;
 import com.phicomm.phihome.event.UploadHeadPortraitEvent;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 import com.phicomm.phihome.presenter.UserInfoPresenter;
@@ -83,6 +84,14 @@ public class MineFragment extends BaseFragment {
         if (mAccountDetailsBean != null) {
             mAccountDetailsBean.setImg(event.getUrl());
             ImageLoader.getLoader(getActivity()).load(mAccountDetailsBean.getImg()).into(mIvHeadPortrait);
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(ChangeNicknameEvent event) {
+        if (mAccountDetailsBean != null) {
+            mAccountDetailsBean.setNickname(event.getNickname());
+            mTvNickname.setText(TextUtils.isEmpty(mAccountDetailsBean.getNickname()) ? "" : mAccountDetailsBean.getNickname());
         }
     }
 

@@ -1,9 +1,9 @@
 package com.phicomm.phihome.presenter;
 
-import android.util.Log;
-
+import com.alibaba.fastjson.JSON;
 import com.phicomm.phihome.bean.AccountBean;
 import com.phicomm.phihome.bean.AccountDetailsBean;
+import com.phicomm.phihome.bean.FxResponse;
 import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.model.UserInfoModel;
 import com.phicomm.phihome.net.callback.BeanCallback;
@@ -16,10 +16,10 @@ import com.phicomm.phihome.presenter.viewback.UserInfoView;
 
 public class UserInfoPresenter {
     private UserInfoModel mUserInfoModel;
-    private UserInfoView mUploadBaseView;
+    private UserInfoView mUserInfoView;
 
-    public UserInfoPresenter(UserInfoView uploadBaseView) {
-        mUploadBaseView = uploadBaseView;
+    public UserInfoPresenter(UserInfoView userInfoView) {
+        mUserInfoView = userInfoView;
         mUserInfoModel = new UserInfoModel();
     }
 
@@ -27,15 +27,15 @@ public class UserInfoPresenter {
         mUserInfoModel.uploadBase64(imgBase64, type, new BeanCallback<UploadBaseBean>() {
             @Override
             public void onSuccess(UploadBaseBean uploadBaseBean) {
-                if (mUploadBaseView != null) {
-                    mUploadBaseView.uploadBaseSuccess(uploadBaseBean);
+                if (mUserInfoView != null) {
+                    mUserInfoView.uploadBaseSuccess(uploadBaseBean);
                 }
             }
 
             @Override
             public void onError(String code, String msg) {
-                if (mUploadBaseView != null) {
-                    mUploadBaseView.uploadBaseError(code, msg);
+                if (mUserInfoView != null) {
+                    mUserInfoView.uploadBaseError(code, msg);
                 }
             }
         });
@@ -45,15 +45,15 @@ public class UserInfoPresenter {
         mUserInfoModel.avatarUrl(new BeanCallback<UploadBaseBean>() {
             @Override
             public void onSuccess(UploadBaseBean uploadBaseBean) {
-                if (mUploadBaseView != null) {
-                    mUploadBaseView.avatarUrlSuccess(uploadBaseBean);
+                if (mUserInfoView != null) {
+                    mUserInfoView.avatarUrlSuccess(uploadBaseBean);
                 }
             }
 
             @Override
             public void onError(String code, String msg) {
-                if (mUploadBaseView != null) {
-                    mUploadBaseView.avatarUrlError(code, msg);
+                if (mUserInfoView != null) {
+                    mUserInfoView.avatarUrlError(code, msg);
                 }
             }
         });
@@ -61,16 +61,14 @@ public class UserInfoPresenter {
 
     public void accountDetail() {
         mUserInfoModel.accountDetail(new BeanCallback<AccountBean>() {
-
-
             @Override
             public void onSuccess(AccountBean accountBean) {
                 if (accountBean != null) {
                     AccountDetailsBean accountDetailsBean = accountBean.getData();
                     if (accountDetailsBean != null) {
-                      if (mUploadBaseView!=null){
-                          mUploadBaseView.accountDetailSuccess(accountDetailsBean);
-                      }
+                        if (mUserInfoView != null) {
+                            mUserInfoView.accountDetailSuccess(accountDetailsBean);
+                        }
                     } else {
                         onError("0", null);
                     }
@@ -81,7 +79,27 @@ public class UserInfoPresenter {
 
             @Override
             public void onError(String code, String msg) {
-                Log.e("=======", "onError: " + code + "===" + msg);
+                if (mUserInfoView != null) {
+                    mUserInfoView.accountDetailError(code, msg);
+                }
+            }
+        });
+    }
+
+    public void property(AccountDetailsBean accountDetailsBean) {
+        mUserInfoModel.property(JSON.toJSONString(accountDetailsBean), new BeanCallback<FxResponse>() {
+            @Override
+            public void onSuccess(FxResponse fxResponse) {
+                if (mUserInfoView != null) {
+                    mUserInfoView.propertySuccess();
+                }
+            }
+
+            @Override
+            public void onError(String code, String msg) {
+                if (mUserInfoView != null) {
+                    mUserInfoView.propertyError(code, msg);
+                }
             }
         });
     }

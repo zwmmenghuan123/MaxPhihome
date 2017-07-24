@@ -13,6 +13,7 @@ import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.AccountDetailsBean;
 import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.constants.AppConstans;
+import com.phicomm.phihome.event.ChangeNicknameEvent;
 import com.phicomm.phihome.event.UploadHeadPortraitEvent;
 import com.phicomm.phihome.listener.GetPhotoBeforeListener;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
@@ -25,6 +26,7 @@ import com.phicomm.phihome.utils.PathUtils;
 import com.phicomm.phihome.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -62,6 +64,7 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
 
     @Override
     public void afterInitView() {
+        EventBus.getDefault().register(this);
         setPageTitle("个人信息");
         mUploadBasePresenter = new UserInfoPresenter(new UserInfoView() {
             @Override
@@ -128,6 +131,20 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
     }
 
     @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void onEventMainThread(ChangeNicknameEvent event) {
+        if (mAccountDetailsBean != null) {
+            mAccountDetailsBean.setNickname(event.getNickname());
+            mTvNickname.setText(TextUtils.isEmpty(mAccountDetailsBean.getNickname()) ? "" : mAccountDetailsBean.getNickname());
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
@@ -136,6 +153,15 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
     public void rl_head_portrait() {
         GetPhotoPopup photoPopup = new GetPhotoPopup(this, this);
         photoPopup.showAsDropDown(mRlHeadPortrait);
+    }
+
+    @OnClick(R.id.rl_nickname)
+    public void tv_nickname() {
+        Intent intent = new Intent(this, ChangeNicknameActivity.class);
+        if (mAccountDetailsBean != null) {
+            intent.putExtra("nickname", mAccountDetailsBean.getNickname());
+        }
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_exit)

@@ -30,6 +30,7 @@ public interface UrlConfig {
         String UPLOAD_BASE64 = URL_HOST + "/pic/uploadBase64"; //上传Base64字符串
         String AVATAR_URL = URL_HOST + "/pic/avatarUrl"; //获取头像url
         String ACCOUNT_DETAIL = URL_HOST + "/v1/accountDetail"; //获取用户云账户公共信息
+        String PROPERTY = URL_HOST + "/v1/property"; //修改用户云账户公共信息
     }
 
     interface SoftApInfoUrl {

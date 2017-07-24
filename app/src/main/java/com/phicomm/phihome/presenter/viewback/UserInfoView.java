@@ -33,4 +33,12 @@ public class UserInfoView {
 
     }
 
+    public void propertySuccess() {
+
+    }
+
+    public void propertyError(String code, String msg) {
+
+    }
+
 }

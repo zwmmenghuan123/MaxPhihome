@@ -41,13 +41,25 @@ public class UserInfoModel {
     }
 
     /**
-     * 获取账户详情
+     * 获取账户信息
      *
      * @param callback 请求回调。
      */
     public void accountDetail(BaseCallback callback) {
         OkHttpUtil.get(UrlConfig.CloudAccountUrl.ACCOUNT_DETAIL)
                 .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .run(null, callback);
+    }
+
+    /**
+     * 修改账户信息
+     *
+     * @param callback 请求回调。
+     */
+    public void property(String accountDetailsString, BaseCallback callback) {
+        OkHttpUtil.post(UrlConfig.CloudAccountUrl.PROPERTY)
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .addParams("data", accountDetailsString)
                 .run(null, callback);
     }
 
