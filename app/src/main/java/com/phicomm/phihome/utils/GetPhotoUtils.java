@@ -45,7 +45,7 @@ public class GetPhotoUtils {
         Uri imageUri;
         String dir = PathUtils.getCameraImageDir();
         if (TextUtils.isEmpty(dir)) {
-            ToastUtil.show(mContext, "创建照片路径失败，请检查应用读写权限或稍后再试。");
+            ToastUtil.show("创建照片路径失败，请检查应用读写权限或稍后再试。");
             return null;
         }
 
@@ -53,11 +53,11 @@ public class GetPhotoUtils {
         try {
             boolean createFileSuccess = file.createNewFile();
             if (!createFileSuccess) {
-                ToastUtil.show(mContext, "创建照片失败，请检查应用权限或稍后再试");
+                ToastUtil.show("创建照片失败，请检查应用权限或稍后再试");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            ToastUtil.show(mContext, "创建照片失败，请检查应用读写权限或稍后再试。");
+            ToastUtil.show("创建照片失败，请检查应用读写权限或稍后再试。");
         }
 
         Map<String, Object> map = IntentUtils.getCameraIntent(file);
@@ -293,7 +293,7 @@ public class GetPhotoUtils {
         if (imagePath != null) {
             ImageLoader.getLoader(mContext).load(imagePath).into(imageView);
         } else {
-            ToastUtil.show(mContext, "获取图片失败 ");
+            ToastUtil.show("获取图片失败 ");
         }
     }
 

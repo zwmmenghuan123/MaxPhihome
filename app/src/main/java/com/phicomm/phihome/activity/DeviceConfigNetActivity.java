@@ -111,7 +111,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
 //                if (writeSsidInfoBean != null) {
 //                    if (0 == writeSsidInfoBean.getErrorCode()) {
-//                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.write_ssid_info_success);
+//                        ToastUtil.show(R.string.write_ssid_info_success);
 ////                        getConnectionState();
 //                        LogUtils.error("=======writeSsidSSuccess: 写入成功");
 //
@@ -131,7 +131,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             public void writeSsidError(String code, String msg) {
 //                LogUtils.error("=======writeSsidError: " + msg);
 //                msg = TextUtils.isEmpty(msg) ? CommonUtils.getString(R.string.write_ssid_info_fail) : msg;
-//                ToastUtil.show(DeviceConfigNetActivity.this, msg);
+//                ToastUtil.show(msg);
                 mTvGettingWifi.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -145,7 +145,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
             public void getConnStateSuccess(GetConnStateBean getConnStateBean) {
                 if (getConnStateBean != null) {
                     if (1 == getConnStateBean.getConn_to_router() && 1 == getConnStateBean.getConn_to_server()) {
-                        ToastUtil.show(DeviceConfigNetActivity.this, R.string.close_device_soft_ap);
+                        ToastUtil.show(R.string.close_device_soft_ap);
                         closeSoftAp();
                     } else {
                         getConnStateError("0", null);
@@ -162,7 +162,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
             @Override
             public void closeSoftApSuccess(WriteSsidInfoBean writeSsidInfoBean) {
-                ToastUtil.show(DeviceConfigNetActivity.this, R.string.close_device_soft_ap_success);
+                ToastUtil.show(R.string.close_device_soft_ap_success);
             }
 
             @Override
@@ -174,8 +174,8 @@ public class DeviceConfigNetActivity extends BaseActivity {
             public void bindDeviceSuccess() {
                 mProgressBarRoot.setVisibility(View.GONE);
                 LogUtils.error("======bindDeviceSuccess: ");
-                ToastUtil.show(DeviceConfigNetActivity.this, "绑定成功");
-                Intent intent = new Intent(DeviceConfigNetActivity.this, MainActivity.class);
+                ToastUtil.show("绑定成功");
+                Intent intent = new Intent(DeviceConfigNetActivity.this,MainActivity.class);
                 startActivity(intent);
             }
 
@@ -186,7 +186,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
 
                 if ("11002".equals(code)) {
                     mProgressBarRoot.setVisibility(View.GONE);
-                    ToastUtil.show(DeviceConfigNetActivity.this, TextUtils.isEmpty(msg) ? "设备已经被绑定，请先解除绑定" : msg);
+                    ToastUtil.show(TextUtils.isEmpty(msg) ? "设备已经被绑定，请先解除绑定" : msg);
                 } else {
                     mTvGettingWifi.postDelayed(new Runnable() {
                         @Override
@@ -234,7 +234,7 @@ public class DeviceConfigNetActivity extends BaseActivity {
     @OnClick(R.id.tv_connect)
     public void tv_connect() {
         if (mSsid == null) {
-            ToastUtil.show(this, R.string.get_device_wifi_fail);
+            ToastUtil.show(R.string.get_device_wifi_fail);
         } else {
             if (mEtPassword.getText() == null) {
                 mEtPassword.setText("");

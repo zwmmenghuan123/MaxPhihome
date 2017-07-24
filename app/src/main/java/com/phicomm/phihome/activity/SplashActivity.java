@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity {
     private CloudAccountPresenter mPresenter;
     private String mPhone;
     private String mPwd;
-    private boolean mIsAutoLogin = true;
+    private boolean mIsAutoLogin = false;
 
     Runnable mR = new Runnable() {
         @Override

@@ -107,7 +107,7 @@ public class SoftApResetActivity extends BaseActivity {
             }
         } else {
             mProgressBar.setVisibility(View.GONE);
-            ToastUtil.show(this, R.string.get_wifi_fail);
+            ToastUtil.show(R.string.get_wifi_fail);
         }
     }
 

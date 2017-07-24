@@ -64,7 +64,7 @@ public class RegisterCodeActivity extends BaseActivity {
             mTvMsgCode.setText(mCodeTime + "秒重新获取");
             mCodeTime -= 1;
             AccountManager.getInstance().saveRegisterCodeTime(mCodeTime);
-            mHandler.postDelayed(this, 1000);
+            mHandler.postDelayed(this,1000);
         }
     };
 
@@ -112,7 +112,7 @@ public class RegisterCodeActivity extends BaseActivity {
         mPresenter = new CloudAccountPresenter(new CloudAccountView() {
             @Override
             public void onAuthorizationError(String code, String msg) {
-                ToastUtil.show(RegisterCodeActivity.this, msg);
+                ToastUtil.show(msg);
             }
 
             @Override
@@ -122,7 +122,7 @@ public class RegisterCodeActivity extends BaseActivity {
 
             @Override
             public void onCheckPhoneError(String code, String msg) {
-                ToastUtil.show(RegisterCodeActivity.this, msg);
+                ToastUtil.show(msg);
                 mHasChecPhone = false;
             }
 
@@ -130,7 +130,7 @@ public class RegisterCodeActivity extends BaseActivity {
             public void onCheckPhoneSuccess(boolean isExist) {
                 mHasChecPhone = true;
                 if (isExist) {
-                    ToastUtil.show(RegisterCodeActivity.this, getString(R.string.check_phone_already_register));
+                    ToastUtil.show(getString(R.string.check_phone_already_register));
                 } else {
                     doGetCaptcha();
                 }
@@ -138,7 +138,7 @@ public class RegisterCodeActivity extends BaseActivity {
 
             @Override
             public void onGetCaptchaError(String code, String msg) {
-                ToastUtil.show(RegisterCodeActivity.this, msg);
+                ToastUtil.show(msg);
             }
 
             @Override
@@ -149,19 +149,19 @@ public class RegisterCodeActivity extends BaseActivity {
 
             @Override
             public void onGetVerCodeError(String code, String msg) {
-                ToastUtil.show(RegisterCodeActivity.this, msg);
+                ToastUtil.show(msg);
                 mHandler.postDelayed(mCodeTimeR, 0);
             }
 
             @Override
             public void onGetVerCodeSuccess() {
-                ToastUtil.show(RegisterCodeActivity.this, R.string.get_vercode_success);
+                ToastUtil.show(R.string.get_vercode_success);
                 mHandler.postDelayed(mCodeTimeR, 0);
             }
 
             @Override
             public void onCheckVerCodeError(String code, String msg) {
-                ToastUtil.show(RegisterCodeActivity.this, msg);
+                ToastUtil.show(msg);
             }
 
             @Override
@@ -235,7 +235,7 @@ public class RegisterCodeActivity extends BaseActivity {
 
     private void showCaptcha(Captcha captcha) {
         if (captcha == null || TextUtils.isEmpty(captcha.getCaptcha()) || TextUtils.isEmpty(captcha.getCaptchaid())) {
-            ToastUtil.show(this, R.string.captcha_failure);
+            ToastUtil.show(R.string.captcha_failure);
             return;
         }
         byte[] imageByte = Base64Utils.decode(captcha.getCaptcha());
@@ -263,7 +263,7 @@ public class RegisterCodeActivity extends BaseActivity {
 
     private boolean checkPhoneInput() {
         if (!RegexUtils.checkMobilePhone(mPhone)) {
-            ToastUtil.show(this, R.string.login_user_illegal);
+            ToastUtil.show(R.string.login_user_illegal);
             return false;
         }
         return true;
@@ -271,12 +271,12 @@ public class RegisterCodeActivity extends BaseActivity {
 
     private boolean checkAllInput() {
         if (!RegexUtils.checkMobilePhone(mPhone)) {
-            ToastUtil.show(this, R.string.login_user_illegal);
+            ToastUtil.show(R.string.login_user_illegal);
             return false;
         }
 
         if (TextUtils.isEmpty(mVerCode) || mVerCode.length() < 6) {
-            ToastUtil.show(this, R.string.verifiaction_code_illegal);
+            ToastUtil.show(R.string.verifiaction_code_illegal);
             return false;
         }
 

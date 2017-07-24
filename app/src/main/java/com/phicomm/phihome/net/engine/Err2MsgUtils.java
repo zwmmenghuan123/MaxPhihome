@@ -39,6 +39,7 @@ public class Err2MsgUtils {
         //服务器返回的错误
         mMap.put("1", "短信验证码错误");
         mMap.put("2", "短信验证码过期");
+        mMap.put("4", "旧密码错误");
         mMap.put("5", "token失效");
         mMap.put("7", "用户不存在");
         mMap.put("8", "密码错误");
