@@ -1,5 +1,6 @@
 package com.phicomm.phihome.presenter.viewback;
 
+import com.phicomm.phihome.bean.AccountDetailsBean;
 import com.phicomm.phihome.bean.UploadBaseBean;
 
 /**
@@ -7,7 +8,7 @@ import com.phicomm.phihome.bean.UploadBaseBean;
  * Created by xiaolei.yang on 2017/7/24.
  */
 
-public class UploadBaseView {
+public class UserInfoView {
     public void uploadBaseSuccess(UploadBaseBean uploadBaseBean) {
 
     }
@@ -21,6 +22,14 @@ public class UploadBaseView {
     }
 
     public void avatarUrlError(String code, String msg) {
+
+    }
+
+    public void accountDetailSuccess(AccountDetailsBean accountDetailsBean) {
+
+    }
+
+    public void accountDetailError(String code, String msg) {
 
     }
 

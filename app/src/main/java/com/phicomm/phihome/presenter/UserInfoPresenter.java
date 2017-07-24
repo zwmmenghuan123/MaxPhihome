@@ -1,20 +1,24 @@
 package com.phicomm.phihome.presenter;
 
+import android.util.Log;
+
+import com.phicomm.phihome.bean.AccountBean;
+import com.phicomm.phihome.bean.AccountDetailsBean;
 import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.model.UserInfoModel;
 import com.phicomm.phihome.net.callback.BeanCallback;
-import com.phicomm.phihome.presenter.viewback.UploadBaseView;
+import com.phicomm.phihome.presenter.viewback.UserInfoView;
 
 /**
- * 上传Base64字符串
+ * 用户信息
  * Created by xiaolei.yang on 2017/7/24.
  */
 
-public class UploadBasePresenter {
+public class UserInfoPresenter {
     private UserInfoModel mUserInfoModel;
-    private UploadBaseView mUploadBaseView;
+    private UserInfoView mUploadBaseView;
 
-    public UploadBasePresenter(UploadBaseView uploadBaseView) {
+    public UserInfoPresenter(UserInfoView uploadBaseView) {
         mUploadBaseView = uploadBaseView;
         mUserInfoModel = new UserInfoModel();
     }
@@ -51,6 +55,33 @@ public class UploadBasePresenter {
                 if (mUploadBaseView != null) {
                     mUploadBaseView.avatarUrlError(code, msg);
                 }
+            }
+        });
+    }
+
+    public void accountDetail() {
+        mUserInfoModel.accountDetail(new BeanCallback<AccountBean>() {
+
+
+            @Override
+            public void onSuccess(AccountBean accountBean) {
+                if (accountBean != null) {
+                    AccountDetailsBean accountDetailsBean = accountBean.getData();
+                    if (accountDetailsBean != null) {
+                      if (mUploadBaseView!=null){
+                          mUploadBaseView.accountDetailSuccess(accountDetailsBean);
+                      }
+                    } else {
+                        onError("0", null);
+                    }
+                } else {
+                    onError("0", null);
+                }
+            }
+
+            @Override
+            public void onError(String code, String msg) {
+                Log.e("=======", "onError: " + code + "===" + msg);
             }
         });
     }

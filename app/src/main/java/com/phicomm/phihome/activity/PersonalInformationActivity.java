@@ -7,19 +7,24 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.phicomm.phihome.R;
+import com.phicomm.phihome.bean.AccountDetailsBean;
 import com.phicomm.phihome.bean.UploadBaseBean;
 import com.phicomm.phihome.constants.AppConstans;
+import com.phicomm.phihome.event.UploadHeadPortraitEvent;
 import com.phicomm.phihome.listener.GetPhotoBeforeListener;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 import com.phicomm.phihome.popup.GetPhotoPopup;
-import com.phicomm.phihome.presenter.UploadBasePresenter;
-import com.phicomm.phihome.presenter.viewback.UploadBaseView;
+import com.phicomm.phihome.presenter.UserInfoPresenter;
+import com.phicomm.phihome.presenter.viewback.UserInfoView;
 import com.phicomm.phihome.utils.Base64Utils;
 import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.PathUtils;
 import com.phicomm.phihome.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -41,19 +46,24 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
 
     @BindView(R.id.iv_head_portrait)
     ImageView mIvHeadPortrait;
+    @BindView(R.id.tv_nickname)
+    TextView mTvNickname;
+    @BindView(R.id.tv_mobile)
+    TextView mTvMobile;
 
-    UploadBasePresenter mUploadBasePresenter;
+    UserInfoPresenter mUploadBasePresenter;
+
+    AccountDetailsBean mAccountDetailsBean;
 
     @Override
     public void initLayout(Bundle savedInstanceState) {
         setContentView(R.layout.activity_personal_information);
-
     }
 
     @Override
     public void afterInitView() {
         setPageTitle("个人信息");
-        mUploadBasePresenter = new UploadBasePresenter(new UploadBaseView() {
+        mUploadBasePresenter = new UserInfoPresenter(new UserInfoView() {
             @Override
             public void uploadBaseSuccess(UploadBaseBean uploadBaseBean) {
                 if (uploadBaseBean == null) {
@@ -61,6 +71,7 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
                 } else {
                     String url = uploadBaseBean.getUrl();
                     LogUtils.error("=======", "url:" + url);
+                    EventBus.getDefault().post(new UploadHeadPortraitEvent(url));
                 }
             }
 
@@ -83,9 +94,36 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
             public void avatarUrlError(String code, String msg) {
                 ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "获取头像失败，请稍后再试。" : msg);
             }
+
+            @Override
+            public void accountDetailSuccess(AccountDetailsBean accountDetailsBean) {
+                if (accountDetailsBean != null) {
+                    mAccountDetailsBean = accountDetailsBean;
+                    ImageLoader.getLoader(PersonalInformationActivity.this).load(accountDetailsBean.getImg()).into(mIvHeadPortrait);
+                    mTvNickname.setText(TextUtils.isEmpty(accountDetailsBean.getNickname()) ? "" : accountDetailsBean.getNickname());
+                    mTvMobile.setText(TextUtils.isEmpty(accountDetailsBean.getPhonenumber()) ? "" : accountDetailsBean.getPhonenumber());
+
+                } else {
+                    accountDetailError("0", null);
+                }
+            }
+
+            @Override
+            public void accountDetailError(String code, String msg) {
+                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "获取个人信息失败，请稍后再试" : msg);
+            }
         });
 
-        mUploadBasePresenter.avatarUrl();
+//        mUploadBasePresenter.avatarUrl();//单独获取头像url的接口，可以使用获取账号的接口，不用这个
+        mAccountDetailsBean = (AccountDetailsBean) getIntent().getSerializableExtra("account_details_bean");
+        if (mAccountDetailsBean == null) {
+            mUploadBasePresenter.accountDetail();
+        } else {
+            ImageLoader.getLoader(PersonalInformationActivity.this).load(mAccountDetailsBean.getImg()).into(mIvHeadPortrait);
+            mTvNickname.setText(TextUtils.isEmpty(mAccountDetailsBean.getNickname()) ? "" : mAccountDetailsBean.getNickname());
+            mTvMobile.setText(TextUtils.isEmpty(mAccountDetailsBean.getPhonenumber()) ? "" : mAccountDetailsBean.getPhonenumber());
+
+        }
 
     }
 

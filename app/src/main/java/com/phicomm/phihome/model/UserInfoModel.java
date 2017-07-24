@@ -34,10 +34,22 @@ public class UserInfoModel {
      * @param callback 请求回调。
      */
     public void avatarUrl(BaseCallback callback) {
-        OkHttpUtil.get(UrlConfig.CloudAccountUrl.AVATARURL)
+        OkHttpUtil.get(UrlConfig.CloudAccountUrl.AVATAR_URL)
                 .addHeader("Authorization", AccountManager.getInstance().getToken())
                 .addParams("access_token", AccountManager.getInstance().getToken())//可选，如果header中没有Authorization，则使用参数传入token
                 .run(null, callback);
     }
+
+    /**
+     * 获取账户详情
+     *
+     * @param callback 请求回调。
+     */
+    public void accountDetail(BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.CloudAccountUrl.ACCOUNT_DETAIL)
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .run(null, callback);
+    }
+
 
 }
