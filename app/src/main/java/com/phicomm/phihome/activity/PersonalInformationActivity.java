@@ -12,6 +12,15 @@ import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.listener.GetPhotoBeforeListener;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 import com.phicomm.phihome.popup.GetPhotoPopup;
+import com.phicomm.phihome.utils.Base64Utils;
+import com.phicomm.phihome.utils.PathUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,8 +98,25 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
         switch (requestCode) {
             case AppConstans.GetPhoto.ONE_DRAGON:
                 if (resultCode == RESULT_OK && data != null) {
-                    String path = data.getStringExtra("path");
-                    ImageLoader.getLoader(this).load(path).into(mIvHeadPortrait);
+                    String imageString = data.getStringExtra("image_string");
+                    byte[] buf = Base64Utils.decode(imageString);
+                    InputStream inputStream = new ByteArrayInputStream(buf);
+
+                    String dir = PathUtils.getCameraImageDir();
+                    File file = new File(dir, System.currentTimeMillis() + ".jpg");
+                    try {
+                        OutputStream os = new FileOutputStream(file);
+                        int bytesRead = 0;
+                        byte[] buffer = new byte[8192];
+                        while ((bytesRead = inputStream.read(buffer, 0, 8192)) != -1) {
+                            os.write(buffer, 0, bytesRead);
+                        }
+                        os.close();
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ImageLoader.getLoader(this).load(file.getAbsolutePath()).into(mIvHeadPortrait);
                 }
                 break;
             default:

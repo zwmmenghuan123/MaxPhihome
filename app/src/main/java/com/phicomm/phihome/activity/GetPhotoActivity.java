@@ -56,15 +56,19 @@ public class GetPhotoActivity extends BaseActivity implements GetPhotoAfterListe
 
     @Override
     public void compressPhotoCompleteSuccess(File file) {
-        Intent intent = new Intent();
-        intent.putExtra("path", file == null ? "" : file.getAbsolutePath());
-        setResult(RESULT_OK, intent);
-        finish();
+        GetPhotoUtils.startTranscode(this, file == null ? "" : file.getAbsolutePath(), this);
     }
 
     @Override
     public void compressPhotoCompleteError(Throwable e) {
+    }
 
+    @Override
+    public void transcodeComplete(String base64String) {
+        Intent intent = new Intent();
+        intent.putExtra("image_string", base64String);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 

@@ -22,4 +22,6 @@ public interface GetPhotoAfterListener {
     void compressPhotoCompleteSuccess(File file);
 
     void compressPhotoCompleteError(Throwable e);
+
+    void transcodeComplete(String base64String);
 }

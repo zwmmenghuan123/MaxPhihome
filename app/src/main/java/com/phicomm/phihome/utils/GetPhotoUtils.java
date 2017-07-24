@@ -17,8 +17,11 @@ import com.phicomm.phihome.constants.AppConstans;
 import com.phicomm.phihome.listener.GetPhotoAfterListener;
 import com.phicomm.phihome.manager.imageloader.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 import top.zibin.luban.Luban;
@@ -73,6 +76,7 @@ public class GetPhotoUtils {
         mContext.startActivityForResult(intent, AppConstans.GetPhoto.GET_PHOTO_FROM_ALBUM);
     }
 
+    //启动裁剪
     public static void startCropImage(Activity mContext, Uri imageUri) {
         String imagePath;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -86,6 +90,7 @@ public class GetPhotoUtils {
         mContext.startActivityForResult(intent, AppConstans.GetPhoto.CROP_IMAGE);
     }
 
+    //启动压缩
     public static void startCompressImage(Activity mContext, Uri imageUri, final GetPhotoAfterListener listener) {
         if (imageUri == null) {
             return;
@@ -132,6 +137,31 @@ public class GetPhotoUtils {
                         }
                     }
                 }).launch();    //启动压缩
+    }
+
+    //启动转码
+    public static void startTranscode(Activity mContext, String filePath, GetPhotoAfterListener listener) {
+        String fileString = "";
+        File file = new File(filePath);
+        if (!file.exists()) {
+            listener.transcodeComplete(null);
+            return;
+        }
+        InputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
+            ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+            byte[] buff = new byte[100];
+            int rc;
+            while ((rc = inputStream.read(buff, 0, 100)) > 0) {
+                swapStream.write(buff, 0, rc);
+            }
+            byte[] fileBytes = swapStream.toByteArray();
+            fileString = Base64Utils.encode(fileBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        listener.transcodeComplete(fileString);
     }
 
     /**
