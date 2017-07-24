@@ -16,8 +16,9 @@
 
 package com.phicomm.phihome.net.interceptor;
 
+import android.util.Log;
+
 import com.phicomm.phihome.BuildConfig;
-import com.phicomm.phihome.utils.LogUtils;
 import com.phicomm.phihome.utils.NetworkUtils;
 
 import java.io.EOFException;
@@ -118,8 +119,8 @@ public final class MyInterceptor implements Interceptor {
             public void log(String message) {
 //                Platform.get().log(INFO, message, null);
                 if (BuildConfig.isDebug) {
-//                    Log.d(TAG, message);
-                    LogUtils.info(TAG, message, false);
+                    Log.d(TAG, message);
+//                    LogUtils.info(TAG, message, false);
                 }
             }
         };

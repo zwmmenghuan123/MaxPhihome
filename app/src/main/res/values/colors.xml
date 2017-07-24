@@ -4,10 +4,19 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="status_bar">#00A0FE</color>
-    <color name="main_bg">#F0F0F0</color>
+    <color name="status_bar">#FFFFFF</color>
+    <color name="main_bg">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#00A0FE</color>
     <color name="text">#666666</color>
-    <color name="default_line">#E4E4E4</color>
+    <color name="default_line">#E2E2E2</color>
+    <color name="focused_line">#898989</color>
+    <color name="text_large">#313131</color>
+    <color name="text_middle">#efefef</color>
+    <color name="text_small">#898989</color>
+    <color name="text_normal">#313131</color>
+    <color name="text_oringe">#ff9b1a</color>
+    <color name="btn_disable_bg">#bfbfbf</color>
+    <color name="btn_enable_bg">#ff9b1a</color>
+    <color name="btn_text">#efefef</color>
 </resources>

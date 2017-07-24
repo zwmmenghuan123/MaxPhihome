@@ -99,7 +99,7 @@ public class MainActivity extends BaseFragmentActivity {
                 LogUtils.unLoad();
                 System.exit(0);
             } else {
-                ToastUtil.show(this, R.string.app_exit_hit);
+                ToastUtil.show(R.string.app_exit_hit);
                 mFirstTime = System.currentTimeMillis();
             }
             return true;

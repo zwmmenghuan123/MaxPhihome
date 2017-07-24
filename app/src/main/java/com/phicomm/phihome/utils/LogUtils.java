@@ -220,6 +220,10 @@ public class LogUtils {
         error(message, false);
     }
 
+    public static void error(String tag, Object message) {
+        error(tag, message, false);
+    }
+
     public static void error(Object message, boolean isPrStack) {
         error(TAG, message, isPrStack);
     }
@@ -385,7 +389,7 @@ public class LogUtils {
             try {
                 int left = Integer.parseInt(in);
                 result = left != date;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }

@@ -63,7 +63,7 @@ public class AccountRegisterActivity extends BaseActivity {
 
             @Override
             public void onRegisterSuccess() {
-                ToastUtil.show(AccountRegisterActivity.this, R.string.register_success);
+                ToastUtil.show(R.string.register_success);
                 onRegisterOk();
             }
         });
@@ -97,18 +97,18 @@ public class AccountRegisterActivity extends BaseActivity {
 
     private boolean checkInput() {
         if (TextUtils.isEmpty(mVerCode) || !RegexUtils.checkMobilePhone(mPhone)) {
-            ToastUtil.show(this, R.string.register_pwd_diff);
+            ToastUtil.show(R.string.register_pwd_diff);
             finish();
             return false;
         }
 
         if (TextUtils.isEmpty(mPwd) || mPwd.length() < 6) {
-            ToastUtil.show(this, R.string.register_pwd_illegal);
+            ToastUtil.show(R.string.register_pwd_illegal);
             return false;
         }
 
         if (!mPwd.equals(mPwdComfirm)) {
-            ToastUtil.show(this, R.string.register_pwd_diff);
+            ToastUtil.show(R.string.register_pwd_diff);
             return false;
         }
 

@@ -20,11 +20,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 
 /**
  * 当前包里仿微信头像的裁剪方式，裁剪边框不动，图片可缩放移动。
@@ -388,29 +383,11 @@ public class ClipZoomImageView extends ImageView implements
     }
 
     /**
-     * 剪切图片，返回剪切后的bitmap对象
-     *
-     * @return
+     * 保存裁剪后的图片到相册中
      */
     public Uri clipUri() {
         return Uri.parse(MediaStore.Images.Media.insertImage(mContext.getContentResolver(), clip(), null, null));
     }
-
-    /**
-     * 保存文件
-     *
-     * @throws IOException
-     */
-    public String saveFile() throws IOException {
-
-        File myCaptureFile = new File(mPath);
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-        clip().compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        bos.flush();
-        bos.close();
-        return mPath;
-    }
-
 
     /**
      * 边界检测
@@ -461,14 +438,6 @@ public class ClipZoomImageView extends ImageView implements
 
     public void setHorizontalPadding(int mHorizontalPadding) {
         this.mHorizontalPadding = mHorizontalPadding;
-    }
-
-    private String mPath = "";
-
-    public void setPath(String path) {
-        if (path != null) {
-            mPath = path;
-        }
     }
 
 }

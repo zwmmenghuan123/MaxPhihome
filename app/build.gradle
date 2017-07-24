@@ -79,7 +79,7 @@ android {
             versionName BASE_VERSION_NAME + "." + qaNumber + "." + buildNumber
 
             //测试环境
-            buildConfigField "String", "host_cloud_acount", "\"http://test.account.phiwifi.com\""
+//            buildConfigField "String", "host_cloud_acount", "\"http://test.account.phiwifi.com\""
         }
 
         productFlavors.all { flavor ->

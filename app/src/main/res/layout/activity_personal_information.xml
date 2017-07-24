@@ -93,7 +93,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
-            android:text="@string/nickname" />
+            android:text="@string/phone" />
 
         <TextView
             android:id="@+id/tv_mobile"
@@ -110,6 +110,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_modify_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/icon_indicator"

@@ -11,7 +11,7 @@
     <string name="title_login_cloud">云账号登录</string>
     <string name="login">登录</string>
     <string name="exit_login">退出登录</string>
-    <string name="login_user_hint">请输入手机号</string>
+    <string name="login_user_hint">请输入11位的手机号码</string>
     <string name="login_pwd_hint">请输入密码</string>
     <string name="login_user_illegal">请输入正确的手机号</string>
     <string name="login_pwd_illegal">请输入正确的密码</string>
@@ -19,6 +19,7 @@
     <string name="login_token_fail">登录失败</string>
     <string name="logout_success">已登出</string>
     <string name="register">注册</string>
+    <string name="forget_pwd">忘记密码？</string>
     <string name="register_now">立即注册</string>
     <string name="get_verification_code">获取验证码</string>
     <string name="phone">手机号</string>
@@ -29,7 +30,7 @@
     <string name="verifiaction_code">验证码</string>
     <string name="get_vercode_success">获取验证码成功</string>
     <string name="verifiaction_code_illegal">请输入正确的短信验证码</string>
-    <string name="password">密&#x0020;&#x0020;码</string>
+    <string name="password">密码</string>
     <string name="password_comfirm">确认密码</string>
     <string name="password_set">设置密码</string>
     <string name="register_pwd_illegal">请输入合法的密码</string>
@@ -37,6 +38,7 @@
     <string name="register_no_info">请重新输入信息</string>
     <string name="register_success">注册成功</string>
     <string name="check_phone_already_register">该手机号已注册，你可以直接登录</string>
+    <string name="login_welcom_phihome">欢迎来到 PhiHome</string>
 
 
     <string name="common_image_description">通用图片描述</string>
@@ -92,4 +94,6 @@
     <string name="cancel">取消</string>
     <string name="crop">裁剪</string>
 
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
 </resources>

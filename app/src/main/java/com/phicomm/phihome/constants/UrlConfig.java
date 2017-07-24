@@ -23,9 +23,15 @@ public interface UrlConfig {
         String LOGOUT = URL_HOST + "/v1/logout"; //退出登陆
         String GET_CAPTCHA = URL_HOST + "/v1/captcha"; //获取图形验证码
         String GET_VER_CODE = URL_HOST + "/v1/verificationMsg"; //获取验证码
-//        String GET_VER_CODE = "https://account.phicomm.com" + "/v1/verificationMsg"; //获取验证码
+        //        String GET_VER_CODE = "https://account.phicomm.com" + "/v1/verificationMsg"; //获取验证码
         String CHECK_VER_CODE = URL_HOST + "/v1/verifyVerificationCode"; //校验短信验证码
         String REGISTER = URL_HOST + "/v1/account"; //注册账号
+
+        String UPLOAD_BASE64 = URL_HOST + "/pic/uploadBase64"; //上传Base64字符串
+        String AVATAR_URL = URL_HOST + "/pic/avatarUrl"; //获取头像url
+        String ACCOUNT_DETAIL = URL_HOST + "/v1/accountDetail"; //获取用户云账户公共信息
+        String PROPERTY = URL_HOST + "/v1/property"; //修改用户云账户公共信息
+        String PASSWORD = URL_HOST +"/v1/password"; //修改密码
     }
 
     interface SoftApInfoUrl {

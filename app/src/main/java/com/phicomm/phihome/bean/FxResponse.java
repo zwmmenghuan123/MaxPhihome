@@ -18,9 +18,6 @@ public class FxResponse implements Serializable {
 
     private int token_status;
 
-    //远程操控路由器时，路由器响应并透传的消息
-    private String data;
-
     private String httpCode = "200";
 
     public String getError() {
@@ -53,14 +50,6 @@ public class FxResponse implements Serializable {
 
     public void setToken_status(int token_status) {
         this.token_status = token_status;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 
     public String getHttpCode() {

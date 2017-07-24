@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyEditTextAttr">
+        <attr name="input_type" format="integer"/>
+        <attr name="max_length" format="integer"/>
+        <attr name="has_eye" format="boolean"/>
+        <attr name="hint" format="string"/>
+    </declare-styleable>
+
+</resources>

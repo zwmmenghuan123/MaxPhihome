@@ -3,7 +3,7 @@ package com.phicomm.phihome.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.EditText;
+import android.widget.Button;
 
 import com.phicomm.phihome.R;
 import com.phicomm.phihome.bean.CloudAccount;
@@ -14,6 +14,8 @@ import com.phicomm.phihome.presenter.viewback.CloudAccountView;
 import com.phicomm.phihome.utils.RegexUtils;
 import com.phicomm.phihome.utils.SpfUtils;
 import com.phicomm.phihome.utils.ToastUtil;
+import com.phicomm.phihome.utils.ViewUtils;
+import com.phicomm.phihome.views.MyEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,10 +27,12 @@ import butterknife.OnLongClick;
  */
 public class LoginCloudActivity extends BaseActivity {
 
-    @BindView(R.id.et_user)
-    EditText mEtUser;
-    @BindView(R.id.et_pwd)
-    EditText mEtPwd;
+    @BindView(R.id.myet_user)
+    MyEditText mMyEtUser;
+    @BindView(R.id.myet_pwd)
+    MyEditText mMyEtPwd;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
 
     private CloudAccountPresenter mPresenter;
     private String mUser;
@@ -41,21 +45,15 @@ public class LoginCloudActivity extends BaseActivity {
 
     @Override
     public void afterInitView() {
-        hideBack();
-        setPageTitle(getString(R.string.title_login_cloud));
         initPresenter();
         getUser();
+        ViewUtils.toggleBtn(mMyEtUser.getEt(), mMyEtPwd.getEt(), mBtnLogin);
     }
 
     private void getUser() {
         String user = (String) SpfUtils.get(AppConstans.Sp.CLOUD_ACCOUNT_PHONE, "");
         if (!TextUtils.isEmpty(user)) {
-            mEtUser.setText(user);
-        }
-
-        String pwd = (String) SpfUtils.get(AppConstans.Sp.CLOUD_ACCOUNT_PWD, "");
-        if (!TextUtils.isEmpty(pwd)) {
-            mEtPwd.setText(pwd);
+            mMyEtUser.setContent(user);
         }
     }
 
@@ -95,8 +93,8 @@ public class LoginCloudActivity extends BaseActivity {
     //点击登录
     @OnClick(R.id.btn_login)
     public void btn_login() {
-        mUser = mEtUser.getText().toString().trim();
-        mPwd = mEtPwd.getText().toString().trim();
+        mUser = mMyEtUser.getContent();
+        mPwd = mMyEtPwd.getContent();
         if (checkInput()) {
             loginPrepare();
         }
@@ -158,12 +156,12 @@ public class LoginCloudActivity extends BaseActivity {
 
     private boolean checkInput() {
         if (!RegexUtils.checkMobilePhone(mUser)) {
-            ToastUtil.show(this, R.string.login_user_illegal);
+            ToastUtil.show(R.string.login_user_illegal);
             return false;
         }
 
         if (TextUtils.isEmpty(mPwd) || mPwd.length() < 6) {
-            ToastUtil.show(this, R.string.login_pwd_illegal);
+            ToastUtil.show(R.string.login_pwd_illegal);
             return false;
         }
 

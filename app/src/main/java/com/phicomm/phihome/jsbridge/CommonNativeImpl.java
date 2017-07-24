@@ -19,7 +19,7 @@ public class CommonNativeImpl {
         }
 
         String toast = jsMessage.getJsParams().getToast_msg();
-        ToastUtil.show(context, toast);
+        ToastUtil.show(toast);
         return toast;
     }
 
