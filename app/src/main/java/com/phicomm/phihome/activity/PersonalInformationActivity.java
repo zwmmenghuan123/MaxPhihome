@@ -68,7 +68,24 @@ public class PersonalInformationActivity extends BaseActivity implements GetPhot
             public void uploadBaseError(String code, String msg) {
                 ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "上传图片失败，请稍后再试。" : msg);
             }
+
+            @Override
+            public void avatarUrlSuccess(UploadBaseBean uploadBaseBean) {
+                if (uploadBaseBean == null) {
+                    avatarUrlError("0", null);
+                } else {
+                    String avatarUrl = uploadBaseBean.getAvatarUrl();
+                    ImageLoader.getLoader(PersonalInformationActivity.this).load(avatarUrl).into(mIvHeadPortrait);
+                }
+            }
+
+            @Override
+            public void avatarUrlError(String code, String msg) {
+                ToastUtil.show(PersonalInformationActivity.this, TextUtils.isEmpty(msg) ? "获取头像失败，请稍后再试。" : msg);
+            }
         });
+
+        mUploadBasePresenter.avatarUrl();
 
     }
 

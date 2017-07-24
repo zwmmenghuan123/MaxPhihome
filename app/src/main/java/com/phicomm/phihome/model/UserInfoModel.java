@@ -10,7 +10,7 @@ import com.phicomm.phihome.net.engine.OkHttpUtil;
  * Created by xiaolei.yang on 2017/7/24.
  */
 
-public class UploadBaseModel {
+public class UserInfoModel {
 
     /**
      * 上传Base64字符串
@@ -25,6 +25,18 @@ public class UploadBaseModel {
                 .addHeader("Authorization", AccountManager.getInstance().getToken())
                 .addParams("imgBase64", String.valueOf(imgBase64))
                 .addParams("type", String.valueOf(type))
+                .run(null, callback);
+    }
+
+    /**
+     * 获取用户头像
+     *
+     * @param callback 请求回调。
+     */
+    public void avatarUrl(BaseCallback callback) {
+        OkHttpUtil.get(UrlConfig.CloudAccountUrl.AVATARURL)
+                .addHeader("Authorization", AccountManager.getInstance().getToken())
+                .addParams("access_token", AccountManager.getInstance().getToken())//可选，如果header中没有Authorization，则使用参数传入token
                 .run(null, callback);
     }
 

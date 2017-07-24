@@ -47,6 +47,7 @@ public class Err2MsgUtils {
         mMap.put("13", "获取验证码失败");
         mMap.put("18", "图片格式错误");
         mMap.put("19", "图片为空");
+        mMap.put("20", "用户未设置头像");
         mMap.put("32", "密码格式错误");
         mMap.put("36", "请刷新图形验证码");
         mMap.put("37", "图片验证码不正确");

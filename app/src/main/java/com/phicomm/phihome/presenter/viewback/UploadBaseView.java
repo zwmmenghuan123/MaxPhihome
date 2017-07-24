@@ -16,4 +16,12 @@ public class UploadBaseView {
 
     }
 
+    public void avatarUrlSuccess(UploadBaseBean uploadBaseBean) {
+
+    }
+
+    public void avatarUrlError(String code, String msg) {
+
+    }
+
 }

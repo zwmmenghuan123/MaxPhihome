@@ -28,6 +28,7 @@ public interface UrlConfig {
         String REGISTER = URL_HOST + "/v1/account"; //注册账号
 
         String UPLOAD_BASE64 = URL_HOST + "/pic/uploadBase64"; //上传Base64字符串
+        String AVATARURL = URL_HOST + "/pic/avatarUrl"; //获取头像url
     }
 
     interface SoftApInfoUrl {
